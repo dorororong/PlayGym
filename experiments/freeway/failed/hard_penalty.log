@@ -1,2 +1,0 @@
-{"game":"hard","algo":"ppo","seed":0,"frames":1503232,"frameSkip":4,"seconds":117.2,"fps":12831,"randomScore":0,"greedyScore":0,"playScore":0,"playLength":2000,"secondsTo2x":null}
-{"game":"hard","algo":"ppo","seed":1,"frames":1503232,"frameSkip":4,"seconds":115,"fps":13066,"randomScore":0,"greedyScore":0,"playScore":0,"playLength":2000,"secondsTo2x":null}

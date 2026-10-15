@@ -1,2 +1,0 @@
-{"game":"harddir","algo":"ppo","seed":0,"frames":1503232,"frameSkip":4,"seconds":137.6,"fps":10925,"randomScore":0,"greedyScore":0,"playScore":0,"playLength":2000,"secondsTo2x":null}
-{"game":"harddir","algo":"ppo","seed":1,"frames":1503232,"frameSkip":4,"seconds":138.3,"fps":10869,"randomScore":0,"greedyScore":0,"playScore":0,"playLength":2000,"secondsTo2x":null}

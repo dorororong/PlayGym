@@ -127,6 +127,7 @@ const duck: Draw = (ctx, o, t, _L, _T, W, H) => {
   const tilt = Math.max(-0.45, Math.min(0.6, o.vy * 0.06));
   ctx.save();
   ctx.translate(o.x, o.y);
+  if (o.vx < 0) ctx.scale(-1, 1); // 왼쪽으로 가면 왼쪽을 본다
   ctx.rotate(tilt);
   ctx.lineWidth = 1;
   ctx.strokeStyle = '#d99a00';
@@ -507,29 +508,121 @@ const coin: Draw = (ctx, o, t, _L, _T, W, H) => {
   ctx.fill();
 };
 
-/** 도로 한 줄 (끝없는 길 건너기). 가운데 점선은 객체 x 와 상관없이 화면에 고정 */
-const roadStrip: Draw = (ctx, _o, _t, L, T, W, H) => {
-  ctx.fillStyle = '#4a4a5e';
-  ctx.fillRect(L, T, W, H);
-  ctx.fillStyle = '#5d5d74';
-  ctx.fillRect(L, T, W, 2);
-  ctx.fillStyle = '#3a3a4c';
-  ctx.fillRect(L, T + H - 2, W, 2);
-  ctx.fillStyle = 'rgba(255,255,255,0.32)';
-  for (let x = L + 6; x < L + W; x += 32) ctx.fillRect(x, T + H / 2 - 1, 14, 2);
+/** 폭탄: 까만 공 + 반짝이는 심지 */
+const bomb: Draw = (ctx, o, t, _L, _T, W, H) => {
+  const r = Math.min(W, H) * 0.42;
+  const cy = o.y + H * 0.08;
+  ctx.fillStyle = '#26232f';
+  circle(ctx, o.x, cy, r);
+  ctx.fill();
+  ctx.fillStyle = 'rgba(255,255,255,0.35)';
+  circle(ctx, o.x - r * 0.35, cy - r * 0.35, r * 0.28);
+  ctx.fill();
+  ctx.fillStyle = '#5b5866';
+  ctx.fillRect(o.x - r * 0.3, cy - r - 2, r * 0.6, 3);
+  ctx.strokeStyle = '#c9a26b';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(o.x, cy - r - 2);
+  ctx.quadraticCurveTo(o.x + r * 0.5, cy - r - 5, o.x + r * 0.4, cy - r - 7);
+  ctx.stroke();
+  ctx.fillStyle = t % 6 < 3 ? '#ffd23f' : '#ff6b3d';
+  circle(ctx, o.x + r * 0.4, cy - r - 7, 2.2);
+  ctx.fill();
 };
 
-/** 풀밭 한 줄. 색은 객체 색을 쓴다 */
-const grassStrip: Draw = (ctx, o, _t, L, T, W, H) => {
+/** 물 양동이 */
+const bucket: Draw = (ctx, o, _t, L, T, W, H) => {
+  const c = o.color;
+  ctx.fillStyle = shade(c, -0.25);
+  ctx.beginPath();
+  ctx.moveTo(L, T);
+  ctx.lineTo(L + W, T);
+  ctx.lineTo(L + W * 0.88, T + H);
+  ctx.lineTo(L + W * 0.12, T + H);
+  ctx.closePath();
+  ctx.fill();
+  ctx.fillStyle = c;
+  ctx.fillRect(L + W * 0.06, T + H * 0.25, W * 0.88, H * 0.3);
+  ctx.fillStyle = '#5ad1ff';
+  ctx.fillRect(L + 2, T, W - 4, Math.max(2, H * 0.2));
+  ctx.fillStyle = 'rgba(255,255,255,0.5)';
+  ctx.fillRect(L + W * 0.15, T + 1, W * 0.25, 1.5);
+};
+
+/** 스키 타는 사람: 움직이는 쪽으로 기운다 */
+const skier: Draw = (ctx, o, _t, _L, _T, W, H) => {
+  const tilt = Math.max(-0.5, Math.min(0.5, o.vx * 0.12));
+  ctx.save();
+  ctx.translate(o.x, o.y);
+  // 스키 두 짝
+  ctx.save();
+  ctx.rotate(tilt * 1.4);
+  ctx.fillStyle = '#e63946';
+  rr(ctx, -W * 0.42, H * 0.36, W * 0.22, H * 0.16, 2);
+  ctx.fill();
+  rr(ctx, W * 0.2, H * 0.36, W * 0.22, H * 0.16, 2);
+  ctx.fill();
+  ctx.fillRect(-W * 0.36, -H * 0.1, W * 0.1, H * 0.5);
+  ctx.fillRect(W * 0.26, -H * 0.1, W * 0.1, H * 0.5);
+  ctx.restore();
+  ctx.rotate(tilt);
+  // 몸·머리·모자
+  ctx.fillStyle = '#3a86ff';
+  rr(ctx, -W * 0.28, -H * 0.18, W * 0.56, H * 0.46, 4);
+  ctx.fill();
+  ctx.fillStyle = '#f4d1ae';
+  circle(ctx, 0, -H * 0.3, W * 0.2);
+  ctx.fill();
+  ctx.fillStyle = '#ff6fb5';
+  ctx.beginPath();
+  ctx.arc(0, -H * 0.33, W * 0.21, Math.PI, 0);
+  ctx.fill();
+  ctx.fillStyle = '#ffffff';
+  circle(ctx, 0, -H * 0.52, W * 0.07);
+  ctx.fill();
+  ctx.restore();
+};
+
+/** 깃발: 막대 + 세모 깃발 (색은 객체 색) */
+const flag: Draw = (ctx, o, t, L, T, W, H) => {
+  const px = L + W * 0.3;
+  ctx.fillStyle = '#555555';
+  ctx.fillRect(px - 1, T, 2, H);
   ctx.fillStyle = o.color;
-  ctx.fillRect(L, T, W, H);
-  ctx.fillStyle = shade(o.color, -0.18);
-  for (let i = 0; i < W / 22; i++) {
-    const x = L + i * 22 + hash(i * 3 + Math.round(T)) * 14;
-    const y = T + 4 + hash(i * 5 + 1) * Math.max(1, H - 10);
-    ctx.fillRect(x, y, 2, 4);
-    ctx.fillRect(x + 3, y + 1, 2, 3);
-  }
+  const wave = Math.sin(t * 0.2 + o.x) * 1.5;
+  ctx.beginPath();
+  ctx.moveTo(px + 1, T);
+  ctx.lineTo(px + W * 0.7 + wave, T + H * 0.2);
+  ctx.lineTo(px + 1, T + H * 0.42);
+  ctx.closePath();
+  ctx.fill();
+};
+
+/** 눈 덮인 전나무 */
+const tree: Draw = (ctx, o, _t, L, T, W, H) => {
+  ctx.fillStyle = '#8b5a2b';
+  ctx.fillRect(o.x - W * 0.08, T + H * 0.78, W * 0.16, H * 0.22);
+  const tri = (y0: number, y1: number, half: number, col: string) => {
+    ctx.fillStyle = col;
+    ctx.beginPath();
+    ctx.moveTo(o.x, T + H * y0);
+    ctx.lineTo(o.x + W * half, T + H * y1);
+    ctx.lineTo(o.x - W * half, T + H * y1);
+    ctx.closePath();
+    ctx.fill();
+  };
+  tri(0.3, 0.82, 0.5, '#1e7a46');
+  tri(0.12, 0.6, 0.4, '#2e8b57');
+  tri(0, 0.38, 0.28, '#3aa66b');
+  ctx.fillStyle = 'rgba(255,255,255,0.85)';
+  ctx.beginPath();
+  ctx.moveTo(o.x, T);
+  ctx.lineTo(o.x + W * 0.12, T + H * 0.16);
+  ctx.lineTo(o.x - W * 0.12, T + H * 0.16);
+  ctx.closePath();
+  ctx.fill();
+  void L;
 };
 
 const DRAW: Record<string, Draw> = {
@@ -551,8 +644,11 @@ const DRAW: Record<string, Draw> = {
   groundRun: groundDraw(5),
   star,
   coin,
-  road: roadStrip,
-  grass: grassStrip,
+  bomb,
+  bucket,
+  skier,
+  flag,
+  tree,
   hidden: () => {},
 };
 

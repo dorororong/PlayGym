@@ -1,0 +1,21 @@
+
+> playgym@0.1.0 train
+> tsx scripts/train.ts ski --seed 0 --out experiments/atari3/ski_ppo
+
+[ski] PPO · 64×64 tanh · 행동 유지 4 · 1,500,000 프레임
+  무작위 행동: 점수 1.9 · 보상 1.9 · 길이 465
+    114470 프레임   10초 | 점수 4.3 보상 4.3 길이 538 | entropy=0.717 approxKl=0.0048 clipFrac=0.0559
+    208506 프레임   20초 | 점수 6.3 보상 6.3 길이 667 | entropy=0.6247 approxKl=0.0117 clipFrac=0.0542
+    322963 프레임   31초 | 점수 6.8 보상 6.8 길이 704 | entropy=0.6639 approxKl=0.0047 clipFrac=0.0171
+    445625 프레임   41초 | 점수 6.5 보상 6.5 길이 667 | entropy=0.8578 approxKl=-0.0004 clipFrac=0.002
+    576460 프레임   51초 | 점수 6.4 보상 6.4 길이 658 | entropy=0.7345 approxKl=0.0047 clipFrac=0.0803
+    719555 프레임   61초 | 점수 7.2 보상 7.2 길이 733 | entropy=0.7817 approxKl=0.0031 clipFrac=0.031
+    846305 프레임   71초 | 점수 7.3 보상 7.3 길이 757 | entropy=0.7864 approxKl=0.0009 clipFrac=0.0015
+    993460 프레임   81초 | 점수 6.1 보상 6.1 길이 637 | entropy=0.7652 approxKl=0.0025 clipFrac=0.011
+   1144720 프레임   92초 | 점수 7.7 보상 7.7 길이 766 | entropy=0.7194 approxKl=0.0022 clipFrac=0.0059
+   1287776 프레임  102초 | 점수 5.7 보상 5.7 길이 610 | entropy=0.7028 approxKl=0.0021 clipFrac=0.0286
+   1422666 프레임  112초 | 점수 6.5 보상 6.5 길이 669 | entropy=0.7344 approxKl=0.0004 clipFrac=0.0078
+   1500351 프레임  118초 | 점수 6.0 보상 6.0 길이 626 | entropy=0.7221 approxKl=0.0037 clipFrac=0.0576
+[ski] 학습 1,500,351 프레임 / 118초 (12,763 프레임/초)
+  학습된 AI (최선만)   : 점수 8.2 · 보상 8.2 · 길이 784
+  학습된 AI (화면 방식): 점수 6.9 · 보상 6.9 · 길이 695

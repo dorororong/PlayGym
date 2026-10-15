@@ -1,0 +1,2657 @@
+{
+  "version": 1,
+  "blocksJson": {
+    "blocks": {
+      "languageVersion": 0,
+      "blocks": [
+        {
+          "type": "pg_settings",
+          "id": "ducks_1",
+          "x": 20,
+          "y": 20,
+          "fields": {
+            "LEFT": true,
+            "RIGHT": true,
+            "UP": false,
+            "DOWN": false,
+            "A": true,
+            "B": false,
+            "MAXSTEPS": 2000,
+            "SCORE_REWARD": true,
+            "BACKDROP": "arcade",
+            "BG": "#20202a"
+          }
+        },
+        {
+          "type": "pg_observe",
+          "id": "ducks_7",
+          "x": 20,
+          "y": 120,
+          "inputs": {
+            "SENSORS": {
+              "block": {
+                "type": "pg_s_prop",
+                "id": "ducks_2",
+                "fields": {
+                  "SUBJECT": {
+                    "id": "ducks_Tag_gun"
+                  },
+                  "PROP": "x",
+                  "MIN": 0,
+                  "MAX": 400
+                },
+                "next": {
+                  "block": {
+                    "type": "pg_s_lidar",
+                    "id": "ducks_3",
+                    "fields": {
+                      "SUBJECT": {
+                        "id": "ducks_Tag_gun"
+                      },
+                      "RAYS": 5,
+                      "START": 84,
+                      "END": 96,
+                      "MAXDIST": 300,
+                      "TARGET": {
+                        "id": "ducks_Tag_duck"
+                      },
+                      "BOUNDS": false
+                    },
+                    "next": {
+                      "block": {
+                        "type": "pg_s_nearest_k",
+                        "id": "ducks_4",
+                        "fields": {
+                          "K": 2,
+                          "SUBJECT": {
+                            "id": "ducks_Tag_gun"
+                          },
+                          "TARGET": {
+                            "id": "ducks_Tag_duck"
+                          },
+                          "DIR": "up"
+                        },
+                        "next": {
+                          "block": {
+                            "type": "pg_s_count",
+                            "id": "ducks_5",
+                            "fields": {
+                              "TARGET": {
+                                "id": "ducks_Tag_bullet"
+                              },
+                              "MAX": 1
+                            },
+                            "next": {
+                              "block": {
+                                "type": "pg_s_variable",
+                                "id": "ducks_6",
+                                "fields": {
+                                  "VAR": {
+                                    "id": "ducks_var_lives"
+                                  },
+                                  "MIN": 0,
+                                  "MAX": 3
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_start",
+          "id": "ducks_114",
+          "x": 20,
+          "y": 220,
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "variables_set",
+                "id": "ducks_9",
+                "fields": {
+                  "VAR": {
+                    "id": "ducks_var_wave"
+                  }
+                },
+                "inputs": {
+                  "VALUE": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "ducks_8",
+                      "fields": {
+                        "NUM": 0
+                      }
+                    }
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "variables_set",
+                    "id": "ducks_11",
+                    "fields": {
+                      "VAR": {
+                        "id": "ducks_var_lives"
+                      }
+                    },
+                    "inputs": {
+                      "VALUE": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "ducks_10",
+                          "fields": {
+                            "NUM": 3
+                          }
+                        }
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "controls_for",
+                        "id": "ducks_91",
+                        "fields": {
+                          "VAR": {
+                            "id": "ducks_var_row"
+                          }
+                        },
+                        "inputs": {
+                          "FROM": {
+                            "shadow": {
+                              "type": "math_number",
+                              "id": "ducks_88",
+                              "fields": {
+                                "NUM": 0
+                              }
+                            }
+                          },
+                          "BY": {
+                            "shadow": {
+                              "type": "math_number",
+                              "id": "ducks_90",
+                              "fields": {
+                                "NUM": 1
+                              }
+                            }
+                          },
+                          "TO": {
+                            "shadow": {
+                              "type": "math_number",
+                              "id": "ducks_89",
+                              "fields": {
+                                "NUM": 2
+                              }
+                            }
+                          },
+                          "DO": {
+                            "block": {
+                              "type": "controls_if",
+                              "id": "ducks_49",
+                              "inputs": {
+                                "IF0": {
+                                  "block": {
+                                    "type": "logic_compare",
+                                    "id": "ducks_16",
+                                    "fields": {
+                                      "OP": "EQ"
+                                    },
+                                    "inputs": {
+                                      "A": {
+                                        "block": {
+                                          "type": "math_modulo",
+                                          "id": "ducks_14",
+                                          "inputs": {
+                                            "DIVIDEND": {
+                                              "block": {
+                                                "type": "variables_get",
+                                                "id": "ducks_12",
+                                                "fields": {
+                                                  "VAR": {
+                                                    "id": "ducks_var_row"
+                                                  }
+                                                }
+                                              }
+                                            },
+                                            "DIVISOR": {
+                                              "shadow": {
+                                                "type": "math_number",
+                                                "id": "ducks_13",
+                                                "fields": {
+                                                  "NUM": 2
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      },
+                                      "B": {
+                                        "shadow": {
+                                          "type": "math_number",
+                                          "id": "ducks_15",
+                                          "fields": {
+                                            "NUM": 0
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "DO0": {
+                                  "block": {
+                                    "type": "controls_for",
+                                    "id": "ducks_48",
+                                    "fields": {
+                                      "VAR": {
+                                        "id": "ducks_var_k"
+                                      }
+                                    },
+                                    "inputs": {
+                                      "FROM": {
+                                        "shadow": {
+                                          "type": "math_number",
+                                          "id": "ducks_45",
+                                          "fields": {
+                                            "NUM": 0
+                                          }
+                                        }
+                                      },
+                                      "BY": {
+                                        "shadow": {
+                                          "type": "math_number",
+                                          "id": "ducks_47",
+                                          "fields": {
+                                            "NUM": 1
+                                          }
+                                        }
+                                      },
+                                      "TO": {
+                                        "shadow": {
+                                          "type": "math_number",
+                                          "id": "ducks_46",
+                                          "fields": {
+                                            "NUM": 2
+                                          }
+                                        }
+                                      },
+                                      "DO": {
+                                        "block": {
+                                          "type": "pg_create",
+                                          "id": "ducks_44",
+                                          "fields": {
+                                            "TAG": {
+                                              "id": "ducks_Tag_duck"
+                                            }
+                                          },
+                                          "inputs": {
+                                            "X": {
+                                              "block": {
+                                                "type": "math_arithmetic",
+                                                "id": "ducks_23",
+                                                "fields": {
+                                                  "OP": "ADD"
+                                                },
+                                                "inputs": {
+                                                  "A": {
+                                                    "block": {
+                                                      "type": "math_arithmetic",
+                                                      "id": "ducks_19",
+                                                      "fields": {
+                                                        "OP": "MULTIPLY"
+                                                      },
+                                                      "inputs": {
+                                                        "A": {
+                                                          "block": {
+                                                            "type": "variables_get",
+                                                            "id": "ducks_17",
+                                                            "fields": {
+                                                              "VAR": {
+                                                                "id": "ducks_var_k"
+                                                              }
+                                                            }
+                                                          }
+                                                        },
+                                                        "B": {
+                                                          "shadow": {
+                                                            "type": "math_number",
+                                                            "id": "ducks_18",
+                                                            "fields": {
+                                                              "NUM": 133
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  },
+                                                  "B": {
+                                                    "block": {
+                                                      "type": "math_arithmetic",
+                                                      "id": "ducks_22",
+                                                      "fields": {
+                                                        "OP": "MULTIPLY"
+                                                      },
+                                                      "inputs": {
+                                                        "A": {
+                                                          "block": {
+                                                            "type": "variables_get",
+                                                            "id": "ducks_20",
+                                                            "fields": {
+                                                              "VAR": {
+                                                                "id": "ducks_var_row"
+                                                              }
+                                                            }
+                                                          }
+                                                        },
+                                                        "B": {
+                                                          "shadow": {
+                                                            "type": "math_number",
+                                                            "id": "ducks_21",
+                                                            "fields": {
+                                                              "NUM": 45
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            },
+                                            "Y": {
+                                              "block": {
+                                                "type": "math_arithmetic",
+                                                "id": "ducks_28",
+                                                "fields": {
+                                                  "OP": "ADD"
+                                                },
+                                                "inputs": {
+                                                  "A": {
+                                                    "shadow": {
+                                                      "type": "math_number",
+                                                      "id": "ducks_27",
+                                                      "fields": {
+                                                        "NUM": 50
+                                                      }
+                                                    }
+                                                  },
+                                                  "B": {
+                                                    "block": {
+                                                      "type": "math_arithmetic",
+                                                      "id": "ducks_26",
+                                                      "fields": {
+                                                        "OP": "MULTIPLY"
+                                                      },
+                                                      "inputs": {
+                                                        "A": {
+                                                          "block": {
+                                                            "type": "variables_get",
+                                                            "id": "ducks_24",
+                                                            "fields": {
+                                                              "VAR": {
+                                                                "id": "ducks_var_row"
+                                                              }
+                                                            }
+                                                          }
+                                                        },
+                                                        "B": {
+                                                          "shadow": {
+                                                            "type": "math_number",
+                                                            "id": "ducks_25",
+                                                            "fields": {
+                                                              "NUM": 40
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            },
+                                            "W": {
+                                              "shadow": {
+                                                "type": "math_number",
+                                                "id": "ducks_41",
+                                                "fields": {
+                                                  "NUM": 26
+                                                }
+                                              }
+                                            },
+                                            "H": {
+                                              "shadow": {
+                                                "type": "math_number",
+                                                "id": "ducks_42",
+                                                "fields": {
+                                                  "NUM": 20
+                                                }
+                                              }
+                                            },
+                                            "COLOR": {
+                                              "shadow": {
+                                                "type": "pg_colour",
+                                                "id": "ducks_40",
+                                                "fields": {
+                                                  "C": "#ffd23f"
+                                                }
+                                              }
+                                            },
+                                            "VX": {
+                                              "block": {
+                                                "type": "math_arithmetic",
+                                                "id": "ducks_39",
+                                                "fields": {
+                                                  "OP": "MULTIPLY"
+                                                },
+                                                "inputs": {
+                                                  "A": {
+                                                    "block": {
+                                                      "type": "math_arithmetic",
+                                                      "id": "ducks_37",
+                                                      "fields": {
+                                                        "OP": "ADD"
+                                                      },
+                                                      "inputs": {
+                                                        "A": {
+                                                          "shadow": {
+                                                            "type": "math_number",
+                                                            "id": "ducks_36",
+                                                            "fields": {
+                                                              "NUM": 0.8
+                                                            }
+                                                          }
+                                                        },
+                                                        "B": {
+                                                          "block": {
+                                                            "type": "math_arithmetic",
+                                                            "id": "ducks_35",
+                                                            "fields": {
+                                                              "OP": "ADD"
+                                                            },
+                                                            "inputs": {
+                                                              "A": {
+                                                                "block": {
+                                                                  "type": "math_arithmetic",
+                                                                  "id": "ducks_31",
+                                                                  "fields": {
+                                                                    "OP": "MULTIPLY"
+                                                                  },
+                                                                  "inputs": {
+                                                                    "A": {
+                                                                      "block": {
+                                                                        "type": "variables_get",
+                                                                        "id": "ducks_29",
+                                                                        "fields": {
+                                                                          "VAR": {
+                                                                            "id": "ducks_var_row"
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                    },
+                                                                    "B": {
+                                                                      "shadow": {
+                                                                        "type": "math_number",
+                                                                        "id": "ducks_30",
+                                                                        "fields": {
+                                                                          "NUM": 0.3
+                                                                        }
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                }
+                                                              },
+                                                              "B": {
+                                                                "block": {
+                                                                  "type": "math_arithmetic",
+                                                                  "id": "ducks_34",
+                                                                  "fields": {
+                                                                    "OP": "MULTIPLY"
+                                                                  },
+                                                                  "inputs": {
+                                                                    "A": {
+                                                                      "block": {
+                                                                        "type": "variables_get",
+                                                                        "id": "ducks_32",
+                                                                        "fields": {
+                                                                          "VAR": {
+                                                                            "id": "ducks_var_wave"
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                    },
+                                                                    "B": {
+                                                                      "shadow": {
+                                                                        "type": "math_number",
+                                                                        "id": "ducks_33",
+                                                                        "fields": {
+                                                                          "NUM": 0.15
+                                                                        }
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  },
+                                                  "B": {
+                                                    "shadow": {
+                                                      "type": "math_number",
+                                                      "id": "ducks_38",
+                                                      "fields": {
+                                                        "NUM": 1
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            },
+                                            "VY": {
+                                              "shadow": {
+                                                "type": "math_number",
+                                                "id": "ducks_43",
+                                                "fields": {
+                                                  "NUM": 0
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "next": {
+                                "block": {
+                                  "type": "controls_if",
+                                  "id": "ducks_87",
+                                  "inputs": {
+                                    "IF0": {
+                                      "block": {
+                                        "type": "logic_compare",
+                                        "id": "ducks_54",
+                                        "fields": {
+                                          "OP": "EQ"
+                                        },
+                                        "inputs": {
+                                          "A": {
+                                            "block": {
+                                              "type": "math_modulo",
+                                              "id": "ducks_52",
+                                              "inputs": {
+                                                "DIVIDEND": {
+                                                  "block": {
+                                                    "type": "variables_get",
+                                                    "id": "ducks_50",
+                                                    "fields": {
+                                                      "VAR": {
+                                                        "id": "ducks_var_row"
+                                                      }
+                                                    }
+                                                  }
+                                                },
+                                                "DIVISOR": {
+                                                  "shadow": {
+                                                    "type": "math_number",
+                                                    "id": "ducks_51",
+                                                    "fields": {
+                                                      "NUM": 2
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          },
+                                          "B": {
+                                            "shadow": {
+                                              "type": "math_number",
+                                              "id": "ducks_53",
+                                              "fields": {
+                                                "NUM": 1
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "DO0": {
+                                      "block": {
+                                        "type": "controls_for",
+                                        "id": "ducks_86",
+                                        "fields": {
+                                          "VAR": {
+                                            "id": "ducks_var_k"
+                                          }
+                                        },
+                                        "inputs": {
+                                          "FROM": {
+                                            "shadow": {
+                                              "type": "math_number",
+                                              "id": "ducks_83",
+                                              "fields": {
+                                                "NUM": 0
+                                              }
+                                            }
+                                          },
+                                          "BY": {
+                                            "shadow": {
+                                              "type": "math_number",
+                                              "id": "ducks_85",
+                                              "fields": {
+                                                "NUM": 1
+                                              }
+                                            }
+                                          },
+                                          "TO": {
+                                            "shadow": {
+                                              "type": "math_number",
+                                              "id": "ducks_84",
+                                              "fields": {
+                                                "NUM": 2
+                                              }
+                                            }
+                                          },
+                                          "DO": {
+                                            "block": {
+                                              "type": "pg_create",
+                                              "id": "ducks_82",
+                                              "fields": {
+                                                "TAG": {
+                                                  "id": "ducks_Tag_duck"
+                                                }
+                                              },
+                                              "inputs": {
+                                                "X": {
+                                                  "block": {
+                                                    "type": "math_arithmetic",
+                                                    "id": "ducks_61",
+                                                    "fields": {
+                                                      "OP": "ADD"
+                                                    },
+                                                    "inputs": {
+                                                      "A": {
+                                                        "block": {
+                                                          "type": "math_arithmetic",
+                                                          "id": "ducks_57",
+                                                          "fields": {
+                                                            "OP": "MULTIPLY"
+                                                          },
+                                                          "inputs": {
+                                                            "A": {
+                                                              "block": {
+                                                                "type": "variables_get",
+                                                                "id": "ducks_55",
+                                                                "fields": {
+                                                                  "VAR": {
+                                                                    "id": "ducks_var_k"
+                                                                  }
+                                                                }
+                                                              }
+                                                            },
+                                                            "B": {
+                                                              "shadow": {
+                                                                "type": "math_number",
+                                                                "id": "ducks_56",
+                                                                "fields": {
+                                                                  "NUM": 133
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      },
+                                                      "B": {
+                                                        "block": {
+                                                          "type": "math_arithmetic",
+                                                          "id": "ducks_60",
+                                                          "fields": {
+                                                            "OP": "MULTIPLY"
+                                                          },
+                                                          "inputs": {
+                                                            "A": {
+                                                              "block": {
+                                                                "type": "variables_get",
+                                                                "id": "ducks_58",
+                                                                "fields": {
+                                                                  "VAR": {
+                                                                    "id": "ducks_var_row"
+                                                                  }
+                                                                }
+                                                              }
+                                                            },
+                                                            "B": {
+                                                              "shadow": {
+                                                                "type": "math_number",
+                                                                "id": "ducks_59",
+                                                                "fields": {
+                                                                  "NUM": 45
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                },
+                                                "Y": {
+                                                  "block": {
+                                                    "type": "math_arithmetic",
+                                                    "id": "ducks_66",
+                                                    "fields": {
+                                                      "OP": "ADD"
+                                                    },
+                                                    "inputs": {
+                                                      "A": {
+                                                        "shadow": {
+                                                          "type": "math_number",
+                                                          "id": "ducks_65",
+                                                          "fields": {
+                                                            "NUM": 50
+                                                          }
+                                                        }
+                                                      },
+                                                      "B": {
+                                                        "block": {
+                                                          "type": "math_arithmetic",
+                                                          "id": "ducks_64",
+                                                          "fields": {
+                                                            "OP": "MULTIPLY"
+                                                          },
+                                                          "inputs": {
+                                                            "A": {
+                                                              "block": {
+                                                                "type": "variables_get",
+                                                                "id": "ducks_62",
+                                                                "fields": {
+                                                                  "VAR": {
+                                                                    "id": "ducks_var_row"
+                                                                  }
+                                                                }
+                                                              }
+                                                            },
+                                                            "B": {
+                                                              "shadow": {
+                                                                "type": "math_number",
+                                                                "id": "ducks_63",
+                                                                "fields": {
+                                                                  "NUM": 40
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                },
+                                                "W": {
+                                                  "shadow": {
+                                                    "type": "math_number",
+                                                    "id": "ducks_79",
+                                                    "fields": {
+                                                      "NUM": 26
+                                                    }
+                                                  }
+                                                },
+                                                "H": {
+                                                  "shadow": {
+                                                    "type": "math_number",
+                                                    "id": "ducks_80",
+                                                    "fields": {
+                                                      "NUM": 20
+                                                    }
+                                                  }
+                                                },
+                                                "COLOR": {
+                                                  "shadow": {
+                                                    "type": "pg_colour",
+                                                    "id": "ducks_78",
+                                                    "fields": {
+                                                      "C": "#ffd23f"
+                                                    }
+                                                  }
+                                                },
+                                                "VX": {
+                                                  "block": {
+                                                    "type": "math_arithmetic",
+                                                    "id": "ducks_77",
+                                                    "fields": {
+                                                      "OP": "MULTIPLY"
+                                                    },
+                                                    "inputs": {
+                                                      "A": {
+                                                        "block": {
+                                                          "type": "math_arithmetic",
+                                                          "id": "ducks_75",
+                                                          "fields": {
+                                                            "OP": "ADD"
+                                                          },
+                                                          "inputs": {
+                                                            "A": {
+                                                              "shadow": {
+                                                                "type": "math_number",
+                                                                "id": "ducks_74",
+                                                                "fields": {
+                                                                  "NUM": 0.8
+                                                                }
+                                                              }
+                                                            },
+                                                            "B": {
+                                                              "block": {
+                                                                "type": "math_arithmetic",
+                                                                "id": "ducks_73",
+                                                                "fields": {
+                                                                  "OP": "ADD"
+                                                                },
+                                                                "inputs": {
+                                                                  "A": {
+                                                                    "block": {
+                                                                      "type": "math_arithmetic",
+                                                                      "id": "ducks_69",
+                                                                      "fields": {
+                                                                        "OP": "MULTIPLY"
+                                                                      },
+                                                                      "inputs": {
+                                                                        "A": {
+                                                                          "block": {
+                                                                            "type": "variables_get",
+                                                                            "id": "ducks_67",
+                                                                            "fields": {
+                                                                              "VAR": {
+                                                                                "id": "ducks_var_row"
+                                                                              }
+                                                                            }
+                                                                          }
+                                                                        },
+                                                                        "B": {
+                                                                          "shadow": {
+                                                                            "type": "math_number",
+                                                                            "id": "ducks_68",
+                                                                            "fields": {
+                                                                              "NUM": 0.3
+                                                                            }
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                    }
+                                                                  },
+                                                                  "B": {
+                                                                    "block": {
+                                                                      "type": "math_arithmetic",
+                                                                      "id": "ducks_72",
+                                                                      "fields": {
+                                                                        "OP": "MULTIPLY"
+                                                                      },
+                                                                      "inputs": {
+                                                                        "A": {
+                                                                          "block": {
+                                                                            "type": "variables_get",
+                                                                            "id": "ducks_70",
+                                                                            "fields": {
+                                                                              "VAR": {
+                                                                                "id": "ducks_var_wave"
+                                                                              }
+                                                                            }
+                                                                          }
+                                                                        },
+                                                                        "B": {
+                                                                          "shadow": {
+                                                                            "type": "math_number",
+                                                                            "id": "ducks_71",
+                                                                            "fields": {
+                                                                              "NUM": 0.15
+                                                                            }
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      },
+                                                      "B": {
+                                                        "shadow": {
+                                                          "type": "math_number",
+                                                          "id": "ducks_76",
+                                                          "fields": {
+                                                            "NUM": -1
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                },
+                                                "VY": {
+                                                  "shadow": {
+                                                    "type": "math_number",
+                                                    "id": "ducks_81",
+                                                    "fields": {
+                                                      "NUM": 0
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "next": {
+                          "block": {
+                            "type": "pg_create",
+                            "id": "ducks_99",
+                            "fields": {
+                              "TAG": {
+                                "id": "ducks_Tag_top"
+                              }
+                            },
+                            "inputs": {
+                              "X": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "ducks_93",
+                                  "fields": {
+                                    "NUM": 200
+                                  }
+                                }
+                              },
+                              "Y": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "ducks_94",
+                                  "fields": {
+                                    "NUM": 10
+                                  }
+                                }
+                              },
+                              "W": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "ducks_95",
+                                  "fields": {
+                                    "NUM": 600
+                                  }
+                                }
+                              },
+                              "H": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "ducks_96",
+                                  "fields": {
+                                    "NUM": 20
+                                  }
+                                }
+                              },
+                              "COLOR": {
+                                "shadow": {
+                                  "type": "pg_colour",
+                                  "id": "ducks_92",
+                                  "fields": {
+                                    "C": "#000000"
+                                  }
+                                }
+                              },
+                              "VX": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "ducks_97",
+                                  "fields": {
+                                    "NUM": 0
+                                  }
+                                }
+                              },
+                              "VY": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "ducks_98",
+                                  "fields": {
+                                    "NUM": 0
+                                  }
+                                }
+                              }
+                            },
+                            "next": {
+                              "block": {
+                                "type": "pg_set_costume",
+                                "id": "ducks_100",
+                                "fields": {
+                                  "TAG": {
+                                    "id": "ducks_Tag_top"
+                                  },
+                                  "COSTUME": "hidden"
+                                },
+                                "next": {
+                                  "block": {
+                                    "type": "pg_create",
+                                    "id": "ducks_108",
+                                    "fields": {
+                                      "TAG": {
+                                        "id": "ducks_Tag_gun"
+                                      }
+                                    },
+                                    "inputs": {
+                                      "X": {
+                                        "shadow": {
+                                          "type": "math_number",
+                                          "id": "ducks_102",
+                                          "fields": {
+                                            "NUM": 200
+                                          }
+                                        }
+                                      },
+                                      "Y": {
+                                        "shadow": {
+                                          "type": "math_number",
+                                          "id": "ducks_103",
+                                          "fields": {
+                                            "NUM": 280
+                                          }
+                                        }
+                                      },
+                                      "W": {
+                                        "shadow": {
+                                          "type": "math_number",
+                                          "id": "ducks_104",
+                                          "fields": {
+                                            "NUM": 22
+                                          }
+                                        }
+                                      },
+                                      "H": {
+                                        "shadow": {
+                                          "type": "math_number",
+                                          "id": "ducks_105",
+                                          "fields": {
+                                            "NUM": 24
+                                          }
+                                        }
+                                      },
+                                      "COLOR": {
+                                        "shadow": {
+                                          "type": "pg_colour",
+                                          "id": "ducks_101",
+                                          "fields": {
+                                            "C": "#cccccc"
+                                          }
+                                        }
+                                      },
+                                      "VX": {
+                                        "shadow": {
+                                          "type": "math_number",
+                                          "id": "ducks_106",
+                                          "fields": {
+                                            "NUM": 0
+                                          }
+                                        }
+                                      },
+                                      "VY": {
+                                        "shadow": {
+                                          "type": "math_number",
+                                          "id": "ducks_107",
+                                          "fields": {
+                                            "NUM": 0
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "next": {
+                                      "block": {
+                                        "type": "pg_set_behavior",
+                                        "id": "ducks_109",
+                                        "fields": {
+                                          "TAG": {
+                                            "id": "ducks_Tag_duck"
+                                          },
+                                          "KIND": "wrap_x",
+                                          "PARAM": 0.5
+                                        },
+                                        "next": {
+                                          "block": {
+                                            "type": "pg_set_behavior",
+                                            "id": "ducks_110",
+                                            "fields": {
+                                              "TAG": {
+                                                "id": "ducks_Tag_gun"
+                                              },
+                                              "KIND": "stayInScreen",
+                                              "PARAM": 0.5
+                                            },
+                                            "next": {
+                                              "block": {
+                                                "type": "pg_set_behavior",
+                                                "id": "ducks_111",
+                                                "fields": {
+                                                  "TAG": {
+                                                    "id": "ducks_Tag_bullet"
+                                                  },
+                                                  "KIND": "destroyOffscreen",
+                                                  "PARAM": 0.5
+                                                },
+                                                "next": {
+                                                  "block": {
+                                                    "type": "pg_set_costume",
+                                                    "id": "ducks_112",
+                                                    "fields": {
+                                                      "TAG": {
+                                                        "id": "ducks_Tag_duck"
+                                                      },
+                                                      "COSTUME": "duck"
+                                                    },
+                                                    "next": {
+                                                      "block": {
+                                                        "type": "pg_set_costume",
+                                                        "id": "ducks_113",
+                                                        "fields": {
+                                                          "TAG": {
+                                                            "id": "ducks_Tag_gun"
+                                                          },
+                                                          "COSTUME": "ship"
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_tick",
+          "id": "ducks_203",
+          "x": 20,
+          "y": 320,
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "controls_if",
+                "id": "ducks_202",
+                "inputs": {
+                  "IF0": {
+                    "block": {
+                      "type": "logic_compare",
+                      "id": "ducks_117",
+                      "fields": {
+                        "OP": "EQ"
+                      },
+                      "inputs": {
+                        "A": {
+                          "block": {
+                            "type": "pg_count",
+                            "id": "ducks_115",
+                            "fields": {
+                              "TAG": {
+                                "id": "ducks_Tag_duck"
+                              }
+                            }
+                          }
+                        },
+                        "B": {
+                          "shadow": {
+                            "type": "math_number",
+                            "id": "ducks_116",
+                            "fields": {
+                              "NUM": 0
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "DO0": {
+                    "block": {
+                      "type": "variables_set",
+                      "id": "ducks_121",
+                      "fields": {
+                        "VAR": {
+                          "id": "ducks_var_wave"
+                        }
+                      },
+                      "inputs": {
+                        "VALUE": {
+                          "block": {
+                            "type": "math_arithmetic",
+                            "id": "ducks_120",
+                            "fields": {
+                              "OP": "ADD"
+                            },
+                            "inputs": {
+                              "A": {
+                                "block": {
+                                  "type": "variables_get",
+                                  "id": "ducks_118",
+                                  "fields": {
+                                    "VAR": {
+                                      "id": "ducks_var_wave"
+                                    }
+                                  }
+                                }
+                              },
+                              "B": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "ducks_119",
+                                  "fields": {
+                                    "NUM": 1
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "next": {
+                        "block": {
+                          "type": "controls_for",
+                          "id": "ducks_201",
+                          "fields": {
+                            "VAR": {
+                              "id": "ducks_var_row"
+                            }
+                          },
+                          "inputs": {
+                            "FROM": {
+                              "shadow": {
+                                "type": "math_number",
+                                "id": "ducks_198",
+                                "fields": {
+                                  "NUM": 0
+                                }
+                              }
+                            },
+                            "BY": {
+                              "shadow": {
+                                "type": "math_number",
+                                "id": "ducks_200",
+                                "fields": {
+                                  "NUM": 1
+                                }
+                              }
+                            },
+                            "TO": {
+                              "shadow": {
+                                "type": "math_number",
+                                "id": "ducks_199",
+                                "fields": {
+                                  "NUM": 2
+                                }
+                              }
+                            },
+                            "DO": {
+                              "block": {
+                                "type": "controls_if",
+                                "id": "ducks_159",
+                                "inputs": {
+                                  "IF0": {
+                                    "block": {
+                                      "type": "logic_compare",
+                                      "id": "ducks_126",
+                                      "fields": {
+                                        "OP": "EQ"
+                                      },
+                                      "inputs": {
+                                        "A": {
+                                          "block": {
+                                            "type": "math_modulo",
+                                            "id": "ducks_124",
+                                            "inputs": {
+                                              "DIVIDEND": {
+                                                "block": {
+                                                  "type": "variables_get",
+                                                  "id": "ducks_122",
+                                                  "fields": {
+                                                    "VAR": {
+                                                      "id": "ducks_var_row"
+                                                    }
+                                                  }
+                                                }
+                                              },
+                                              "DIVISOR": {
+                                                "shadow": {
+                                                  "type": "math_number",
+                                                  "id": "ducks_123",
+                                                  "fields": {
+                                                    "NUM": 2
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "B": {
+                                          "shadow": {
+                                            "type": "math_number",
+                                            "id": "ducks_125",
+                                            "fields": {
+                                              "NUM": 0
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "DO0": {
+                                    "block": {
+                                      "type": "controls_for",
+                                      "id": "ducks_158",
+                                      "fields": {
+                                        "VAR": {
+                                          "id": "ducks_var_k"
+                                        }
+                                      },
+                                      "inputs": {
+                                        "FROM": {
+                                          "shadow": {
+                                            "type": "math_number",
+                                            "id": "ducks_155",
+                                            "fields": {
+                                              "NUM": 0
+                                            }
+                                          }
+                                        },
+                                        "BY": {
+                                          "shadow": {
+                                            "type": "math_number",
+                                            "id": "ducks_157",
+                                            "fields": {
+                                              "NUM": 1
+                                            }
+                                          }
+                                        },
+                                        "TO": {
+                                          "shadow": {
+                                            "type": "math_number",
+                                            "id": "ducks_156",
+                                            "fields": {
+                                              "NUM": 2
+                                            }
+                                          }
+                                        },
+                                        "DO": {
+                                          "block": {
+                                            "type": "pg_create",
+                                            "id": "ducks_154",
+                                            "fields": {
+                                              "TAG": {
+                                                "id": "ducks_Tag_duck"
+                                              }
+                                            },
+                                            "inputs": {
+                                              "X": {
+                                                "block": {
+                                                  "type": "math_arithmetic",
+                                                  "id": "ducks_133",
+                                                  "fields": {
+                                                    "OP": "ADD"
+                                                  },
+                                                  "inputs": {
+                                                    "A": {
+                                                      "block": {
+                                                        "type": "math_arithmetic",
+                                                        "id": "ducks_129",
+                                                        "fields": {
+                                                          "OP": "MULTIPLY"
+                                                        },
+                                                        "inputs": {
+                                                          "A": {
+                                                            "block": {
+                                                              "type": "variables_get",
+                                                              "id": "ducks_127",
+                                                              "fields": {
+                                                                "VAR": {
+                                                                  "id": "ducks_var_k"
+                                                                }
+                                                              }
+                                                            }
+                                                          },
+                                                          "B": {
+                                                            "shadow": {
+                                                              "type": "math_number",
+                                                              "id": "ducks_128",
+                                                              "fields": {
+                                                                "NUM": 133
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    },
+                                                    "B": {
+                                                      "block": {
+                                                        "type": "math_arithmetic",
+                                                        "id": "ducks_132",
+                                                        "fields": {
+                                                          "OP": "MULTIPLY"
+                                                        },
+                                                        "inputs": {
+                                                          "A": {
+                                                            "block": {
+                                                              "type": "variables_get",
+                                                              "id": "ducks_130",
+                                                              "fields": {
+                                                                "VAR": {
+                                                                  "id": "ducks_var_row"
+                                                                }
+                                                              }
+                                                            }
+                                                          },
+                                                          "B": {
+                                                            "shadow": {
+                                                              "type": "math_number",
+                                                              "id": "ducks_131",
+                                                              "fields": {
+                                                                "NUM": 45
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              },
+                                              "Y": {
+                                                "block": {
+                                                  "type": "math_arithmetic",
+                                                  "id": "ducks_138",
+                                                  "fields": {
+                                                    "OP": "ADD"
+                                                  },
+                                                  "inputs": {
+                                                    "A": {
+                                                      "shadow": {
+                                                        "type": "math_number",
+                                                        "id": "ducks_137",
+                                                        "fields": {
+                                                          "NUM": 50
+                                                        }
+                                                      }
+                                                    },
+                                                    "B": {
+                                                      "block": {
+                                                        "type": "math_arithmetic",
+                                                        "id": "ducks_136",
+                                                        "fields": {
+                                                          "OP": "MULTIPLY"
+                                                        },
+                                                        "inputs": {
+                                                          "A": {
+                                                            "block": {
+                                                              "type": "variables_get",
+                                                              "id": "ducks_134",
+                                                              "fields": {
+                                                                "VAR": {
+                                                                  "id": "ducks_var_row"
+                                                                }
+                                                              }
+                                                            }
+                                                          },
+                                                          "B": {
+                                                            "shadow": {
+                                                              "type": "math_number",
+                                                              "id": "ducks_135",
+                                                              "fields": {
+                                                                "NUM": 40
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              },
+                                              "W": {
+                                                "shadow": {
+                                                  "type": "math_number",
+                                                  "id": "ducks_151",
+                                                  "fields": {
+                                                    "NUM": 26
+                                                  }
+                                                }
+                                              },
+                                              "H": {
+                                                "shadow": {
+                                                  "type": "math_number",
+                                                  "id": "ducks_152",
+                                                  "fields": {
+                                                    "NUM": 20
+                                                  }
+                                                }
+                                              },
+                                              "COLOR": {
+                                                "shadow": {
+                                                  "type": "pg_colour",
+                                                  "id": "ducks_150",
+                                                  "fields": {
+                                                    "C": "#ffd23f"
+                                                  }
+                                                }
+                                              },
+                                              "VX": {
+                                                "block": {
+                                                  "type": "math_arithmetic",
+                                                  "id": "ducks_149",
+                                                  "fields": {
+                                                    "OP": "MULTIPLY"
+                                                  },
+                                                  "inputs": {
+                                                    "A": {
+                                                      "block": {
+                                                        "type": "math_arithmetic",
+                                                        "id": "ducks_147",
+                                                        "fields": {
+                                                          "OP": "ADD"
+                                                        },
+                                                        "inputs": {
+                                                          "A": {
+                                                            "shadow": {
+                                                              "type": "math_number",
+                                                              "id": "ducks_146",
+                                                              "fields": {
+                                                                "NUM": 0.8
+                                                              }
+                                                            }
+                                                          },
+                                                          "B": {
+                                                            "block": {
+                                                              "type": "math_arithmetic",
+                                                              "id": "ducks_145",
+                                                              "fields": {
+                                                                "OP": "ADD"
+                                                              },
+                                                              "inputs": {
+                                                                "A": {
+                                                                  "block": {
+                                                                    "type": "math_arithmetic",
+                                                                    "id": "ducks_141",
+                                                                    "fields": {
+                                                                      "OP": "MULTIPLY"
+                                                                    },
+                                                                    "inputs": {
+                                                                      "A": {
+                                                                        "block": {
+                                                                          "type": "variables_get",
+                                                                          "id": "ducks_139",
+                                                                          "fields": {
+                                                                            "VAR": {
+                                                                              "id": "ducks_var_row"
+                                                                            }
+                                                                          }
+                                                                        }
+                                                                      },
+                                                                      "B": {
+                                                                        "shadow": {
+                                                                          "type": "math_number",
+                                                                          "id": "ducks_140",
+                                                                          "fields": {
+                                                                            "NUM": 0.3
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                },
+                                                                "B": {
+                                                                  "block": {
+                                                                    "type": "math_arithmetic",
+                                                                    "id": "ducks_144",
+                                                                    "fields": {
+                                                                      "OP": "MULTIPLY"
+                                                                    },
+                                                                    "inputs": {
+                                                                      "A": {
+                                                                        "block": {
+                                                                          "type": "variables_get",
+                                                                          "id": "ducks_142",
+                                                                          "fields": {
+                                                                            "VAR": {
+                                                                              "id": "ducks_var_wave"
+                                                                            }
+                                                                          }
+                                                                        }
+                                                                      },
+                                                                      "B": {
+                                                                        "shadow": {
+                                                                          "type": "math_number",
+                                                                          "id": "ducks_143",
+                                                                          "fields": {
+                                                                            "NUM": 0.15
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    },
+                                                    "B": {
+                                                      "shadow": {
+                                                        "type": "math_number",
+                                                        "id": "ducks_148",
+                                                        "fields": {
+                                                          "NUM": 1
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              },
+                                              "VY": {
+                                                "shadow": {
+                                                  "type": "math_number",
+                                                  "id": "ducks_153",
+                                                  "fields": {
+                                                    "NUM": 0
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "next": {
+                                  "block": {
+                                    "type": "controls_if",
+                                    "id": "ducks_197",
+                                    "inputs": {
+                                      "IF0": {
+                                        "block": {
+                                          "type": "logic_compare",
+                                          "id": "ducks_164",
+                                          "fields": {
+                                            "OP": "EQ"
+                                          },
+                                          "inputs": {
+                                            "A": {
+                                              "block": {
+                                                "type": "math_modulo",
+                                                "id": "ducks_162",
+                                                "inputs": {
+                                                  "DIVIDEND": {
+                                                    "block": {
+                                                      "type": "variables_get",
+                                                      "id": "ducks_160",
+                                                      "fields": {
+                                                        "VAR": {
+                                                          "id": "ducks_var_row"
+                                                        }
+                                                      }
+                                                    }
+                                                  },
+                                                  "DIVISOR": {
+                                                    "shadow": {
+                                                      "type": "math_number",
+                                                      "id": "ducks_161",
+                                                      "fields": {
+                                                        "NUM": 2
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            },
+                                            "B": {
+                                              "shadow": {
+                                                "type": "math_number",
+                                                "id": "ducks_163",
+                                                "fields": {
+                                                  "NUM": 1
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      },
+                                      "DO0": {
+                                        "block": {
+                                          "type": "controls_for",
+                                          "id": "ducks_196",
+                                          "fields": {
+                                            "VAR": {
+                                              "id": "ducks_var_k"
+                                            }
+                                          },
+                                          "inputs": {
+                                            "FROM": {
+                                              "shadow": {
+                                                "type": "math_number",
+                                                "id": "ducks_193",
+                                                "fields": {
+                                                  "NUM": 0
+                                                }
+                                              }
+                                            },
+                                            "BY": {
+                                              "shadow": {
+                                                "type": "math_number",
+                                                "id": "ducks_195",
+                                                "fields": {
+                                                  "NUM": 1
+                                                }
+                                              }
+                                            },
+                                            "TO": {
+                                              "shadow": {
+                                                "type": "math_number",
+                                                "id": "ducks_194",
+                                                "fields": {
+                                                  "NUM": 2
+                                                }
+                                              }
+                                            },
+                                            "DO": {
+                                              "block": {
+                                                "type": "pg_create",
+                                                "id": "ducks_192",
+                                                "fields": {
+                                                  "TAG": {
+                                                    "id": "ducks_Tag_duck"
+                                                  }
+                                                },
+                                                "inputs": {
+                                                  "X": {
+                                                    "block": {
+                                                      "type": "math_arithmetic",
+                                                      "id": "ducks_171",
+                                                      "fields": {
+                                                        "OP": "ADD"
+                                                      },
+                                                      "inputs": {
+                                                        "A": {
+                                                          "block": {
+                                                            "type": "math_arithmetic",
+                                                            "id": "ducks_167",
+                                                            "fields": {
+                                                              "OP": "MULTIPLY"
+                                                            },
+                                                            "inputs": {
+                                                              "A": {
+                                                                "block": {
+                                                                  "type": "variables_get",
+                                                                  "id": "ducks_165",
+                                                                  "fields": {
+                                                                    "VAR": {
+                                                                      "id": "ducks_var_k"
+                                                                    }
+                                                                  }
+                                                                }
+                                                              },
+                                                              "B": {
+                                                                "shadow": {
+                                                                  "type": "math_number",
+                                                                  "id": "ducks_166",
+                                                                  "fields": {
+                                                                    "NUM": 133
+                                                                  }
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        },
+                                                        "B": {
+                                                          "block": {
+                                                            "type": "math_arithmetic",
+                                                            "id": "ducks_170",
+                                                            "fields": {
+                                                              "OP": "MULTIPLY"
+                                                            },
+                                                            "inputs": {
+                                                              "A": {
+                                                                "block": {
+                                                                  "type": "variables_get",
+                                                                  "id": "ducks_168",
+                                                                  "fields": {
+                                                                    "VAR": {
+                                                                      "id": "ducks_var_row"
+                                                                    }
+                                                                  }
+                                                                }
+                                                              },
+                                                              "B": {
+                                                                "shadow": {
+                                                                  "type": "math_number",
+                                                                  "id": "ducks_169",
+                                                                  "fields": {
+                                                                    "NUM": 45
+                                                                  }
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  },
+                                                  "Y": {
+                                                    "block": {
+                                                      "type": "math_arithmetic",
+                                                      "id": "ducks_176",
+                                                      "fields": {
+                                                        "OP": "ADD"
+                                                      },
+                                                      "inputs": {
+                                                        "A": {
+                                                          "shadow": {
+                                                            "type": "math_number",
+                                                            "id": "ducks_175",
+                                                            "fields": {
+                                                              "NUM": 50
+                                                            }
+                                                          }
+                                                        },
+                                                        "B": {
+                                                          "block": {
+                                                            "type": "math_arithmetic",
+                                                            "id": "ducks_174",
+                                                            "fields": {
+                                                              "OP": "MULTIPLY"
+                                                            },
+                                                            "inputs": {
+                                                              "A": {
+                                                                "block": {
+                                                                  "type": "variables_get",
+                                                                  "id": "ducks_172",
+                                                                  "fields": {
+                                                                    "VAR": {
+                                                                      "id": "ducks_var_row"
+                                                                    }
+                                                                  }
+                                                                }
+                                                              },
+                                                              "B": {
+                                                                "shadow": {
+                                                                  "type": "math_number",
+                                                                  "id": "ducks_173",
+                                                                  "fields": {
+                                                                    "NUM": 40
+                                                                  }
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  },
+                                                  "W": {
+                                                    "shadow": {
+                                                      "type": "math_number",
+                                                      "id": "ducks_189",
+                                                      "fields": {
+                                                        "NUM": 26
+                                                      }
+                                                    }
+                                                  },
+                                                  "H": {
+                                                    "shadow": {
+                                                      "type": "math_number",
+                                                      "id": "ducks_190",
+                                                      "fields": {
+                                                        "NUM": 20
+                                                      }
+                                                    }
+                                                  },
+                                                  "COLOR": {
+                                                    "shadow": {
+                                                      "type": "pg_colour",
+                                                      "id": "ducks_188",
+                                                      "fields": {
+                                                        "C": "#ffd23f"
+                                                      }
+                                                    }
+                                                  },
+                                                  "VX": {
+                                                    "block": {
+                                                      "type": "math_arithmetic",
+                                                      "id": "ducks_187",
+                                                      "fields": {
+                                                        "OP": "MULTIPLY"
+                                                      },
+                                                      "inputs": {
+                                                        "A": {
+                                                          "block": {
+                                                            "type": "math_arithmetic",
+                                                            "id": "ducks_185",
+                                                            "fields": {
+                                                              "OP": "ADD"
+                                                            },
+                                                            "inputs": {
+                                                              "A": {
+                                                                "shadow": {
+                                                                  "type": "math_number",
+                                                                  "id": "ducks_184",
+                                                                  "fields": {
+                                                                    "NUM": 0.8
+                                                                  }
+                                                                }
+                                                              },
+                                                              "B": {
+                                                                "block": {
+                                                                  "type": "math_arithmetic",
+                                                                  "id": "ducks_183",
+                                                                  "fields": {
+                                                                    "OP": "ADD"
+                                                                  },
+                                                                  "inputs": {
+                                                                    "A": {
+                                                                      "block": {
+                                                                        "type": "math_arithmetic",
+                                                                        "id": "ducks_179",
+                                                                        "fields": {
+                                                                          "OP": "MULTIPLY"
+                                                                        },
+                                                                        "inputs": {
+                                                                          "A": {
+                                                                            "block": {
+                                                                              "type": "variables_get",
+                                                                              "id": "ducks_177",
+                                                                              "fields": {
+                                                                                "VAR": {
+                                                                                  "id": "ducks_var_row"
+                                                                                }
+                                                                              }
+                                                                            }
+                                                                          },
+                                                                          "B": {
+                                                                            "shadow": {
+                                                                              "type": "math_number",
+                                                                              "id": "ducks_178",
+                                                                              "fields": {
+                                                                                "NUM": 0.3
+                                                                              }
+                                                                            }
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                    },
+                                                                    "B": {
+                                                                      "block": {
+                                                                        "type": "math_arithmetic",
+                                                                        "id": "ducks_182",
+                                                                        "fields": {
+                                                                          "OP": "MULTIPLY"
+                                                                        },
+                                                                        "inputs": {
+                                                                          "A": {
+                                                                            "block": {
+                                                                              "type": "variables_get",
+                                                                              "id": "ducks_180",
+                                                                              "fields": {
+                                                                                "VAR": {
+                                                                                  "id": "ducks_var_wave"
+                                                                                }
+                                                                              }
+                                                                            }
+                                                                          },
+                                                                          "B": {
+                                                                            "shadow": {
+                                                                              "type": "math_number",
+                                                                              "id": "ducks_181",
+                                                                              "fields": {
+                                                                                "NUM": 0.15
+                                                                              }
+                                                                            }
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        },
+                                                        "B": {
+                                                          "shadow": {
+                                                            "type": "math_number",
+                                                            "id": "ducks_186",
+                                                            "fields": {
+                                                              "NUM": -1
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  },
+                                                  "VY": {
+                                                    "shadow": {
+                                                      "type": "math_number",
+                                                      "id": "ducks_191",
+                                                      "fields": {
+                                                        "NUM": 0
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_action",
+          "id": "ducks_207",
+          "x": 20,
+          "y": 420,
+          "fields": {
+            "ACTION": "none"
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_set_vel",
+                "id": "ducks_206",
+                "fields": {
+                  "AXIS": "x"
+                },
+                "inputs": {
+                  "T": {
+                    "block": {
+                      "type": "pg_tag",
+                      "id": "ducks_204",
+                      "fields": {
+                        "TAG": {
+                          "id": "ducks_Tag_gun"
+                        }
+                      }
+                    }
+                  },
+                  "V": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "ducks_205",
+                      "fields": {
+                        "NUM": 0
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_action",
+          "id": "ducks_211",
+          "x": 20,
+          "y": 520,
+          "fields": {
+            "ACTION": "left"
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_set_vel",
+                "id": "ducks_210",
+                "fields": {
+                  "AXIS": "x"
+                },
+                "inputs": {
+                  "T": {
+                    "block": {
+                      "type": "pg_tag",
+                      "id": "ducks_208",
+                      "fields": {
+                        "TAG": {
+                          "id": "ducks_Tag_gun"
+                        }
+                      }
+                    }
+                  },
+                  "V": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "ducks_209",
+                      "fields": {
+                        "NUM": -5
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_action",
+          "id": "ducks_215",
+          "x": 20,
+          "y": 620,
+          "fields": {
+            "ACTION": "right"
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_set_vel",
+                "id": "ducks_214",
+                "fields": {
+                  "AXIS": "x"
+                },
+                "inputs": {
+                  "T": {
+                    "block": {
+                      "type": "pg_tag",
+                      "id": "ducks_212",
+                      "fields": {
+                        "TAG": {
+                          "id": "ducks_Tag_gun"
+                        }
+                      }
+                    }
+                  },
+                  "V": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "ducks_213",
+                      "fields": {
+                        "NUM": 5
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_action",
+          "id": "ducks_232",
+          "x": 20,
+          "y": 720,
+          "fields": {
+            "ACTION": "a"
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_set_vel",
+                "id": "ducks_218",
+                "fields": {
+                  "AXIS": "x"
+                },
+                "inputs": {
+                  "T": {
+                    "block": {
+                      "type": "pg_tag",
+                      "id": "ducks_216",
+                      "fields": {
+                        "TAG": {
+                          "id": "ducks_Tag_gun"
+                        }
+                      }
+                    }
+                  },
+                  "V": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "ducks_217",
+                      "fields": {
+                        "NUM": 0
+                      }
+                    }
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "controls_if",
+                    "id": "ducks_231",
+                    "inputs": {
+                      "IF0": {
+                        "block": {
+                          "type": "logic_compare",
+                          "id": "ducks_221",
+                          "fields": {
+                            "OP": "EQ"
+                          },
+                          "inputs": {
+                            "A": {
+                              "block": {
+                                "type": "pg_count",
+                                "id": "ducks_219",
+                                "fields": {
+                                  "TAG": {
+                                    "id": "ducks_Tag_bullet"
+                                  }
+                                }
+                              }
+                            },
+                            "B": {
+                              "shadow": {
+                                "type": "math_number",
+                                "id": "ducks_220",
+                                "fields": {
+                                  "NUM": 0
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "DO0": {
+                        "block": {
+                          "type": "pg_create",
+                          "id": "ducks_230",
+                          "fields": {
+                            "TAG": {
+                              "id": "ducks_Tag_bullet"
+                            }
+                          },
+                          "inputs": {
+                            "X": {
+                              "block": {
+                                "type": "pg_get",
+                                "id": "ducks_223",
+                                "fields": {
+                                  "PROP": "x"
+                                },
+                                "inputs": {
+                                  "T": {
+                                    "block": {
+                                      "type": "pg_tag",
+                                      "id": "ducks_222",
+                                      "fields": {
+                                        "TAG": {
+                                          "id": "ducks_Tag_gun"
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "Y": {
+                              "shadow": {
+                                "type": "math_number",
+                                "id": "ducks_225",
+                                "fields": {
+                                  "NUM": 262
+                                }
+                              }
+                            },
+                            "W": {
+                              "shadow": {
+                                "type": "math_number",
+                                "id": "ducks_226",
+                                "fields": {
+                                  "NUM": 4
+                                }
+                              }
+                            },
+                            "H": {
+                              "shadow": {
+                                "type": "math_number",
+                                "id": "ducks_227",
+                                "fields": {
+                                  "NUM": 12
+                                }
+                              }
+                            },
+                            "COLOR": {
+                              "shadow": {
+                                "type": "pg_colour",
+                                "id": "ducks_224",
+                                "fields": {
+                                  "C": "#ffe66d"
+                                }
+                              }
+                            },
+                            "VX": {
+                              "shadow": {
+                                "type": "math_number",
+                                "id": "ducks_228",
+                                "fields": {
+                                  "NUM": 0
+                                }
+                              }
+                            },
+                            "VY": {
+                              "shadow": {
+                                "type": "math_number",
+                                "id": "ducks_229",
+                                "fields": {
+                                  "NUM": -16
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_collide",
+          "id": "ducks_239",
+          "x": 20,
+          "y": 820,
+          "fields": {
+            "A": {
+              "id": "ducks_Tag_bullet"
+            },
+            "B": {
+              "id": "ducks_Tag_duck"
+            }
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_destroy",
+                "id": "ducks_234",
+                "inputs": {
+                  "T": {
+                    "block": {
+                      "type": "pg_self",
+                      "id": "ducks_233"
+                    }
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "pg_destroy",
+                    "id": "ducks_236",
+                    "inputs": {
+                      "T": {
+                        "block": {
+                          "type": "pg_other",
+                          "id": "ducks_235"
+                        }
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "pg_add_score",
+                        "id": "ducks_238",
+                        "inputs": {
+                          "N": {
+                            "shadow": {
+                              "type": "math_number",
+                              "id": "ducks_237",
+                              "fields": {
+                                "NUM": 1
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_collide",
+          "id": "ducks_251",
+          "x": 20,
+          "y": 920,
+          "fields": {
+            "A": {
+              "id": "ducks_Tag_bullet"
+            },
+            "B": {
+              "id": "ducks_Tag_top"
+            }
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_destroy",
+                "id": "ducks_241",
+                "inputs": {
+                  "T": {
+                    "block": {
+                      "type": "pg_self",
+                      "id": "ducks_240"
+                    }
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "variables_set",
+                    "id": "ducks_245",
+                    "fields": {
+                      "VAR": {
+                        "id": "ducks_var_lives"
+                      }
+                    },
+                    "inputs": {
+                      "VALUE": {
+                        "block": {
+                          "type": "math_arithmetic",
+                          "id": "ducks_244",
+                          "fields": {
+                            "OP": "MINUS"
+                          },
+                          "inputs": {
+                            "A": {
+                              "block": {
+                                "type": "variables_get",
+                                "id": "ducks_242",
+                                "fields": {
+                                  "VAR": {
+                                    "id": "ducks_var_lives"
+                                  }
+                                }
+                              }
+                            },
+                            "B": {
+                              "shadow": {
+                                "type": "math_number",
+                                "id": "ducks_243",
+                                "fields": {
+                                  "NUM": 1
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "controls_if",
+                        "id": "ducks_250",
+                        "inputs": {
+                          "IF0": {
+                            "block": {
+                              "type": "logic_compare",
+                              "id": "ducks_248",
+                              "fields": {
+                                "OP": "LTE"
+                              },
+                              "inputs": {
+                                "A": {
+                                  "block": {
+                                    "type": "variables_get",
+                                    "id": "ducks_246",
+                                    "fields": {
+                                      "VAR": {
+                                        "id": "ducks_var_lives"
+                                      }
+                                    }
+                                  }
+                                },
+                                "B": {
+                                  "shadow": {
+                                    "type": "math_number",
+                                    "id": "ducks_247",
+                                    "fields": {
+                                      "NUM": 0
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "DO0": {
+                            "block": {
+                              "type": "pg_game_over",
+                              "id": "ducks_249"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "variables": [
+      {
+        "name": "player",
+        "id": "ducks_Tag_player",
+        "type": "Tag"
+      },
+      {
+        "name": "obstacle",
+        "id": "ducks_Tag_obstacle",
+        "type": "Tag"
+      },
+      {
+        "name": "ground",
+        "id": "ducks_Tag_ground",
+        "type": "Tag"
+      },
+      {
+        "name": "gun",
+        "id": "ducks_Tag_gun",
+        "type": "Tag"
+      },
+      {
+        "name": "duck",
+        "id": "ducks_Tag_duck",
+        "type": "Tag"
+      },
+      {
+        "name": "bullet",
+        "id": "ducks_Tag_bullet",
+        "type": "Tag"
+      },
+      {
+        "name": "top",
+        "id": "ducks_Tag_top",
+        "type": "Tag"
+      },
+      {
+        "name": "lives",
+        "id": "ducks_var_lives"
+      },
+      {
+        "name": "wave",
+        "id": "ducks_var_wave"
+      },
+      {
+        "name": "row",
+        "id": "ducks_var_row"
+      },
+      {
+        "name": "k",
+        "id": "ducks_var_k"
+      }
+    ]
+  },
+  "generatedCode": "\n\n\napi.$b('ducks_1');\napi.$b('ducks_7');\napi.sensors([\n  api.sensor.prop('gun', 'x', 0, 400),\n  api.sensor.lidar('gun', 5, 84, 96, 300, 'duck', false),\n  api.sensor.nearestK('gun', 'duck', 2, 'up'),\n  api.sensor.count('bullet', 1),\n  api.sensor.variable('lives', 0, 3),\n]);\napi.$b('ducks_114');\napi.onStart(() => {\n  api.$b('ducks_9');\n  api.vars['wave'] = 0;\n  api.$b('ducks_11');\n  api.vars['lives'] = 3;\n  api.$b('ducks_91');\n  {\n    const $a = 0, $z = 2, $s = ($a <= $z ? 1 : -1) * (Math.abs(1) || 1);\n    for (api.vars['row'] = $a; $s > 0 ? api.vars['row'] <= $z : api.vars['row'] >= $z; api.vars['row'] += $s) {\n      api.$loop();\n      api.$b('ducks_49');\n      if (api.vars['row'] % 2 == 0) {\n        api.$b('ducks_48');\n        {\n          const $a = 0, $z = 2, $s = ($a <= $z ? 1 : -1) * (Math.abs(1) || 1);\n          for (api.vars['k'] = $a; $s > 0 ? api.vars['k'] <= $z : api.vars['k'] >= $z; api.vars['k'] += $s) {\n            api.$loop();\n            api.$b('ducks_44');\n            api.create({ tag: 'duck', x: api.vars['k'] * 133 + api.vars['row'] * 45, y: 50 + api.vars['row'] * 40, w: 26, h: 20, color: '#ffd23f', vx: (0.8 + api.vars['row'] * 0.3 + api.vars['wave'] * 0.15) * 1, vy: 0 });\n            api.$b('ducks_48');\n          }\n        }\n      }\n      api.$b('ducks_87');\n      if (api.vars['row'] % 2 == 1) {\n        api.$b('ducks_86');\n        {\n          const $a = 0, $z = 2, $s = ($a <= $z ? 1 : -1) * (Math.abs(1) || 1);\n          for (api.vars['k'] = $a; $s > 0 ? api.vars['k'] <= $z : api.vars['k'] >= $z; api.vars['k'] += $s) {\n            api.$loop();\n            api.$b('ducks_82');\n            api.create({ tag: 'duck', x: api.vars['k'] * 133 + api.vars['row'] * 45, y: 50 + api.vars['row'] * 40, w: 26, h: 20, color: '#ffd23f', vx: (0.8 + api.vars['row'] * 0.3 + api.vars['wave'] * 0.15) * -1, vy: 0 });\n            api.$b('ducks_86');\n          }\n        }\n      }\n      api.$b('ducks_91');\n    }\n  }\n  api.$b('ducks_99');\n  api.create({ tag: 'top', x: 200, y: 10, w: 600, h: 20, color: '#000000', vx: 0, vy: 0 });\n  api.$b('ducks_100');\n  api.setCostume('top', 'hidden');\n  api.$b('ducks_108');\n  api.create({ tag: 'gun', x: 200, y: 280, w: 22, h: 24, color: '#cccccc', vx: 0, vy: 0 });\n  api.$b('ducks_109');\n  api.setBehavior('duck', 'wrap', 'x');\n  api.$b('ducks_110');\n  api.setBehavior('gun', 'stayInScreen');\n  api.$b('ducks_111');\n  api.setBehavior('bullet', 'destroyOffscreen');\n  api.$b('ducks_112');\n  api.setCostume('duck', 'duck');\n  api.$b('ducks_113');\n  api.setCostume('gun', 'ship');\n});\napi.$b('ducks_203');\napi.onTick(() => {\n  api.$b('ducks_202');\n  if (api.count('duck') == 0) {\n    api.$b('ducks_121');\n    api.vars['wave'] = api.vars['wave'] + 1;\n    api.$b('ducks_201');\n    {\n      const $a = 0, $z = 2, $s = ($a <= $z ? 1 : -1) * (Math.abs(1) || 1);\n      for (api.vars['row'] = $a; $s > 0 ? api.vars['row'] <= $z : api.vars['row'] >= $z; api.vars['row'] += $s) {\n        api.$loop();\n        api.$b('ducks_159');\n        if (api.vars['row'] % 2 == 0) {\n          api.$b('ducks_158');\n          {\n            const $a = 0, $z = 2, $s = ($a <= $z ? 1 : -1) * (Math.abs(1) || 1);\n            for (api.vars['k'] = $a; $s > 0 ? api.vars['k'] <= $z : api.vars['k'] >= $z; api.vars['k'] += $s) {\n              api.$loop();\n              api.$b('ducks_154');\n              api.create({ tag: 'duck', x: api.vars['k'] * 133 + api.vars['row'] * 45, y: 50 + api.vars['row'] * 40, w: 26, h: 20, color: '#ffd23f', vx: (0.8 + api.vars['row'] * 0.3 + api.vars['wave'] * 0.15) * 1, vy: 0 });\n              api.$b('ducks_158');\n            }\n          }\n        }\n        api.$b('ducks_197');\n        if (api.vars['row'] % 2 == 1) {\n          api.$b('ducks_196');\n          {\n            const $a = 0, $z = 2, $s = ($a <= $z ? 1 : -1) * (Math.abs(1) || 1);\n            for (api.vars['k'] = $a; $s > 0 ? api.vars['k'] <= $z : api.vars['k'] >= $z; api.vars['k'] += $s) {\n              api.$loop();\n              api.$b('ducks_192');\n              api.create({ tag: 'duck', x: api.vars['k'] * 133 + api.vars['row'] * 45, y: 50 + api.vars['row'] * 40, w: 26, h: 20, color: '#ffd23f', vx: (0.8 + api.vars['row'] * 0.3 + api.vars['wave'] * 0.15) * -1, vy: 0 });\n              api.$b('ducks_196');\n            }\n          }\n        }\n        api.$b('ducks_201');\n      }\n    }\n  }\n});\napi.$b('ducks_207');\napi.onAction('none', () => {\n  api.$b('ducks_206');\n  api.setVel('gun', 'x', 0);\n});\napi.$b('ducks_211');\napi.onAction('left', () => {\n  api.$b('ducks_210');\n  api.setVel('gun', 'x', -5);\n});\napi.$b('ducks_215');\napi.onAction('right', () => {\n  api.$b('ducks_214');\n  api.setVel('gun', 'x', 5);\n});\napi.$b('ducks_232');\napi.onAction('a', () => {\n  api.$b('ducks_218');\n  api.setVel('gun', 'x', 0);\n  api.$b('ducks_231');\n  if (api.count('bullet') == 0) {\n    api.$b('ducks_230');\n    api.create({ tag: 'bullet', x: api.get('gun', 'x'), y: 262, w: 4, h: 12, color: '#ffe66d', vx: 0, vy: -16 });\n  }\n});\napi.$b('ducks_239');\napi.onCollide('bullet', 'duck', (self, other) => {\n  api.$b('ducks_234');\n  api.destroy(self);\n  api.$b('ducks_236');\n  api.destroy(other);\n  api.$b('ducks_238');\n  api.addScore(1);\n});\napi.$b('ducks_251');\napi.onCollide('bullet', 'top', (self, other) => {\n  api.$b('ducks_241');\n  api.destroy(self);\n  api.$b('ducks_245');\n  api.vars['lives'] = api.vars['lives'] - 1;\n  api.$b('ducks_250');\n  if (api.vars['lives'] <= 0) {\n    api.$b('ducks_249');\n    api.gameOver();\n  }\n});\n",
+  "settings": {
+    "actions": [
+      "none",
+      "left",
+      "right",
+      "a"
+    ],
+    "maxSteps": 2000,
+    "background": "#20202a",
+    "backdrop": "arcade",
+    "scoreReward": true
+  },
+  "keymap": {
+    "left": [
+      "ArrowLeft",
+      "KeyA"
+    ],
+    "right": [
+      "ArrowRight",
+      "KeyD"
+    ],
+    "up": [
+      "ArrowUp"
+    ],
+    "down": [
+      "ArrowDown"
+    ],
+    "a": [
+      "Space",
+      "KeyJ"
+    ],
+    "b": [
+      "KeyS"
+    ]
+  },
+  "training": {
+    "steps": 1500000,
+    "frameSkip": 4
+  }
+}

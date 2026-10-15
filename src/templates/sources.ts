@@ -237,121 +237,129 @@ export function pongBlocks() {
   return t.build();
 }
 
-/**
- * 닭 길 건너기 (Freeway 형). 8차선 도로를 건너면 1점. 차는 화면 반대편으로 이어진다 (seamless).
- *  - 보통: 치이면 한 칸 밀려난다.
- *  - 어려움(hard): 치이면 출발점으로 (Frogger 식). 차를 방향별 태그(carL·carR)로 나눠 AI 가 차의 방향을 본다.
- * 보상은 "올라간 만큼" (잠재함수 기반): 밀려나거나 출발점으로 돌아가면 잃은 높이만큼 깎인다.
- * 치일 때 따로 벌점을 주면 AI 가 "아예 안 건너기" 를 배워 버린다 (experiments/freeway, experiments/atari).
- */
-function freewayGame(hard: boolean) {
-  const t = new TemplateBuilder(hard ? 'freewayHard' : 'freeway');
-  const lane = () => t.getVar('lane');
-  const py = () => t.get(t.tag('player'), 'y');
-  const carTags = hard ? ['carL', 'carR'] : ['car'];
-  t.settings(['none', 'up', 'down'], 2000, '#2e8b3e', 'road');
-  t.observe([t.sProp('player', 'y', 0, 300), ...carTags.map((c) => t.sGrid('player', 5, 9, 28, c))]);
-  // 차선마다 방향이 번갈아 바뀌고(짝수 ←, 홀수 →) 빠르기가 다르다
-  const vx = () => t.math('MULTIPLY', t.math('MINUS', t.math('MULTIPLY', t.mod(lane(), 2), 2), 1), t.math('ADD', 1, t.math('MULTIPLY', t.mod(lane(), 3), 0.75)));
-  const car = (tag: string) =>
-    t.create(tag, t.math('ADD', t.math('MULTIPLY', t.getVar('k'), 200), t.randInt(0, 150)), t.math('ADD', 50, t.math('MULTIPLY', lane(), 28)), 30, 16, t.rainbow(lane()), vx(), 0);
+/** 폭탄 받기 (Kaboom! 형): 위에서 폭탄마가 떨어뜨리는 폭탄을 양동이로 받는다. 3개 놓치면 끝 */
+export function bombsBlocks() {
+  const t = new TemplateBuilder('bombs');
+  const v = (n: string) => t.getVar(n);
+  t.settings(['none', 'left', 'right'], 3000, '#1d2330', 'night');
+  t.observe([t.sProp('bucket', 'x', 0, 400), t.sProp('bomber', 'x', 0, 400), t.sNearestK(3, 'bucket', 'bomb', 'up')]);
   t.onStart([
-    t.create('player', 200, 285, 18, 18, '#ffffff', 0, 0),
-    t.setVar('prevY', 285),
-    t.for('lane', 0, 7, 1, [
-      t.for('k', 0, 1, 1, hard ? [t.if(t.compare('EQ', t.mod(lane(), 2), 0), [car('carL')]), t.if(t.compare('EQ', t.mod(lane(), 2), 1), [car('carR')])] : [car('car')]),
-    ]),
-    ...carTags.flatMap((c) => [t.setBehavior(c, 'wrap'), t.costume(c, 'car')]),
-    t.setBehavior('player', 'stayInScreen'),
-    t.costume('player', 'chicken'),
+    t.create('bomber', 200, 30, 30, 26, '#8e44ad', 2, 0),
+    t.create('bucket', 200, 272, 52, 16, '#4a90d9', 0, 0),
+    // 화면 아래 보이지 않는 바닥: 폭탄이 닿으면 놓친 것
+    t.create('floor', 200, 315, 600, 20, '#000000', 0, 0),
+    t.setVar('lives', 3),
+    t.setVar('speed', 2),
+    t.setBehavior('bomber', 'bounceWalls_all'),
+    t.setBehavior('bucket', 'stayInScreen'),
+    t.costume('bomber', 'alien'),
+    t.costume('bucket', 'bucket'),
+    t.costume('bomb', 'bomb'),
+    t.costume('floor', 'hidden'),
   ]);
-  t.onTick([
-    // 올라간 만큼 보상 (한 번 건너면 약 +1). 내려가면 그만큼 마이너스
-    t.reward(t.math('MULTIPLY', t.math('MINUS', t.getVar('prevY'), py()), 0.004)),
-    t.setVar('prevY', py()),
-    t.if(t.compare('LT', py(), 30), [t.addScore(1), t.setPos(t.tag('player'), 200, 285), t.setVar('prevY', 285)]),
-  ]);
-  t.onAction('up', [t.move(t.tag('player'), 'y', -3)]);
-  t.onAction('down', [t.move(t.tag('player'), 'y', 3)]);
-  for (const c of carTags) t.onCollide('player', c, [hard ? t.setPos(t.self(), 200, 285) : t.move(t.self(), 'y', 28)]);
+  // 폭탄마는 가끔 방향을 바꾼다
+  t.onInterval(15, [t.if(t.compare('EQ', t.randInt(1, 4), 1), [t.setVel(t.tag('bomber'), 'x', t.math('MULTIPLY', t.get(t.tag('bomber'), 'vx'), -1))])]);
+  t.onInterval(24, [t.create('bomb', t.get(t.tag('bomber'), 'x'), 48, 12, 14, '#222222', 0, v('speed'))]);
+  t.onAction('none', [t.setVel(t.tag('bucket'), 'x', 0)]);
+  t.onAction('left', [t.setVel(t.tag('bucket'), 'x', -6)]);
+  t.onAction('right', [t.setVel(t.tag('bucket'), 'x', 6)]);
+  // 받으면 1점, 받을수록 폭탄이 빨라진다
+  t.onCollide('bucket', 'bomb', [t.destroy(t.other()), t.addScore(1), t.setVar('speed', t.math('ADD', 2, t.math('MULTIPLY', t.score(), 0.04)))]);
+  t.onCollide('bomb', 'floor', [t.destroy(t.self()), t.setVar('lives', t.math('MINUS', v('lives'), 1)), t.if(t.compare('LTE', v('lives'), 0), [t.gameOver()])]);
   return t.build();
 }
 
 /**
- * 끝없는 길 건너기 (Crossy Road 식): 위로 가면 화면이 따라 올라가고 새 길이 계속 생긴다.
- * 상하좌우로 움직이고, 차에 치이면 끝. 점수 = 가장 멀리 간 줄 수 (점수 = 보상).
- * 화면을 올리는 방법: 닭이 화면 가운데보다 위로 가면 모든 것을 그만큼 아래로 민다.
+ * 오리 사격장 (Carnival 형): 줄지어 지나가는 오리를 쏜다. 빗나가면 목숨 하나, 3번 빗나가면 끝.
+ * 빗나가도 손해가 없으면 AI 는 "계속 쏘기"만 배운다 (experiments/atari3). 목숨이 걸려야 "노리고 쏘기"를 배운다.
  */
-export function crossyBlocks() {
-  const t = new TemplateBuilder('crossy');
-  const LANE = 30;
-  const TOP = 170; // 닭이 이보다 위로 가면 화면이 따라 올라간다
-  const py = () => t.get(t.tag('player'), 'y');
+export function ducksBlocks() {
+  const t = new TemplateBuilder('ducks');
   const v = (n: string) => t.getVar(n);
-  t.settings(['none', 'up', 'down', 'left', 'right'], 3000, '#2e8b3e', 'none');
-  t.observe([t.sProp('player', 'x', 0, 400), t.sProp('player', 'y', 0, 300), t.sGrid('player', 5, 9, LANE, 'carL'), t.sGrid('player', 5, 9, LANE, 'carR')]);
-  // 새 줄 하나: 30% 풀밭, 70% 도로. 도로는 방향(←/→)과 빠르기를 정하고 차 1~3대. 멀리 갈수록 빨라진다
-  const cars = (tag: string, sign: number, y: () => Record<string, unknown>) =>
-    t.for('k', 1, t.randInt(1, 3), 1, [
-      t.create(tag, t.math('ADD', t.math('MULTIPLY', v('k'), 130), t.randInt(0, 60)), y(), 34, 18, t.rainbow(t.randInt(0, 6)), t.math('MULTIPLY', v('spd'), sign), 0),
+  const duckRow = (dir: number) =>
+    t.for('k', 0, 2, 1, [
+      t.create('duck', t.math('ADD', t.math('MULTIPLY', v('k'), 133), t.math('MULTIPLY', v('row'), 45)), t.math('ADD', 50, t.math('MULTIPLY', v('row'), 40)), 26, 20, '#ffd23f', t.math('MULTIPLY', t.math('ADD', 0.8, t.math('ADD', t.math('MULTIPLY', v('row'), 0.3), t.math('MULTIPLY', v('wave'), 0.15))), dir), 0),
     ]);
-  const lane = (y: () => Record<string, unknown>) => [
-    t.setVar('kind', t.randInt(1, 10)),
-    t.if(t.compare('LTE', v('kind'), 3), [t.create('grass', 200, y(), 400, LANE, '#22bb77', 0, 0)]),
-    t.if(t.compare('GT', v('kind'), 3), [
-      t.create('road', 200, y(), 400, LANE, '#555555', 0, 0),
-      t.setVar('spd', t.math('ADD', t.math('ADD', 1, t.math('MULTIPLY', t.randInt(0, 10), 0.15)), t.math('MULTIPLY', t.score(), 0.02))),
-      t.setVar('dir', t.randInt(0, 1)),
-      t.if(t.compare('EQ', v('dir'), 0), [cars('carL', -1, y)]),
-      t.if(t.compare('EQ', v('dir'), 1), [cars('carR', 1, y)]),
-    ]),
-  ];
-  const rowY = () => t.math('MINUS', 285, t.math('MULTIPLY', v('row'), LANE));
+  const wave = () => t.for('row', 0, 2, 1, [t.if(t.compare('EQ', t.mod(v('row'), 2), 0), [duckRow(1)]), t.if(t.compare('EQ', t.mod(v('row'), 2), 1), [duckRow(-1)])]);
+  t.settings(['none', 'left', 'right', 'a'], 2000, '#20202a', 'arcade');
+  // 총구 바로 위로 레이저 5줄: 지금 쏘면 맞을 오리가 있는지
+  t.observe([t.sProp('gun', 'x', 0, 400), t.sLidar('gun', 5, 84, 96, 300, 'duck', false), t.sNearestK(2, 'gun', 'duck', 'up'), t.sCount('bullet', 1), t.sVariable('lives', 0, 3)]);
   t.onStart([
-    // 처음 두 줄은 풀밭 (출발 지점)
-    t.for('row', 0, 9, 1, [t.if(t.compare('LT', v('row'), 2), [t.create('grass', 200, rowY(), 400, LANE, '#22bb77', 0, 0)]), t.if(t.compare('GTE', v('row'), 2), lane(rowY))]),
-    t.setVar('topY', 15),
-    t.setVar('scrolled', 0),
-    t.create('player', 200, 285, 18, 18, '#ffffff', 0, 0),
-    // 화면 아래로 빠진 줄과 차를 치우는 보이지 않는 바닥
-    t.create('sweeper', 200, 340, 600, 20, '#000000', 0, 0),
-    t.setBehavior('player', 'stayInScreen'),
-    t.setBehavior('carL', 'wrap_x'),
-    t.setBehavior('carR', 'wrap_x'),
-    t.costume('player', 'chicken'),
-    t.costume('carL', 'car'),
-    t.costume('carR', 'car'),
-    t.costume('road', 'road'),
-    t.costume('grass', 'grass'),
-    t.costume('sweeper', 'hidden'),
+    t.setVar('wave', 0),
+    t.setVar('lives', 3),
+    wave(),
+    // 화면 맨 위 보이지 않는 줄: 총알이 여기 닿으면 빗나간 것
+    t.create('top', 200, 10, 600, 20, '#000000', 0, 0),
+    t.costume('top', 'hidden'),
+    t.create('gun', 200, 280, 22, 24, '#cccccc', 0, 0),
+    t.setBehavior('duck', 'wrap_x'),
+    t.setBehavior('gun', 'stayInScreen'),
+    t.setBehavior('bullet', 'destroyOffscreen'),
+    t.costume('duck', 'duck'),
+    t.costume('gun', 'ship'),
   ]);
-  const shift = () => t.getVar('d');
   t.onTick([
-    // 화면 따라 올라가기: 닭이 TOP 보다 위면 모두 그만큼 아래로
-    t.if(t.compare('LT', py(), TOP), [
-      t.setVar('d', t.math('MINUS', TOP, py())),
-      ...['player', 'road', 'grass', 'carL', 'carR'].map((tag) => t.move(t.tag(tag), 'y', shift())),
-      t.setVar('topY', t.math('ADD', v('topY'), shift())),
-      t.setVar('scrolled', t.math('ADD', v('scrolled'), shift())),
-    ]),
-    // 맨 위 줄이 내려와 빈틈이 생기면 그 위에 새 줄
-    t.if(t.compare('GT', v('topY'), LANE / 2), [t.setVar('topY', t.math('MINUS', v('topY'), LANE)), ...lane(() => v('topY'))]),
-    // 가장 멀리 간 줄 수가 점수
-    t.if(t.compare('GTE', t.math('ADD', v('scrolled'), t.math('MINUS', 285, py())), t.math('MULTIPLY', t.math('ADD', t.score(), 1), LANE)), [t.addScore(1)]),
+    // 오리를 다 맞히면 더 빠른 다음 무리
+    t.if(t.compare('EQ', t.count('duck'), 0), [t.setVar('wave', t.math('ADD', v('wave'), 1)), wave()]),
   ]);
-  t.onAction('up', [t.move(t.tag('player'), 'y', -3)]);
-  t.onAction('down', [t.move(t.tag('player'), 'y', 3)]);
-  t.onAction('left', [t.move(t.tag('player'), 'x', -3)]);
-  t.onAction('right', [t.move(t.tag('player'), 'x', 3)]);
-  t.onCollide('player', 'carL', [t.gameOver()]);
-  t.onCollide('player', 'carR', [t.gameOver()]);
-  for (const tag of ['road', 'grass', 'carL', 'carR']) t.onCollide(tag, 'sweeper', [t.destroy(t.self())]);
+  t.onAction('none', [t.setVel(t.tag('gun'), 'x', 0)]);
+  t.onAction('left', [t.setVel(t.tag('gun'), 'x', -5)]);
+  t.onAction('right', [t.setVel(t.tag('gun'), 'x', 5)]);
+  // 총알은 한 번에 한 발
+  t.onAction('a', [
+    t.setVel(t.tag('gun'), 'x', 0),
+    t.if(t.compare('EQ', t.count('bullet'), 0), [t.create('bullet', t.get(t.tag('gun'), 'x'), 262, 4, 12, '#ffe66d', 0, -16)]),
+  ]);
+  t.onCollide('bullet', 'duck', [t.destroy(t.self()), t.destroy(t.other()), t.addScore(1)]);
+  t.onCollide('bullet', 'top', [t.destroy(t.self()), t.setVar('lives', t.math('MINUS', v('lives'), 1)), t.if(t.compare('LTE', v('lives'), 0), [t.gameOver()])]);
+  return t.build();
+}
+
+/** 스키 활강 (Skiing 형): 깃발 사이 문을 지나면 1점. 문을 놓치거나 나무에 부딪히면 목숨 하나, 3번이면 끝 */
+export function skiBlocks() {
+  const t = new TemplateBuilder('ski');
+  const v = (n: string) => t.getVar(n);
+  const up = () => t.math('MULTIPLY', v('speed'), -1);
+  const lose = () => [t.setVar('lives', t.math('MINUS', v('lives'), 1)), t.if(t.compare('LTE', v('lives'), 0), [t.gameOver()])];
+  t.settings(['none', 'left', 'right'], 3000, '#f4f4f4', 'none');
+  t.observe([t.sProp('skier', 'x', 0, 400), t.sNearest('skier', 'gate', 'down'), t.sNearestK(2, 'skier', 'tree', 'down')]);
+  t.onStart([
+    t.create('skier', 200, 70, 18, 24, '#4a90d9', 0, 0),
+    // 화면 위 보이지 않는 줄: 문이 여기 닿으면 놓친 것
+    t.create('top', 200, -20, 600, 20, '#000000', 0, 0),
+    t.setVar('lives', 3),
+    t.setVar('speed', 2),
+    t.setBehavior('skier', 'stayInScreen'),
+    t.setBehavior('flag', 'destroyOffscreen'),
+    t.setBehavior('tree', 'destroyOffscreen'),
+    t.costume('skier', 'skier'),
+    t.costume('flag', 'flag'),
+    t.costume('tree', 'tree'),
+    t.costume('gate', 'hidden'),
+    t.costume('top', 'hidden'),
+  ]);
+  // 문: 깃발 두 개 사이 (눈에 안 보이는 gate 를 지나면 통과)
+  t.onInterval(80, [
+    t.setVar('gx', t.randInt(90, 310)),
+    t.create('flag', t.math('MINUS', v('gx'), 45), 312, 12, 26, '#cc3333', 0, up()),
+    t.create('flag', t.math('ADD', v('gx'), 45), 312, 12, 26, '#cc3333', 0, up()),
+    t.create('gate', v('gx'), 312, 70, 6, '#000000', 0, up()),
+  ]);
+  t.onInterval(37, [t.create('tree', t.randInt(20, 380), 314, 24, 32, '#2e8b3e', 0, up())]);
+  t.onAction('none', [t.setVel(t.tag('skier'), 'x', 0)]);
+  t.onAction('left', [t.setVel(t.tag('skier'), 'x', -3)]);
+  t.onAction('right', [t.setVel(t.tag('skier'), 'x', 3)]);
+  // 통과할수록 빨라진다
+  t.onCollide('skier', 'gate', [t.destroy(t.other()), t.addScore(1), t.setVar('speed', t.math('ADD', 2, t.math('MULTIPLY', t.score(), 0.05)))]);
+  t.onCollide('gate', 'top', [t.destroy(t.self()), ...lose()]);
+  t.onCollide('skier', 'tree', [t.destroy(t.other()), ...lose()]);
   return t.build();
 }
 
 /**
  * 막대 세우기 (CartPole): 강화학습의 "Hello World". 수레를 좌우로 밀어 막대가 쓰러지지 않게 한다.
  * 물리는 Gymnasium CartPole-v1 과 같은 식 (1프레임 = 0.02초). 버틴 프레임 수가 점수 (최대 500).
+ * 다만 막대가 절반 높이 아래로 쓰러져야(60°) 끝난다 (원래는 12°).
  */
 export function cartpoleBlocks() {
   const t = new TemplateBuilder('cartpole');
@@ -365,7 +373,7 @@ export function cartpoleBlocks() {
   const CART_Y = 220;
   const small = () => mul(t.randInt(-50, 50), 0.001); // -0.05 ~ 0.05
   t.settings(['none', 'left', 'right'], 500, '#bfe6ff', 'sky');
-  t.observe([t.sVariable('x', -2.4, 2.4), t.sVariable('xdot', -3, 3), t.sVariable('theta', -0.21, 0.21), t.sVariable('thetadot', -3.5, 3.5)]);
+  t.observe([t.sVariable('x', -2.4, 2.4), t.sVariable('xdot', -3, 3), t.sVariable('theta', -1.05, 1.05), t.sVariable('thetadot', -5, 5)]);
   t.onStart([
     t.create('track', 200, CART_Y + 16, 400, 6, '#555555', 0, 0),
     t.setVar('x', small()),
@@ -399,8 +407,9 @@ export function cartpoleBlocks() {
       t.create('pole', add(add(200, mul(v('x'), SCALE)), mul(t.trig('SIN', mul(v('theta'), DEG)), mul(v('i'), 10))), sub(CART_Y - 10, mul(t.trig('COS', mul(v('theta'), DEG)), mul(v('i'), 10))), 7, 9, '#f39c12', 0, 0),
     ]),
     t.addScore(1),
-    // 막대가 12° 넘게 기울거나 수레가 화면 끝(±2.4m)을 넘으면 끝
-    t.if(t.or(t.or(t.compare('GT', v('theta'), 0.2095), t.compare('LT', v('theta'), -0.2095)), t.or(t.compare('GT', v('x'), 2.4), t.compare('LT', v('x'), -2.4))), [t.gameOver()]),
+    // 막대 끝이 원래 높이의 절반 아래로 내려가거나(60° 넘게 기울면) 수레가 화면 끝(±2.4m)을 넘으면 끝.
+    // (Gymnasium 은 12° 에서 끝나는데, 사람이 해 보기엔 너무 빨라서 넉넉하게)
+    t.if(t.or(t.or(t.compare('GT', v('theta'), 1.0472), t.compare('LT', v('theta'), -1.0472)), t.or(t.compare('GT', v('x'), 2.4), t.compare('LT', v('x'), -2.4))), [t.gameOver()]),
   ]);
   return t.build();
 }
@@ -478,9 +487,6 @@ export function snakeBlocks(opt: { closer?: boolean } = {}) {
   return t.build();
 }
 
-export const freewayBlocks = () => freewayGame(false);
-export const freewayHardBlocks = () => freewayGame(true);
-
 export const TEMPLATE_SOURCES = {
   dino: dinoBlocks,
   flappy: flappyBlocks,
@@ -488,11 +494,11 @@ export const TEMPLATE_SOURCES = {
   dodge: dodgeBlocks,
   invaders: invadersBlocks,
   pong: pongBlocks,
-  crossy: crossyBlocks,
+  bombs: bombsBlocks,
+  ducks: ducksBlocks,
+  ski: skiBlocks,
   cartpole: cartpoleBlocks,
   snake: () => snakeBlocks(),
-  freeway: freewayBlocks,
-  freewayHard: freewayHardBlocks,
 };
 
 /**
@@ -507,14 +513,13 @@ export const TEMPLATE_TRAINING: Record<keyof typeof TEMPLATE_SOURCES, Partial<Le
   // Atari 스타일은 실험에서 DQN 이 더 나았다 (experiments/atari: 우주 침략자 DQN 16.9 / PPO 11.2, 핑퐁 DQN 1.5~3.1 / PPO 0.6~1.3)
   invaders: { algo: 'dqn', steps: 3_000_000, frameSkip: 4, lr: 5e-4, network: { hidden: [64, 64], activation: 'relu' } },
   pong: { algo: 'dqn', steps: 1_500_000, frameSkip: 4, lr: 5e-4, network: { hidden: [64, 64], activation: 'relu' } },
-  crossy: { steps: 1_500_000, frameSkip: 4 },
+  bombs: { steps: 1_500_000, frameSkip: 2 },
+  ducks: { steps: 1_500_000, frameSkip: 4 },
+  // 스키는 DQN 이 낫다 (experiments/atari3: DQN 15.8 / PPO 6.9)
+  ski: { algo: 'dqn', steps: 1_500_000, frameSkip: 4, lr: 5e-4, network: { hidden: [64, 64], activation: 'relu' } },
   cartpole: { steps: 300_000, frameSkip: 1 },
   // 6프레임마다 한 칸 → 한 칸에 한 번 고른다. DQN 14~18개 / PPO 5.7개 (experiments/classics)
   snake: { algo: 'dqn', steps: 1_500_000, frameSkip: 6, lr: 5e-4, network: { hidden: [64, 64], activation: 'relu' } },
-  freeway: { steps: 1_500_000, frameSkip: 4 },
-  // 피하기를 배우려면 오래 걸린다 (experiments/freeway: 항상 위로 3.2, 정답 정책 9.0).
-  // PPO 300만 5.6~5.7 (213초) ≈ DQN 300만 5.3 (565초) → 빠른 PPO. 이어서 학습하면 6.2~6.4 까지 오른다
-  freewayHard: { steps: 3_000_000, frameSkip: 4 },
 };
 
 /** 템플릿별 사람 플레이 키 (기본 매핑 위에 덮어씀) */
@@ -528,9 +533,9 @@ export const TEMPLATE_KEYMAPS: Record<keyof typeof TEMPLATE_SOURCES, Keymap> = {
   dodge: wasdKeys,
   invaders: { ...sideKeys, a: ['Space', 'KeyJ'] },
   pong: { up: ['ArrowUp', 'KeyW'], down: ['ArrowDown', 'KeyS'] },
-  crossy: wasdKeys,
+  bombs: sideKeys,
+  ducks: { ...sideKeys, a: ['Space', 'KeyJ'] },
+  ski: sideKeys,
   cartpole: sideKeys,
   snake: wasdKeys,
-  freeway: { up: ['ArrowUp', 'KeyW'], down: ['ArrowDown', 'KeyS'] },
-  freewayHard: { up: ['ArrowUp', 'KeyW'], down: ['ArrowDown', 'KeyS'] },
 };

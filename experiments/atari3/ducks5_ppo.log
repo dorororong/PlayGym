@@ -1,0 +1,18 @@
+
+> playgym@0.1.0 train
+> tsx scripts/train.ts ducks --seed 0 --out experiments/atari3/ducks5_ppo
+
+[ducks] PPO · 64×64 tanh · 행동 유지 4 · 1,500,000 프레임
+  무작위 행동: 점수 30.2 · 보상 30.2 · 길이 2000
+    172032 프레임   10초 | 점수 44.5 보상 44.5 길이 2000 | entropy=0.1558 approxKl=-0.0002 clipFrac=0.0044
+    352256 프레임   20초 | 점수 52.0 보상 52.0 길이 2000 | entropy=0.1091 approxKl=0.0001 clipFrac=0
+    532480 프레임   31초 | 점수 50.3 보상 50.3 길이 2000 | entropy=0.0951 approxKl=0.0009 clipFrac=0.0024
+    716800 프레임   41초 | 점수 49.5 보상 49.5 길이 2000 | entropy=0.2733 approxKl=0.0016 clipFrac=0.0063
+    897024 프레임   51초 | 점수 49.4 보상 49.4 길이 2000 | entropy=0.2322 approxKl=-0.0002 clipFrac=0.0034
+   1073152 프레임   61초 | 점수 48.7 보상 48.7 길이 2000 | entropy=0.3799 approxKl=0.0011 clipFrac=0.0103
+   1249280 프레임   71초 | 점수 51.5 보상 51.5 길이 2000 | entropy=0.3248 approxKl=0.0044 clipFrac=0.0271
+   1421312 프레임   81초 | 점수 47.8 보상 47.8 길이 2000 | entropy=0.1767 approxKl=0 clipFrac=0
+   1503232 프레임   86초 | 점수 50.6 보상 50.6 길이 2000 | entropy=0.2383 approxKl=0.0003 clipFrac=0
+[ducks] 학습 1,503,232 프레임 / 86초 (17,466 프레임/초)
+  학습된 AI (최선만)   : 점수 46.0 · 보상 46.0 · 길이 2000
+  학습된 AI (화면 방식): 점수 46.0 · 보상 46.0 · 길이 2000

@@ -1,0 +1,1099 @@
+{
+  "version": 1,
+  "blocksJson": {
+    "blocks": {
+      "languageVersion": 0,
+      "blocks": [
+        {
+          "type": "pg_settings",
+          "id": "bombs_1",
+          "x": 20,
+          "y": 20,
+          "fields": {
+            "LEFT": true,
+            "RIGHT": true,
+            "UP": false,
+            "DOWN": false,
+            "A": false,
+            "B": false,
+            "MAXSTEPS": 3000,
+            "SCORE_REWARD": true,
+            "BACKDROP": "night",
+            "BG": "#1d2330"
+          }
+        },
+        {
+          "type": "pg_observe",
+          "id": "bombs_5",
+          "x": 20,
+          "y": 120,
+          "inputs": {
+            "SENSORS": {
+              "block": {
+                "type": "pg_s_prop",
+                "id": "bombs_2",
+                "fields": {
+                  "SUBJECT": {
+                    "id": "bombs_Tag_bucket"
+                  },
+                  "PROP": "x",
+                  "MIN": 0,
+                  "MAX": 400
+                },
+                "next": {
+                  "block": {
+                    "type": "pg_s_prop",
+                    "id": "bombs_3",
+                    "fields": {
+                      "SUBJECT": {
+                        "id": "bombs_Tag_bomber"
+                      },
+                      "PROP": "x",
+                      "MIN": 0,
+                      "MAX": 400
+                    },
+                    "next": {
+                      "block": {
+                        "type": "pg_s_nearest_k",
+                        "id": "bombs_4",
+                        "fields": {
+                          "K": 3,
+                          "SUBJECT": {
+                            "id": "bombs_Tag_bucket"
+                          },
+                          "TARGET": {
+                            "id": "bombs_Tag_bomb"
+                          },
+                          "DIR": "up"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_start",
+          "id": "bombs_40",
+          "x": 20,
+          "y": 220,
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_create",
+                "id": "bombs_13",
+                "fields": {
+                  "TAG": {
+                    "id": "bombs_Tag_bomber"
+                  }
+                },
+                "inputs": {
+                  "X": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "bombs_7",
+                      "fields": {
+                        "NUM": 200
+                      }
+                    }
+                  },
+                  "Y": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "bombs_8",
+                      "fields": {
+                        "NUM": 30
+                      }
+                    }
+                  },
+                  "W": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "bombs_9",
+                      "fields": {
+                        "NUM": 30
+                      }
+                    }
+                  },
+                  "H": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "bombs_10",
+                      "fields": {
+                        "NUM": 26
+                      }
+                    }
+                  },
+                  "COLOR": {
+                    "shadow": {
+                      "type": "pg_colour",
+                      "id": "bombs_6",
+                      "fields": {
+                        "C": "#8e44ad"
+                      }
+                    }
+                  },
+                  "VX": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "bombs_11",
+                      "fields": {
+                        "NUM": 2
+                      }
+                    }
+                  },
+                  "VY": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "bombs_12",
+                      "fields": {
+                        "NUM": 0
+                      }
+                    }
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "pg_create",
+                    "id": "bombs_21",
+                    "fields": {
+                      "TAG": {
+                        "id": "bombs_Tag_bucket"
+                      }
+                    },
+                    "inputs": {
+                      "X": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "bombs_15",
+                          "fields": {
+                            "NUM": 200
+                          }
+                        }
+                      },
+                      "Y": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "bombs_16",
+                          "fields": {
+                            "NUM": 272
+                          }
+                        }
+                      },
+                      "W": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "bombs_17",
+                          "fields": {
+                            "NUM": 52
+                          }
+                        }
+                      },
+                      "H": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "bombs_18",
+                          "fields": {
+                            "NUM": 16
+                          }
+                        }
+                      },
+                      "COLOR": {
+                        "shadow": {
+                          "type": "pg_colour",
+                          "id": "bombs_14",
+                          "fields": {
+                            "C": "#4a90d9"
+                          }
+                        }
+                      },
+                      "VX": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "bombs_19",
+                          "fields": {
+                            "NUM": 0
+                          }
+                        }
+                      },
+                      "VY": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "bombs_20",
+                          "fields": {
+                            "NUM": 0
+                          }
+                        }
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "pg_create",
+                        "id": "bombs_29",
+                        "fields": {
+                          "TAG": {
+                            "id": "bombs_Tag_floor"
+                          }
+                        },
+                        "inputs": {
+                          "X": {
+                            "shadow": {
+                              "type": "math_number",
+                              "id": "bombs_23",
+                              "fields": {
+                                "NUM": 200
+                              }
+                            }
+                          },
+                          "Y": {
+                            "shadow": {
+                              "type": "math_number",
+                              "id": "bombs_24",
+                              "fields": {
+                                "NUM": 315
+                              }
+                            }
+                          },
+                          "W": {
+                            "shadow": {
+                              "type": "math_number",
+                              "id": "bombs_25",
+                              "fields": {
+                                "NUM": 600
+                              }
+                            }
+                          },
+                          "H": {
+                            "shadow": {
+                              "type": "math_number",
+                              "id": "bombs_26",
+                              "fields": {
+                                "NUM": 20
+                              }
+                            }
+                          },
+                          "COLOR": {
+                            "shadow": {
+                              "type": "pg_colour",
+                              "id": "bombs_22",
+                              "fields": {
+                                "C": "#000000"
+                              }
+                            }
+                          },
+                          "VX": {
+                            "shadow": {
+                              "type": "math_number",
+                              "id": "bombs_27",
+                              "fields": {
+                                "NUM": 0
+                              }
+                            }
+                          },
+                          "VY": {
+                            "shadow": {
+                              "type": "math_number",
+                              "id": "bombs_28",
+                              "fields": {
+                                "NUM": 0
+                              }
+                            }
+                          }
+                        },
+                        "next": {
+                          "block": {
+                            "type": "variables_set",
+                            "id": "bombs_31",
+                            "fields": {
+                              "VAR": {
+                                "id": "bombs_var_lives"
+                              }
+                            },
+                            "inputs": {
+                              "VALUE": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "bombs_30",
+                                  "fields": {
+                                    "NUM": 3
+                                  }
+                                }
+                              }
+                            },
+                            "next": {
+                              "block": {
+                                "type": "variables_set",
+                                "id": "bombs_33",
+                                "fields": {
+                                  "VAR": {
+                                    "id": "bombs_var_speed"
+                                  }
+                                },
+                                "inputs": {
+                                  "VALUE": {
+                                    "shadow": {
+                                      "type": "math_number",
+                                      "id": "bombs_32",
+                                      "fields": {
+                                        "NUM": 2
+                                      }
+                                    }
+                                  }
+                                },
+                                "next": {
+                                  "block": {
+                                    "type": "pg_set_behavior",
+                                    "id": "bombs_34",
+                                    "fields": {
+                                      "TAG": {
+                                        "id": "bombs_Tag_bomber"
+                                      },
+                                      "KIND": "bounceWalls_all",
+                                      "PARAM": 0.5
+                                    },
+                                    "next": {
+                                      "block": {
+                                        "type": "pg_set_behavior",
+                                        "id": "bombs_35",
+                                        "fields": {
+                                          "TAG": {
+                                            "id": "bombs_Tag_bucket"
+                                          },
+                                          "KIND": "stayInScreen",
+                                          "PARAM": 0.5
+                                        },
+                                        "next": {
+                                          "block": {
+                                            "type": "pg_set_costume",
+                                            "id": "bombs_36",
+                                            "fields": {
+                                              "TAG": {
+                                                "id": "bombs_Tag_bomber"
+                                              },
+                                              "COSTUME": "alien"
+                                            },
+                                            "next": {
+                                              "block": {
+                                                "type": "pg_set_costume",
+                                                "id": "bombs_37",
+                                                "fields": {
+                                                  "TAG": {
+                                                    "id": "bombs_Tag_bucket"
+                                                  },
+                                                  "COSTUME": "bucket"
+                                                },
+                                                "next": {
+                                                  "block": {
+                                                    "type": "pg_set_costume",
+                                                    "id": "bombs_38",
+                                                    "fields": {
+                                                      "TAG": {
+                                                        "id": "bombs_Tag_bomb"
+                                                      },
+                                                      "COSTUME": "bomb"
+                                                    },
+                                                    "next": {
+                                                      "block": {
+                                                        "type": "pg_set_costume",
+                                                        "id": "bombs_39",
+                                                        "fields": {
+                                                          "TAG": {
+                                                            "id": "bombs_Tag_floor"
+                                                          },
+                                                          "COSTUME": "hidden"
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_interval",
+          "id": "bombs_53",
+          "x": 20,
+          "y": 320,
+          "fields": {
+            "N": 15
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "controls_if",
+                "id": "bombs_52",
+                "inputs": {
+                  "IF0": {
+                    "block": {
+                      "type": "logic_compare",
+                      "id": "bombs_45",
+                      "fields": {
+                        "OP": "EQ"
+                      },
+                      "inputs": {
+                        "A": {
+                          "block": {
+                            "type": "math_random_int",
+                            "id": "bombs_43",
+                            "inputs": {
+                              "FROM": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "bombs_41",
+                                  "fields": {
+                                    "NUM": 1
+                                  }
+                                }
+                              },
+                              "TO": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "bombs_42",
+                                  "fields": {
+                                    "NUM": 4
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "B": {
+                          "shadow": {
+                            "type": "math_number",
+                            "id": "bombs_44",
+                            "fields": {
+                              "NUM": 1
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "DO0": {
+                    "block": {
+                      "type": "pg_set_vel",
+                      "id": "bombs_51",
+                      "fields": {
+                        "AXIS": "x"
+                      },
+                      "inputs": {
+                        "T": {
+                          "block": {
+                            "type": "pg_tag",
+                            "id": "bombs_46",
+                            "fields": {
+                              "TAG": {
+                                "id": "bombs_Tag_bomber"
+                              }
+                            }
+                          }
+                        },
+                        "V": {
+                          "block": {
+                            "type": "math_arithmetic",
+                            "id": "bombs_50",
+                            "fields": {
+                              "OP": "MULTIPLY"
+                            },
+                            "inputs": {
+                              "A": {
+                                "block": {
+                                  "type": "pg_get",
+                                  "id": "bombs_48",
+                                  "fields": {
+                                    "PROP": "vx"
+                                  },
+                                  "inputs": {
+                                    "T": {
+                                      "block": {
+                                        "type": "pg_tag",
+                                        "id": "bombs_47",
+                                        "fields": {
+                                          "TAG": {
+                                            "id": "bombs_Tag_bomber"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "B": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "bombs_49",
+                                  "fields": {
+                                    "NUM": -1
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_interval",
+          "id": "bombs_63",
+          "x": 20,
+          "y": 420,
+          "fields": {
+            "N": 24
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_create",
+                "id": "bombs_62",
+                "fields": {
+                  "TAG": {
+                    "id": "bombs_Tag_bomb"
+                  }
+                },
+                "inputs": {
+                  "X": {
+                    "block": {
+                      "type": "pg_get",
+                      "id": "bombs_55",
+                      "fields": {
+                        "PROP": "x"
+                      },
+                      "inputs": {
+                        "T": {
+                          "block": {
+                            "type": "pg_tag",
+                            "id": "bombs_54",
+                            "fields": {
+                              "TAG": {
+                                "id": "bombs_Tag_bomber"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "Y": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "bombs_58",
+                      "fields": {
+                        "NUM": 48
+                      }
+                    }
+                  },
+                  "W": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "bombs_59",
+                      "fields": {
+                        "NUM": 12
+                      }
+                    }
+                  },
+                  "H": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "bombs_60",
+                      "fields": {
+                        "NUM": 14
+                      }
+                    }
+                  },
+                  "COLOR": {
+                    "shadow": {
+                      "type": "pg_colour",
+                      "id": "bombs_57",
+                      "fields": {
+                        "C": "#222222"
+                      }
+                    }
+                  },
+                  "VX": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "bombs_61",
+                      "fields": {
+                        "NUM": 0
+                      }
+                    }
+                  },
+                  "VY": {
+                    "block": {
+                      "type": "variables_get",
+                      "id": "bombs_56",
+                      "fields": {
+                        "VAR": {
+                          "id": "bombs_var_speed"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_action",
+          "id": "bombs_67",
+          "x": 20,
+          "y": 520,
+          "fields": {
+            "ACTION": "none"
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_set_vel",
+                "id": "bombs_66",
+                "fields": {
+                  "AXIS": "x"
+                },
+                "inputs": {
+                  "T": {
+                    "block": {
+                      "type": "pg_tag",
+                      "id": "bombs_64",
+                      "fields": {
+                        "TAG": {
+                          "id": "bombs_Tag_bucket"
+                        }
+                      }
+                    }
+                  },
+                  "V": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "bombs_65",
+                      "fields": {
+                        "NUM": 0
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_action",
+          "id": "bombs_71",
+          "x": 20,
+          "y": 620,
+          "fields": {
+            "ACTION": "left"
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_set_vel",
+                "id": "bombs_70",
+                "fields": {
+                  "AXIS": "x"
+                },
+                "inputs": {
+                  "T": {
+                    "block": {
+                      "type": "pg_tag",
+                      "id": "bombs_68",
+                      "fields": {
+                        "TAG": {
+                          "id": "bombs_Tag_bucket"
+                        }
+                      }
+                    }
+                  },
+                  "V": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "bombs_69",
+                      "fields": {
+                        "NUM": -6
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_action",
+          "id": "bombs_75",
+          "x": 20,
+          "y": 720,
+          "fields": {
+            "ACTION": "right"
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_set_vel",
+                "id": "bombs_74",
+                "fields": {
+                  "AXIS": "x"
+                },
+                "inputs": {
+                  "T": {
+                    "block": {
+                      "type": "pg_tag",
+                      "id": "bombs_72",
+                      "fields": {
+                        "TAG": {
+                          "id": "bombs_Tag_bucket"
+                        }
+                      }
+                    }
+                  },
+                  "V": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "bombs_73",
+                      "fields": {
+                        "NUM": 6
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_collide",
+          "id": "bombs_86",
+          "x": 20,
+          "y": 820,
+          "fields": {
+            "A": {
+              "id": "bombs_Tag_bucket"
+            },
+            "B": {
+              "id": "bombs_Tag_bomb"
+            }
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_destroy",
+                "id": "bombs_77",
+                "inputs": {
+                  "T": {
+                    "block": {
+                      "type": "pg_other",
+                      "id": "bombs_76"
+                    }
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "pg_add_score",
+                    "id": "bombs_79",
+                    "inputs": {
+                      "N": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "bombs_78",
+                          "fields": {
+                            "NUM": 1
+                          }
+                        }
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "variables_set",
+                        "id": "bombs_85",
+                        "fields": {
+                          "VAR": {
+                            "id": "bombs_var_speed"
+                          }
+                        },
+                        "inputs": {
+                          "VALUE": {
+                            "block": {
+                              "type": "math_arithmetic",
+                              "id": "bombs_84",
+                              "fields": {
+                                "OP": "ADD"
+                              },
+                              "inputs": {
+                                "A": {
+                                  "shadow": {
+                                    "type": "math_number",
+                                    "id": "bombs_83",
+                                    "fields": {
+                                      "NUM": 2
+                                    }
+                                  }
+                                },
+                                "B": {
+                                  "block": {
+                                    "type": "math_arithmetic",
+                                    "id": "bombs_82",
+                                    "fields": {
+                                      "OP": "MULTIPLY"
+                                    },
+                                    "inputs": {
+                                      "A": {
+                                        "block": {
+                                          "type": "pg_score",
+                                          "id": "bombs_80"
+                                        }
+                                      },
+                                      "B": {
+                                        "shadow": {
+                                          "type": "math_number",
+                                          "id": "bombs_81",
+                                          "fields": {
+                                            "NUM": 0.04
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_collide",
+          "id": "bombs_98",
+          "x": 20,
+          "y": 920,
+          "fields": {
+            "A": {
+              "id": "bombs_Tag_bomb"
+            },
+            "B": {
+              "id": "bombs_Tag_floor"
+            }
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_destroy",
+                "id": "bombs_88",
+                "inputs": {
+                  "T": {
+                    "block": {
+                      "type": "pg_self",
+                      "id": "bombs_87"
+                    }
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "variables_set",
+                    "id": "bombs_92",
+                    "fields": {
+                      "VAR": {
+                        "id": "bombs_var_lives"
+                      }
+                    },
+                    "inputs": {
+                      "VALUE": {
+                        "block": {
+                          "type": "math_arithmetic",
+                          "id": "bombs_91",
+                          "fields": {
+                            "OP": "MINUS"
+                          },
+                          "inputs": {
+                            "A": {
+                              "block": {
+                                "type": "variables_get",
+                                "id": "bombs_89",
+                                "fields": {
+                                  "VAR": {
+                                    "id": "bombs_var_lives"
+                                  }
+                                }
+                              }
+                            },
+                            "B": {
+                              "shadow": {
+                                "type": "math_number",
+                                "id": "bombs_90",
+                                "fields": {
+                                  "NUM": 1
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "controls_if",
+                        "id": "bombs_97",
+                        "inputs": {
+                          "IF0": {
+                            "block": {
+                              "type": "logic_compare",
+                              "id": "bombs_95",
+                              "fields": {
+                                "OP": "LTE"
+                              },
+                              "inputs": {
+                                "A": {
+                                  "block": {
+                                    "type": "variables_get",
+                                    "id": "bombs_93",
+                                    "fields": {
+                                      "VAR": {
+                                        "id": "bombs_var_lives"
+                                      }
+                                    }
+                                  }
+                                },
+                                "B": {
+                                  "shadow": {
+                                    "type": "math_number",
+                                    "id": "bombs_94",
+                                    "fields": {
+                                      "NUM": 0
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "DO0": {
+                            "block": {
+                              "type": "pg_game_over",
+                              "id": "bombs_96"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "variables": [
+      {
+        "name": "player",
+        "id": "bombs_Tag_player",
+        "type": "Tag"
+      },
+      {
+        "name": "obstacle",
+        "id": "bombs_Tag_obstacle",
+        "type": "Tag"
+      },
+      {
+        "name": "ground",
+        "id": "bombs_Tag_ground",
+        "type": "Tag"
+      },
+      {
+        "name": "bucket",
+        "id": "bombs_Tag_bucket",
+        "type": "Tag"
+      },
+      {
+        "name": "bomber",
+        "id": "bombs_Tag_bomber",
+        "type": "Tag"
+      },
+      {
+        "name": "bomb",
+        "id": "bombs_Tag_bomb",
+        "type": "Tag"
+      },
+      {
+        "name": "floor",
+        "id": "bombs_Tag_floor",
+        "type": "Tag"
+      },
+      {
+        "name": "lives",
+        "id": "bombs_var_lives"
+      },
+      {
+        "name": "speed",
+        "id": "bombs_var_speed"
+      }
+    ]
+  },
+  "generatedCode": "\n\n\napi.$b('bombs_1');\napi.$b('bombs_5');\napi.sensors([\n  api.sensor.prop('bucket', 'x', 0, 400),\n  api.sensor.prop('bomber', 'x', 0, 400),\n  api.sensor.nearestK('bucket', 'bomb', 3, 'up'),\n]);\napi.$b('bombs_40');\napi.onStart(() => {\n  api.$b('bombs_13');\n  api.create({ tag: 'bomber', x: 200, y: 30, w: 30, h: 26, color: '#8e44ad', vx: 2, vy: 0 });\n  api.$b('bombs_21');\n  api.create({ tag: 'bucket', x: 200, y: 272, w: 52, h: 16, color: '#4a90d9', vx: 0, vy: 0 });\n  api.$b('bombs_29');\n  api.create({ tag: 'floor', x: 200, y: 315, w: 600, h: 20, color: '#000000', vx: 0, vy: 0 });\n  api.$b('bombs_31');\n  api.vars['lives'] = 3;\n  api.$b('bombs_33');\n  api.vars['speed'] = 2;\n  api.$b('bombs_34');\n  api.setBehavior('bomber', 'bounceWalls', 'all');\n  api.$b('bombs_35');\n  api.setBehavior('bucket', 'stayInScreen');\n  api.$b('bombs_36');\n  api.setCostume('bomber', 'alien');\n  api.$b('bombs_37');\n  api.setCostume('bucket', 'bucket');\n  api.$b('bombs_38');\n  api.setCostume('bomb', 'bomb');\n  api.$b('bombs_39');\n  api.setCostume('floor', 'hidden');\n});\napi.$b('bombs_53');\napi.onInterval(15, () => {\n  api.$b('bombs_52');\n  if (api.randInt(1, 4) == 1) {\n    api.$b('bombs_51');\n    api.setVel('bomber', 'x', api.get('bomber', 'vx') * -1);\n  }\n});\napi.$b('bombs_63');\napi.onInterval(24, () => {\n  api.$b('bombs_62');\n  api.create({ tag: 'bomb', x: api.get('bomber', 'x'), y: 48, w: 12, h: 14, color: '#222222', vx: 0, vy: api.vars['speed'] });\n});\napi.$b('bombs_67');\napi.onAction('none', () => {\n  api.$b('bombs_66');\n  api.setVel('bucket', 'x', 0);\n});\napi.$b('bombs_71');\napi.onAction('left', () => {\n  api.$b('bombs_70');\n  api.setVel('bucket', 'x', -6);\n});\napi.$b('bombs_75');\napi.onAction('right', () => {\n  api.$b('bombs_74');\n  api.setVel('bucket', 'x', 6);\n});\napi.$b('bombs_86');\napi.onCollide('bucket', 'bomb', (self, other) => {\n  api.$b('bombs_77');\n  api.destroy(other);\n  api.$b('bombs_79');\n  api.addScore(1);\n  api.$b('bombs_85');\n  api.vars['speed'] = 2 + api.score() * 0.04;\n});\napi.$b('bombs_98');\napi.onCollide('bomb', 'floor', (self, other) => {\n  api.$b('bombs_88');\n  api.destroy(self);\n  api.$b('bombs_92');\n  api.vars['lives'] = api.vars['lives'] - 1;\n  api.$b('bombs_97');\n  if (api.vars['lives'] <= 0) {\n    api.$b('bombs_96');\n    api.gameOver();\n  }\n});\n",
+  "settings": {
+    "actions": [
+      "none",
+      "left",
+      "right"
+    ],
+    "maxSteps": 3000,
+    "background": "#1d2330",
+    "backdrop": "night",
+    "scoreReward": true
+  },
+  "keymap": {
+    "left": [
+      "ArrowLeft",
+      "KeyA"
+    ],
+    "right": [
+      "ArrowRight",
+      "KeyD"
+    ],
+    "up": [
+      "ArrowUp"
+    ],
+    "down": [
+      "ArrowDown"
+    ],
+    "a": [
+      "Space"
+    ],
+    "b": [
+      "KeyS"
+    ]
+  },
+  "training": {
+    "steps": 1500000,
+    "frameSkip": 2
+  }
+}

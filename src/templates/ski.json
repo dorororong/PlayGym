@@ -1,0 +1,1471 @@
+{
+  "version": 1,
+  "blocksJson": {
+    "blocks": {
+      "languageVersion": 0,
+      "blocks": [
+        {
+          "type": "pg_settings",
+          "id": "ski_1",
+          "x": 20,
+          "y": 20,
+          "fields": {
+            "LEFT": true,
+            "RIGHT": true,
+            "UP": false,
+            "DOWN": false,
+            "A": false,
+            "B": false,
+            "MAXSTEPS": 3000,
+            "SCORE_REWARD": true,
+            "BACKDROP": "none",
+            "BG": "#f4f4f4"
+          }
+        },
+        {
+          "type": "pg_observe",
+          "id": "ski_5",
+          "x": 20,
+          "y": 120,
+          "inputs": {
+            "SENSORS": {
+              "block": {
+                "type": "pg_s_prop",
+                "id": "ski_2",
+                "fields": {
+                  "SUBJECT": {
+                    "id": "ski_Tag_skier"
+                  },
+                  "PROP": "x",
+                  "MIN": 0,
+                  "MAX": 400
+                },
+                "next": {
+                  "block": {
+                    "type": "pg_s_nearest",
+                    "id": "ski_3",
+                    "fields": {
+                      "SUBJECT": {
+                        "id": "ski_Tag_skier"
+                      },
+                      "TARGET": {
+                        "id": "ski_Tag_gate"
+                      },
+                      "DIR": "down"
+                    },
+                    "next": {
+                      "block": {
+                        "type": "pg_s_nearest_k",
+                        "id": "ski_4",
+                        "fields": {
+                          "K": 2,
+                          "SUBJECT": {
+                            "id": "ski_Tag_skier"
+                          },
+                          "TARGET": {
+                            "id": "ski_Tag_tree"
+                          },
+                          "DIR": "down"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_start",
+          "id": "ski_34",
+          "x": 20,
+          "y": 220,
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_create",
+                "id": "ski_13",
+                "fields": {
+                  "TAG": {
+                    "id": "ski_Tag_skier"
+                  }
+                },
+                "inputs": {
+                  "X": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "ski_7",
+                      "fields": {
+                        "NUM": 200
+                      }
+                    }
+                  },
+                  "Y": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "ski_8",
+                      "fields": {
+                        "NUM": 70
+                      }
+                    }
+                  },
+                  "W": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "ski_9",
+                      "fields": {
+                        "NUM": 18
+                      }
+                    }
+                  },
+                  "H": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "ski_10",
+                      "fields": {
+                        "NUM": 24
+                      }
+                    }
+                  },
+                  "COLOR": {
+                    "shadow": {
+                      "type": "pg_colour",
+                      "id": "ski_6",
+                      "fields": {
+                        "C": "#4a90d9"
+                      }
+                    }
+                  },
+                  "VX": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "ski_11",
+                      "fields": {
+                        "NUM": 0
+                      }
+                    }
+                  },
+                  "VY": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "ski_12",
+                      "fields": {
+                        "NUM": 0
+                      }
+                    }
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "pg_create",
+                    "id": "ski_21",
+                    "fields": {
+                      "TAG": {
+                        "id": "ski_Tag_top"
+                      }
+                    },
+                    "inputs": {
+                      "X": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "ski_15",
+                          "fields": {
+                            "NUM": 200
+                          }
+                        }
+                      },
+                      "Y": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "ski_16",
+                          "fields": {
+                            "NUM": -20
+                          }
+                        }
+                      },
+                      "W": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "ski_17",
+                          "fields": {
+                            "NUM": 600
+                          }
+                        }
+                      },
+                      "H": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "ski_18",
+                          "fields": {
+                            "NUM": 20
+                          }
+                        }
+                      },
+                      "COLOR": {
+                        "shadow": {
+                          "type": "pg_colour",
+                          "id": "ski_14",
+                          "fields": {
+                            "C": "#000000"
+                          }
+                        }
+                      },
+                      "VX": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "ski_19",
+                          "fields": {
+                            "NUM": 0
+                          }
+                        }
+                      },
+                      "VY": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "ski_20",
+                          "fields": {
+                            "NUM": 0
+                          }
+                        }
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "variables_set",
+                        "id": "ski_23",
+                        "fields": {
+                          "VAR": {
+                            "id": "ski_var_lives"
+                          }
+                        },
+                        "inputs": {
+                          "VALUE": {
+                            "shadow": {
+                              "type": "math_number",
+                              "id": "ski_22",
+                              "fields": {
+                                "NUM": 3
+                              }
+                            }
+                          }
+                        },
+                        "next": {
+                          "block": {
+                            "type": "variables_set",
+                            "id": "ski_25",
+                            "fields": {
+                              "VAR": {
+                                "id": "ski_var_speed"
+                              }
+                            },
+                            "inputs": {
+                              "VALUE": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "ski_24",
+                                  "fields": {
+                                    "NUM": 2
+                                  }
+                                }
+                              }
+                            },
+                            "next": {
+                              "block": {
+                                "type": "pg_set_behavior",
+                                "id": "ski_26",
+                                "fields": {
+                                  "TAG": {
+                                    "id": "ski_Tag_skier"
+                                  },
+                                  "KIND": "stayInScreen",
+                                  "PARAM": 0.5
+                                },
+                                "next": {
+                                  "block": {
+                                    "type": "pg_set_behavior",
+                                    "id": "ski_27",
+                                    "fields": {
+                                      "TAG": {
+                                        "id": "ski_Tag_flag"
+                                      },
+                                      "KIND": "destroyOffscreen",
+                                      "PARAM": 0.5
+                                    },
+                                    "next": {
+                                      "block": {
+                                        "type": "pg_set_behavior",
+                                        "id": "ski_28",
+                                        "fields": {
+                                          "TAG": {
+                                            "id": "ski_Tag_tree"
+                                          },
+                                          "KIND": "destroyOffscreen",
+                                          "PARAM": 0.5
+                                        },
+                                        "next": {
+                                          "block": {
+                                            "type": "pg_set_costume",
+                                            "id": "ski_29",
+                                            "fields": {
+                                              "TAG": {
+                                                "id": "ski_Tag_skier"
+                                              },
+                                              "COSTUME": "skier"
+                                            },
+                                            "next": {
+                                              "block": {
+                                                "type": "pg_set_costume",
+                                                "id": "ski_30",
+                                                "fields": {
+                                                  "TAG": {
+                                                    "id": "ski_Tag_flag"
+                                                  },
+                                                  "COSTUME": "flag"
+                                                },
+                                                "next": {
+                                                  "block": {
+                                                    "type": "pg_set_costume",
+                                                    "id": "ski_31",
+                                                    "fields": {
+                                                      "TAG": {
+                                                        "id": "ski_Tag_tree"
+                                                      },
+                                                      "COSTUME": "tree"
+                                                    },
+                                                    "next": {
+                                                      "block": {
+                                                        "type": "pg_set_costume",
+                                                        "id": "ski_32",
+                                                        "fields": {
+                                                          "TAG": {
+                                                            "id": "ski_Tag_gate"
+                                                          },
+                                                          "COSTUME": "hidden"
+                                                        },
+                                                        "next": {
+                                                          "block": {
+                                                            "type": "pg_set_costume",
+                                                            "id": "ski_33",
+                                                            "fields": {
+                                                              "TAG": {
+                                                                "id": "ski_Tag_top"
+                                                              },
+                                                              "COSTUME": "hidden"
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_interval",
+          "id": "ski_73",
+          "x": 20,
+          "y": 320,
+          "fields": {
+            "N": 80
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "variables_set",
+                "id": "ski_38",
+                "fields": {
+                  "VAR": {
+                    "id": "ski_var_gx"
+                  }
+                },
+                "inputs": {
+                  "VALUE": {
+                    "block": {
+                      "type": "math_random_int",
+                      "id": "ski_37",
+                      "inputs": {
+                        "FROM": {
+                          "shadow": {
+                            "type": "math_number",
+                            "id": "ski_35",
+                            "fields": {
+                              "NUM": 90
+                            }
+                          }
+                        },
+                        "TO": {
+                          "shadow": {
+                            "type": "math_number",
+                            "id": "ski_36",
+                            "fields": {
+                              "NUM": 310
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "pg_create",
+                    "id": "ski_50",
+                    "fields": {
+                      "TAG": {
+                        "id": "ski_Tag_flag"
+                      }
+                    },
+                    "inputs": {
+                      "X": {
+                        "block": {
+                          "type": "math_arithmetic",
+                          "id": "ski_41",
+                          "fields": {
+                            "OP": "MINUS"
+                          },
+                          "inputs": {
+                            "A": {
+                              "block": {
+                                "type": "variables_get",
+                                "id": "ski_39",
+                                "fields": {
+                                  "VAR": {
+                                    "id": "ski_var_gx"
+                                  }
+                                }
+                              }
+                            },
+                            "B": {
+                              "shadow": {
+                                "type": "math_number",
+                                "id": "ski_40",
+                                "fields": {
+                                  "NUM": 45
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "Y": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "ski_46",
+                          "fields": {
+                            "NUM": 312
+                          }
+                        }
+                      },
+                      "W": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "ski_47",
+                          "fields": {
+                            "NUM": 12
+                          }
+                        }
+                      },
+                      "H": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "ski_48",
+                          "fields": {
+                            "NUM": 26
+                          }
+                        }
+                      },
+                      "COLOR": {
+                        "shadow": {
+                          "type": "pg_colour",
+                          "id": "ski_45",
+                          "fields": {
+                            "C": "#cc3333"
+                          }
+                        }
+                      },
+                      "VX": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "ski_49",
+                          "fields": {
+                            "NUM": 0
+                          }
+                        }
+                      },
+                      "VY": {
+                        "block": {
+                          "type": "math_arithmetic",
+                          "id": "ski_44",
+                          "fields": {
+                            "OP": "MULTIPLY"
+                          },
+                          "inputs": {
+                            "A": {
+                              "block": {
+                                "type": "variables_get",
+                                "id": "ski_42",
+                                "fields": {
+                                  "VAR": {
+                                    "id": "ski_var_speed"
+                                  }
+                                }
+                              }
+                            },
+                            "B": {
+                              "shadow": {
+                                "type": "math_number",
+                                "id": "ski_43",
+                                "fields": {
+                                  "NUM": -1
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "pg_create",
+                        "id": "ski_62",
+                        "fields": {
+                          "TAG": {
+                            "id": "ski_Tag_flag"
+                          }
+                        },
+                        "inputs": {
+                          "X": {
+                            "block": {
+                              "type": "math_arithmetic",
+                              "id": "ski_53",
+                              "fields": {
+                                "OP": "ADD"
+                              },
+                              "inputs": {
+                                "A": {
+                                  "block": {
+                                    "type": "variables_get",
+                                    "id": "ski_51",
+                                    "fields": {
+                                      "VAR": {
+                                        "id": "ski_var_gx"
+                                      }
+                                    }
+                                  }
+                                },
+                                "B": {
+                                  "shadow": {
+                                    "type": "math_number",
+                                    "id": "ski_52",
+                                    "fields": {
+                                      "NUM": 45
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "Y": {
+                            "shadow": {
+                              "type": "math_number",
+                              "id": "ski_58",
+                              "fields": {
+                                "NUM": 312
+                              }
+                            }
+                          },
+                          "W": {
+                            "shadow": {
+                              "type": "math_number",
+                              "id": "ski_59",
+                              "fields": {
+                                "NUM": 12
+                              }
+                            }
+                          },
+                          "H": {
+                            "shadow": {
+                              "type": "math_number",
+                              "id": "ski_60",
+                              "fields": {
+                                "NUM": 26
+                              }
+                            }
+                          },
+                          "COLOR": {
+                            "shadow": {
+                              "type": "pg_colour",
+                              "id": "ski_57",
+                              "fields": {
+                                "C": "#cc3333"
+                              }
+                            }
+                          },
+                          "VX": {
+                            "shadow": {
+                              "type": "math_number",
+                              "id": "ski_61",
+                              "fields": {
+                                "NUM": 0
+                              }
+                            }
+                          },
+                          "VY": {
+                            "block": {
+                              "type": "math_arithmetic",
+                              "id": "ski_56",
+                              "fields": {
+                                "OP": "MULTIPLY"
+                              },
+                              "inputs": {
+                                "A": {
+                                  "block": {
+                                    "type": "variables_get",
+                                    "id": "ski_54",
+                                    "fields": {
+                                      "VAR": {
+                                        "id": "ski_var_speed"
+                                      }
+                                    }
+                                  }
+                                },
+                                "B": {
+                                  "shadow": {
+                                    "type": "math_number",
+                                    "id": "ski_55",
+                                    "fields": {
+                                      "NUM": -1
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "next": {
+                          "block": {
+                            "type": "pg_create",
+                            "id": "ski_72",
+                            "fields": {
+                              "TAG": {
+                                "id": "ski_Tag_gate"
+                              }
+                            },
+                            "inputs": {
+                              "X": {
+                                "block": {
+                                  "type": "variables_get",
+                                  "id": "ski_63",
+                                  "fields": {
+                                    "VAR": {
+                                      "id": "ski_var_gx"
+                                    }
+                                  }
+                                }
+                              },
+                              "Y": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "ski_68",
+                                  "fields": {
+                                    "NUM": 312
+                                  }
+                                }
+                              },
+                              "W": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "ski_69",
+                                  "fields": {
+                                    "NUM": 70
+                                  }
+                                }
+                              },
+                              "H": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "ski_70",
+                                  "fields": {
+                                    "NUM": 6
+                                  }
+                                }
+                              },
+                              "COLOR": {
+                                "shadow": {
+                                  "type": "pg_colour",
+                                  "id": "ski_67",
+                                  "fields": {
+                                    "C": "#000000"
+                                  }
+                                }
+                              },
+                              "VX": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "ski_71",
+                                  "fields": {
+                                    "NUM": 0
+                                  }
+                                }
+                              },
+                              "VY": {
+                                "block": {
+                                  "type": "math_arithmetic",
+                                  "id": "ski_66",
+                                  "fields": {
+                                    "OP": "MULTIPLY"
+                                  },
+                                  "inputs": {
+                                    "A": {
+                                      "block": {
+                                        "type": "variables_get",
+                                        "id": "ski_64",
+                                        "fields": {
+                                          "VAR": {
+                                            "id": "ski_var_speed"
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "B": {
+                                      "shadow": {
+                                        "type": "math_number",
+                                        "id": "ski_65",
+                                        "fields": {
+                                          "NUM": -1
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_interval",
+          "id": "ski_86",
+          "x": 20,
+          "y": 420,
+          "fields": {
+            "N": 37
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_create",
+                "id": "ski_85",
+                "fields": {
+                  "TAG": {
+                    "id": "ski_Tag_tree"
+                  }
+                },
+                "inputs": {
+                  "X": {
+                    "block": {
+                      "type": "math_random_int",
+                      "id": "ski_76",
+                      "inputs": {
+                        "FROM": {
+                          "shadow": {
+                            "type": "math_number",
+                            "id": "ski_74",
+                            "fields": {
+                              "NUM": 20
+                            }
+                          }
+                        },
+                        "TO": {
+                          "shadow": {
+                            "type": "math_number",
+                            "id": "ski_75",
+                            "fields": {
+                              "NUM": 380
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "Y": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "ski_81",
+                      "fields": {
+                        "NUM": 314
+                      }
+                    }
+                  },
+                  "W": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "ski_82",
+                      "fields": {
+                        "NUM": 24
+                      }
+                    }
+                  },
+                  "H": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "ski_83",
+                      "fields": {
+                        "NUM": 32
+                      }
+                    }
+                  },
+                  "COLOR": {
+                    "shadow": {
+                      "type": "pg_colour",
+                      "id": "ski_80",
+                      "fields": {
+                        "C": "#2e8b3e"
+                      }
+                    }
+                  },
+                  "VX": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "ski_84",
+                      "fields": {
+                        "NUM": 0
+                      }
+                    }
+                  },
+                  "VY": {
+                    "block": {
+                      "type": "math_arithmetic",
+                      "id": "ski_79",
+                      "fields": {
+                        "OP": "MULTIPLY"
+                      },
+                      "inputs": {
+                        "A": {
+                          "block": {
+                            "type": "variables_get",
+                            "id": "ski_77",
+                            "fields": {
+                              "VAR": {
+                                "id": "ski_var_speed"
+                              }
+                            }
+                          }
+                        },
+                        "B": {
+                          "shadow": {
+                            "type": "math_number",
+                            "id": "ski_78",
+                            "fields": {
+                              "NUM": -1
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_action",
+          "id": "ski_90",
+          "x": 20,
+          "y": 520,
+          "fields": {
+            "ACTION": "none"
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_set_vel",
+                "id": "ski_89",
+                "fields": {
+                  "AXIS": "x"
+                },
+                "inputs": {
+                  "T": {
+                    "block": {
+                      "type": "pg_tag",
+                      "id": "ski_87",
+                      "fields": {
+                        "TAG": {
+                          "id": "ski_Tag_skier"
+                        }
+                      }
+                    }
+                  },
+                  "V": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "ski_88",
+                      "fields": {
+                        "NUM": 0
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_action",
+          "id": "ski_94",
+          "x": 20,
+          "y": 620,
+          "fields": {
+            "ACTION": "left"
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_set_vel",
+                "id": "ski_93",
+                "fields": {
+                  "AXIS": "x"
+                },
+                "inputs": {
+                  "T": {
+                    "block": {
+                      "type": "pg_tag",
+                      "id": "ski_91",
+                      "fields": {
+                        "TAG": {
+                          "id": "ski_Tag_skier"
+                        }
+                      }
+                    }
+                  },
+                  "V": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "ski_92",
+                      "fields": {
+                        "NUM": -3
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_action",
+          "id": "ski_98",
+          "x": 20,
+          "y": 720,
+          "fields": {
+            "ACTION": "right"
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_set_vel",
+                "id": "ski_97",
+                "fields": {
+                  "AXIS": "x"
+                },
+                "inputs": {
+                  "T": {
+                    "block": {
+                      "type": "pg_tag",
+                      "id": "ski_95",
+                      "fields": {
+                        "TAG": {
+                          "id": "ski_Tag_skier"
+                        }
+                      }
+                    }
+                  },
+                  "V": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "ski_96",
+                      "fields": {
+                        "NUM": 3
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_collide",
+          "id": "ski_109",
+          "x": 20,
+          "y": 820,
+          "fields": {
+            "A": {
+              "id": "ski_Tag_skier"
+            },
+            "B": {
+              "id": "ski_Tag_gate"
+            }
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_destroy",
+                "id": "ski_100",
+                "inputs": {
+                  "T": {
+                    "block": {
+                      "type": "pg_other",
+                      "id": "ski_99"
+                    }
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "pg_add_score",
+                    "id": "ski_102",
+                    "inputs": {
+                      "N": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "ski_101",
+                          "fields": {
+                            "NUM": 1
+                          }
+                        }
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "variables_set",
+                        "id": "ski_108",
+                        "fields": {
+                          "VAR": {
+                            "id": "ski_var_speed"
+                          }
+                        },
+                        "inputs": {
+                          "VALUE": {
+                            "block": {
+                              "type": "math_arithmetic",
+                              "id": "ski_107",
+                              "fields": {
+                                "OP": "ADD"
+                              },
+                              "inputs": {
+                                "A": {
+                                  "shadow": {
+                                    "type": "math_number",
+                                    "id": "ski_106",
+                                    "fields": {
+                                      "NUM": 2
+                                    }
+                                  }
+                                },
+                                "B": {
+                                  "block": {
+                                    "type": "math_arithmetic",
+                                    "id": "ski_105",
+                                    "fields": {
+                                      "OP": "MULTIPLY"
+                                    },
+                                    "inputs": {
+                                      "A": {
+                                        "block": {
+                                          "type": "pg_score",
+                                          "id": "ski_103"
+                                        }
+                                      },
+                                      "B": {
+                                        "shadow": {
+                                          "type": "math_number",
+                                          "id": "ski_104",
+                                          "fields": {
+                                            "NUM": 0.05
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_collide",
+          "id": "ski_121",
+          "x": 20,
+          "y": 920,
+          "fields": {
+            "A": {
+              "id": "ski_Tag_gate"
+            },
+            "B": {
+              "id": "ski_Tag_top"
+            }
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_destroy",
+                "id": "ski_111",
+                "inputs": {
+                  "T": {
+                    "block": {
+                      "type": "pg_self",
+                      "id": "ski_110"
+                    }
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "variables_set",
+                    "id": "ski_115",
+                    "fields": {
+                      "VAR": {
+                        "id": "ski_var_lives"
+                      }
+                    },
+                    "inputs": {
+                      "VALUE": {
+                        "block": {
+                          "type": "math_arithmetic",
+                          "id": "ski_114",
+                          "fields": {
+                            "OP": "MINUS"
+                          },
+                          "inputs": {
+                            "A": {
+                              "block": {
+                                "type": "variables_get",
+                                "id": "ski_112",
+                                "fields": {
+                                  "VAR": {
+                                    "id": "ski_var_lives"
+                                  }
+                                }
+                              }
+                            },
+                            "B": {
+                              "shadow": {
+                                "type": "math_number",
+                                "id": "ski_113",
+                                "fields": {
+                                  "NUM": 1
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "controls_if",
+                        "id": "ski_120",
+                        "inputs": {
+                          "IF0": {
+                            "block": {
+                              "type": "logic_compare",
+                              "id": "ski_118",
+                              "fields": {
+                                "OP": "LTE"
+                              },
+                              "inputs": {
+                                "A": {
+                                  "block": {
+                                    "type": "variables_get",
+                                    "id": "ski_116",
+                                    "fields": {
+                                      "VAR": {
+                                        "id": "ski_var_lives"
+                                      }
+                                    }
+                                  }
+                                },
+                                "B": {
+                                  "shadow": {
+                                    "type": "math_number",
+                                    "id": "ski_117",
+                                    "fields": {
+                                      "NUM": 0
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "DO0": {
+                            "block": {
+                              "type": "pg_game_over",
+                              "id": "ski_119"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_collide",
+          "id": "ski_133",
+          "x": 20,
+          "y": 1020,
+          "fields": {
+            "A": {
+              "id": "ski_Tag_skier"
+            },
+            "B": {
+              "id": "ski_Tag_tree"
+            }
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_destroy",
+                "id": "ski_123",
+                "inputs": {
+                  "T": {
+                    "block": {
+                      "type": "pg_other",
+                      "id": "ski_122"
+                    }
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "variables_set",
+                    "id": "ski_127",
+                    "fields": {
+                      "VAR": {
+                        "id": "ski_var_lives"
+                      }
+                    },
+                    "inputs": {
+                      "VALUE": {
+                        "block": {
+                          "type": "math_arithmetic",
+                          "id": "ski_126",
+                          "fields": {
+                            "OP": "MINUS"
+                          },
+                          "inputs": {
+                            "A": {
+                              "block": {
+                                "type": "variables_get",
+                                "id": "ski_124",
+                                "fields": {
+                                  "VAR": {
+                                    "id": "ski_var_lives"
+                                  }
+                                }
+                              }
+                            },
+                            "B": {
+                              "shadow": {
+                                "type": "math_number",
+                                "id": "ski_125",
+                                "fields": {
+                                  "NUM": 1
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "controls_if",
+                        "id": "ski_132",
+                        "inputs": {
+                          "IF0": {
+                            "block": {
+                              "type": "logic_compare",
+                              "id": "ski_130",
+                              "fields": {
+                                "OP": "LTE"
+                              },
+                              "inputs": {
+                                "A": {
+                                  "block": {
+                                    "type": "variables_get",
+                                    "id": "ski_128",
+                                    "fields": {
+                                      "VAR": {
+                                        "id": "ski_var_lives"
+                                      }
+                                    }
+                                  }
+                                },
+                                "B": {
+                                  "shadow": {
+                                    "type": "math_number",
+                                    "id": "ski_129",
+                                    "fields": {
+                                      "NUM": 0
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "DO0": {
+                            "block": {
+                              "type": "pg_game_over",
+                              "id": "ski_131"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "variables": [
+      {
+        "name": "player",
+        "id": "ski_Tag_player",
+        "type": "Tag"
+      },
+      {
+        "name": "obstacle",
+        "id": "ski_Tag_obstacle",
+        "type": "Tag"
+      },
+      {
+        "name": "ground",
+        "id": "ski_Tag_ground",
+        "type": "Tag"
+      },
+      {
+        "name": "skier",
+        "id": "ski_Tag_skier",
+        "type": "Tag"
+      },
+      {
+        "name": "gate",
+        "id": "ski_Tag_gate",
+        "type": "Tag"
+      },
+      {
+        "name": "tree",
+        "id": "ski_Tag_tree",
+        "type": "Tag"
+      },
+      {
+        "name": "top",
+        "id": "ski_Tag_top",
+        "type": "Tag"
+      },
+      {
+        "name": "flag",
+        "id": "ski_Tag_flag",
+        "type": "Tag"
+      },
+      {
+        "name": "lives",
+        "id": "ski_var_lives"
+      },
+      {
+        "name": "speed",
+        "id": "ski_var_speed"
+      },
+      {
+        "name": "gx",
+        "id": "ski_var_gx"
+      }
+    ]
+  },
+  "generatedCode": "\n\n\napi.$b('ski_1');\napi.$b('ski_5');\napi.sensors([\n  api.sensor.prop('skier', 'x', 0, 400),\n  api.sensor.nearest('skier', 'gate', 'down'),\n  api.sensor.nearestK('skier', 'tree', 2, 'down'),\n]);\napi.$b('ski_34');\napi.onStart(() => {\n  api.$b('ski_13');\n  api.create({ tag: 'skier', x: 200, y: 70, w: 18, h: 24, color: '#4a90d9', vx: 0, vy: 0 });\n  api.$b('ski_21');\n  api.create({ tag: 'top', x: 200, y: -20, w: 600, h: 20, color: '#000000', vx: 0, vy: 0 });\n  api.$b('ski_23');\n  api.vars['lives'] = 3;\n  api.$b('ski_25');\n  api.vars['speed'] = 2;\n  api.$b('ski_26');\n  api.setBehavior('skier', 'stayInScreen');\n  api.$b('ski_27');\n  api.setBehavior('flag', 'destroyOffscreen');\n  api.$b('ski_28');\n  api.setBehavior('tree', 'destroyOffscreen');\n  api.$b('ski_29');\n  api.setCostume('skier', 'skier');\n  api.$b('ski_30');\n  api.setCostume('flag', 'flag');\n  api.$b('ski_31');\n  api.setCostume('tree', 'tree');\n  api.$b('ski_32');\n  api.setCostume('gate', 'hidden');\n  api.$b('ski_33');\n  api.setCostume('top', 'hidden');\n});\napi.$b('ski_73');\napi.onInterval(80, () => {\n  api.$b('ski_38');\n  api.vars['gx'] = api.randInt(90, 310);\n  api.$b('ski_50');\n  api.create({ tag: 'flag', x: api.vars['gx'] - 45, y: 312, w: 12, h: 26, color: '#cc3333', vx: 0, vy: api.vars['speed'] * -1 });\n  api.$b('ski_62');\n  api.create({ tag: 'flag', x: api.vars['gx'] + 45, y: 312, w: 12, h: 26, color: '#cc3333', vx: 0, vy: api.vars['speed'] * -1 });\n  api.$b('ski_72');\n  api.create({ tag: 'gate', x: api.vars['gx'], y: 312, w: 70, h: 6, color: '#000000', vx: 0, vy: api.vars['speed'] * -1 });\n});\napi.$b('ski_86');\napi.onInterval(37, () => {\n  api.$b('ski_85');\n  api.create({ tag: 'tree', x: api.randInt(20, 380), y: 314, w: 24, h: 32, color: '#2e8b3e', vx: 0, vy: api.vars['speed'] * -1 });\n});\napi.$b('ski_90');\napi.onAction('none', () => {\n  api.$b('ski_89');\n  api.setVel('skier', 'x', 0);\n});\napi.$b('ski_94');\napi.onAction('left', () => {\n  api.$b('ski_93');\n  api.setVel('skier', 'x', -3);\n});\napi.$b('ski_98');\napi.onAction('right', () => {\n  api.$b('ski_97');\n  api.setVel('skier', 'x', 3);\n});\napi.$b('ski_109');\napi.onCollide('skier', 'gate', (self, other) => {\n  api.$b('ski_100');\n  api.destroy(other);\n  api.$b('ski_102');\n  api.addScore(1);\n  api.$b('ski_108');\n  api.vars['speed'] = 2 + api.score() * 0.05;\n});\napi.$b('ski_121');\napi.onCollide('gate', 'top', (self, other) => {\n  api.$b('ski_111');\n  api.destroy(self);\n  api.$b('ski_115');\n  api.vars['lives'] = api.vars['lives'] - 1;\n  api.$b('ski_120');\n  if (api.vars['lives'] <= 0) {\n    api.$b('ski_119');\n    api.gameOver();\n  }\n});\napi.$b('ski_133');\napi.onCollide('skier', 'tree', (self, other) => {\n  api.$b('ski_123');\n  api.destroy(other);\n  api.$b('ski_127');\n  api.vars['lives'] = api.vars['lives'] - 1;\n  api.$b('ski_132');\n  if (api.vars['lives'] <= 0) {\n    api.$b('ski_131');\n    api.gameOver();\n  }\n});\n",
+  "settings": {
+    "actions": [
+      "none",
+      "left",
+      "right"
+    ],
+    "maxSteps": 3000,
+    "background": "#f4f4f4",
+    "backdrop": "none",
+    "scoreReward": true
+  },
+  "keymap": {
+    "left": [
+      "ArrowLeft",
+      "KeyA"
+    ],
+    "right": [
+      "ArrowRight",
+      "KeyD"
+    ],
+    "up": [
+      "ArrowUp"
+    ],
+    "down": [
+      "ArrowDown"
+    ],
+    "a": [
+      "Space"
+    ],
+    "b": [
+      "KeyS"
+    ]
+  },
+  "training": {
+    "algo": "dqn",
+    "steps": 1500000,
+    "frameSkip": 4,
+    "lr": 0.0005,
+    "network": {
+      "hidden": [
+        64,
+        64
+      ],
+      "activation": "relu"
+    }
+  }
+}

@@ -58,8 +58,8 @@
                           "VAR": {
                             "id": "cartpole_var_theta"
                           },
-                          "MIN": -0.21,
-                          "MAX": 0.21
+                          "MIN": -1.05,
+                          "MAX": 1.05
                         },
                         "next": {
                           "block": {
@@ -69,8 +69,8 @@
                               "VAR": {
                                 "id": "cartpole_var_thetadot"
                               },
-                              "MIN": -3.5,
-                              "MAX": 3.5
+                              "MIN": -5,
+                              "MAX": 5
                             }
                           }
                         }
@@ -1989,7 +1989,7 @@
                                                                                             "type": "math_number",
                                                                                             "id": "cartpole_189",
                                                                                             "fields": {
-                                                                                              "NUM": 0.2095
+                                                                                              "NUM": 1.0472
                                                                                             }
                                                                                           }
                                                                                         }
@@ -2020,7 +2020,7 @@
                                                                                             "type": "math_number",
                                                                                             "id": "cartpole_192",
                                                                                             "fields": {
-                                                                                              "NUM": -0.2095
+                                                                                              "NUM": -1.0472
                                                                                             }
                                                                                           }
                                                                                         }
@@ -2222,7 +2222,7 @@
       }
     ]
   },
-  "generatedCode": "\n\n\napi.$b('cartpole_1');\napi.$b('cartpole_6');\napi.sensors([\n  api.sensor.variable('x', -2.4, 2.4),\n  api.sensor.variable('xdot', -3, 3),\n  api.sensor.variable('theta', -0.21, 0.21),\n  api.sensor.variable('thetadot', -3.5, 3.5),\n]);\napi.$b('cartpole_56');\napi.onStart(() => {\n  api.$b('cartpole_14');\n  api.create({ tag: 'track', x: 200, y: 236, w: 400, h: 6, color: '#555555', vx: 0, vy: 0 });\n  api.$b('cartpole_20');\n  api.vars['x'] = api.randInt(-50, 50) * 0.001;\n  api.$b('cartpole_26');\n  api.vars['xdot'] = api.randInt(-50, 50) * 0.001;\n  api.$b('cartpole_32');\n  api.vars['theta'] = api.randInt(-50, 50) * 0.001;\n  api.$b('cartpole_38');\n  api.vars['thetadot'] = api.randInt(-50, 50) * 0.001;\n  api.$b('cartpole_40');\n  api.vars['force'] = 0;\n  api.$b('cartpole_52');\n  api.create({ tag: 'cart', x: 200 + api.vars['x'] * 80, y: 220, w: 50, h: 26, color: '#3355cc', vx: 0, vy: 0 });\n  api.$b('cartpole_53');\n  api.setCostume('track', 'box');\n  api.$b('cartpole_54');\n  api.setCostume('cart', 'box');\n  api.$b('cartpole_55');\n  api.setCostume('pole', 'box');\n});\napi.$b('cartpole_59');\napi.onAction('none', () => {\n  api.$b('cartpole_58');\n  api.vars['force'] = 0;\n});\napi.$b('cartpole_62');\napi.onAction('left', () => {\n  api.$b('cartpole_61');\n  api.vars['force'] = -10;\n});\napi.$b('cartpole_65');\napi.onAction('right', () => {\n  api.$b('cartpole_64');\n  api.vars['force'] = 10;\n});\napi.$b('cartpole_205');\napi.onTick(() => {\n  api.$b('cartpole_70');\n  api.vars['s'] = Math.sin((api.vars['theta'] * 57.29578) / 180 * Math.PI);\n  api.$b('cartpole_75');\n  api.vars['c'] = Math.cos((api.vars['theta'] * 57.29578) / 180 * Math.PI);\n  api.$b('cartpole_87');\n  api.vars['temp'] = (api.vars['force'] + 0.05 * api.vars['thetadot'] * api.vars['thetadot'] * api.vars['s']) / 1.1;\n  api.$b('cartpole_107');\n  api.vars['tacc'] = (9.8 * api.vars['s'] - api.vars['c'] * api.vars['temp']) / (0.5 * (1.3333 - (0.1 * api.vars['c'] * api.vars['c']) / 1.1));\n  api.$b('cartpole_117');\n  api.vars['xacc'] = api.vars['temp'] - (0.05 * api.vars['tacc'] * api.vars['c']) / 1.1;\n  api.$b('cartpole_123');\n  api.vars['x'] = api.vars['x'] + 0.02 * api.vars['xdot'];\n  api.$b('cartpole_129');\n  api.vars['xdot'] = api.vars['xdot'] + 0.02 * api.vars['xacc'];\n  api.$b('cartpole_135');\n  api.vars['theta'] = api.vars['theta'] + 0.02 * api.vars['thetadot'];\n  api.$b('cartpole_141');\n  api.vars['thetadot'] = api.vars['thetadot'] + 0.02 * api.vars['tacc'];\n  api.$b('cartpole_149');\n  api.setPos('cart', 200 + api.vars['x'] * 80, 220);\n  api.$b('cartpole_151');\n  api.destroy('pole');\n  api.$b('cartpole_185');\n  {\n    const $a = 1, $z = 8, $s = ($a <= $z ? 1 : -1) * (Math.abs(1) || 1);\n    for (api.vars['i'] = $a; $s > 0 ? api.vars['i'] <= $z : api.vars['i'] >= $z; api.vars['i'] += $s) {\n      api.$loop();\n      api.$b('cartpole_181');\n      api.create({ tag: 'pole', x: 200 + api.vars['x'] * 80 + Math.sin((api.vars['theta'] * 57.29578) / 180 * Math.PI) * api.vars['i'] * 10, y: 210 - Math.cos((api.vars['theta'] * 57.29578) / 180 * Math.PI) * api.vars['i'] * 10, w: 7, h: 9, color: '#f39c12', vx: 0, vy: 0 });\n      api.$b('cartpole_185');\n    }\n  }\n  api.$b('cartpole_187');\n  api.addScore(1);\n  api.$b('cartpole_204');\n  if (api.vars['theta'] > 0.2095 || api.vars['theta'] < -0.2095 || api.vars['x'] > 2.4 || api.vars['x'] < -2.4) {\n    api.$b('cartpole_203');\n    api.gameOver();\n  }\n});\n",
+  "generatedCode": "\n\n\napi.$b('cartpole_1');\napi.$b('cartpole_6');\napi.sensors([\n  api.sensor.variable('x', -2.4, 2.4),\n  api.sensor.variable('xdot', -3, 3),\n  api.sensor.variable('theta', -1.05, 1.05),\n  api.sensor.variable('thetadot', -5, 5),\n]);\napi.$b('cartpole_56');\napi.onStart(() => {\n  api.$b('cartpole_14');\n  api.create({ tag: 'track', x: 200, y: 236, w: 400, h: 6, color: '#555555', vx: 0, vy: 0 });\n  api.$b('cartpole_20');\n  api.vars['x'] = api.randInt(-50, 50) * 0.001;\n  api.$b('cartpole_26');\n  api.vars['xdot'] = api.randInt(-50, 50) * 0.001;\n  api.$b('cartpole_32');\n  api.vars['theta'] = api.randInt(-50, 50) * 0.001;\n  api.$b('cartpole_38');\n  api.vars['thetadot'] = api.randInt(-50, 50) * 0.001;\n  api.$b('cartpole_40');\n  api.vars['force'] = 0;\n  api.$b('cartpole_52');\n  api.create({ tag: 'cart', x: 200 + api.vars['x'] * 80, y: 220, w: 50, h: 26, color: '#3355cc', vx: 0, vy: 0 });\n  api.$b('cartpole_53');\n  api.setCostume('track', 'box');\n  api.$b('cartpole_54');\n  api.setCostume('cart', 'box');\n  api.$b('cartpole_55');\n  api.setCostume('pole', 'box');\n});\napi.$b('cartpole_59');\napi.onAction('none', () => {\n  api.$b('cartpole_58');\n  api.vars['force'] = 0;\n});\napi.$b('cartpole_62');\napi.onAction('left', () => {\n  api.$b('cartpole_61');\n  api.vars['force'] = -10;\n});\napi.$b('cartpole_65');\napi.onAction('right', () => {\n  api.$b('cartpole_64');\n  api.vars['force'] = 10;\n});\napi.$b('cartpole_205');\napi.onTick(() => {\n  api.$b('cartpole_70');\n  api.vars['s'] = Math.sin((api.vars['theta'] * 57.29578) / 180 * Math.PI);\n  api.$b('cartpole_75');\n  api.vars['c'] = Math.cos((api.vars['theta'] * 57.29578) / 180 * Math.PI);\n  api.$b('cartpole_87');\n  api.vars['temp'] = (api.vars['force'] + 0.05 * api.vars['thetadot'] * api.vars['thetadot'] * api.vars['s']) / 1.1;\n  api.$b('cartpole_107');\n  api.vars['tacc'] = (9.8 * api.vars['s'] - api.vars['c'] * api.vars['temp']) / (0.5 * (1.3333 - (0.1 * api.vars['c'] * api.vars['c']) / 1.1));\n  api.$b('cartpole_117');\n  api.vars['xacc'] = api.vars['temp'] - (0.05 * api.vars['tacc'] * api.vars['c']) / 1.1;\n  api.$b('cartpole_123');\n  api.vars['x'] = api.vars['x'] + 0.02 * api.vars['xdot'];\n  api.$b('cartpole_129');\n  api.vars['xdot'] = api.vars['xdot'] + 0.02 * api.vars['xacc'];\n  api.$b('cartpole_135');\n  api.vars['theta'] = api.vars['theta'] + 0.02 * api.vars['thetadot'];\n  api.$b('cartpole_141');\n  api.vars['thetadot'] = api.vars['thetadot'] + 0.02 * api.vars['tacc'];\n  api.$b('cartpole_149');\n  api.setPos('cart', 200 + api.vars['x'] * 80, 220);\n  api.$b('cartpole_151');\n  api.destroy('pole');\n  api.$b('cartpole_185');\n  {\n    const $a = 1, $z = 8, $s = ($a <= $z ? 1 : -1) * (Math.abs(1) || 1);\n    for (api.vars['i'] = $a; $s > 0 ? api.vars['i'] <= $z : api.vars['i'] >= $z; api.vars['i'] += $s) {\n      api.$loop();\n      api.$b('cartpole_181');\n      api.create({ tag: 'pole', x: 200 + api.vars['x'] * 80 + Math.sin((api.vars['theta'] * 57.29578) / 180 * Math.PI) * api.vars['i'] * 10, y: 210 - Math.cos((api.vars['theta'] * 57.29578) / 180 * Math.PI) * api.vars['i'] * 10, w: 7, h: 9, color: '#f39c12', vx: 0, vy: 0 });\n      api.$b('cartpole_185');\n    }\n  }\n  api.$b('cartpole_187');\n  api.addScore(1);\n  api.$b('cartpole_204');\n  if (api.vars['theta'] > 1.0472 || api.vars['theta'] < -1.0472 || api.vars['x'] > 2.4 || api.vars['x'] < -2.4) {\n    api.$b('cartpole_203');\n    api.gameOver();\n  }\n});\n",
   "settings": {
     "actions": [
       "none",
