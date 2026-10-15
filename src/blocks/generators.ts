@@ -82,6 +82,7 @@ export function installGenerators(): void {
     const tag = q(text(b, 'TAG'));
     if (kind === 'gravity') return `api.setBehavior(${tag}, 'gravity', ${n(b, 'PARAM')});\n`;
     if (kind.startsWith('bounceWalls_')) return `api.setBehavior(${tag}, 'bounceWalls', ${q(kind.slice(12))});\n`;
+    if (kind === 'wrap_x') return `api.setBehavior(${tag}, 'wrap', 'x');\n`;
     return `api.setBehavior(${tag}, ${q(kind)});\n`;
   };
   f['pg_set_costume'] = (b) => `api.setCostume(${q(text(b, 'TAG'))}, ${q(b.getFieldValue('COSTUME'))});
@@ -107,6 +108,7 @@ export function installGenerators(): void {
   f['pg_self'] = () => ['self', Order.ATOMIC];
   f['pg_other'] = () => ['other', Order.ATOMIC];
   f['pg_tag'] = (b) => [q(text(b, 'TAG')), Order.ATOMIC];
+  f['pg_first'] = (b) => [`api.first(${q(text(b, 'TAG'))})`, Order.FUNCTION_CALL];
   f['pg_get'] = (b) => [`api.get(${tgt(b)}, ${q(b.getFieldValue('PROP'))})`, Order.FUNCTION_CALL];
   f['pg_on_ground'] = (b) => [`api.onGround(${tgt(b)})`, Order.FUNCTION_CALL];
   f['pg_count'] = (b) => [`api.count(${q(text(b, 'TAG'))})`, Order.FUNCTION_CALL];

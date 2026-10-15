@@ -41,6 +41,7 @@ export const TOOLBOX = {
     cat(`🔢 ${c.values}`, HUE.values, [
       b('pg_self'),
       b('pg_other'),
+      b('pg_first'),
       b('pg_get', tagT),
       b('pg_on_ground', tagT),
       b('pg_count'),
@@ -70,6 +71,7 @@ export const TOOLBOX = {
       b('math_number'),
       b('math_arithmetic', { A: num(1), B: num(1) }),
       b('math_modulo', { DIVIDEND: num(10), DIVISOR: num(3) }),
+      b('math_trig', { NUM: num(45) }),
       b('math_random_int', { FROM: num(1), TO: num(10) }),
       b('math_random_float'),
     ]),

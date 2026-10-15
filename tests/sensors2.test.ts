@@ -15,6 +15,34 @@ describe('화면 반대편으로 이어지기 (seamless)', () => {
     expect([a.x, a.vx]).toEqual([3, 5]);
     expect([b.y, b.vy]).toEqual([297, -5]);
   });
+
+  it("'좌우만 이어지기'는 위아래로는 이어지지 않는다 (끝없는 길 건너기의 차)", () => {
+    const env = envFromCode(`api.onStart(() => {
+      api.create({tag:'a', x:398, y:150, vx:5}); api.create({tag:'a', x:100, y:298, vy:5}); api.setBehavior('a','wrap','x');
+    });`);
+    env.reset(0);
+    env.step(0);
+    const [a, b] = find(env, 'a');
+    expect(a.x).toBe(3);
+    expect(b.y).toBe(303);
+  });
+});
+
+describe('가장 먼저 만든 객체', () => {
+  it('가장 오래된 것 하나만 지운다 (뱀 꼬리)', () => {
+    const env = envFromCode(`
+      api.onStart(() => { for (let i = 0; i < 3; i++) api.create({tag:'body', x: 10 + i * 20, y: 50}); });
+      api.onTick(() => { if (api.count('body') === 3) api.destroy(api.first('body')); });`);
+    env.reset(0);
+    env.step(0);
+    expect(find(env, 'body').map((o) => o.x)).toEqual([30, 50]);
+  });
+
+  it('없으면 아무것도 하지 않는다', () => {
+    const env = envFromCode(`api.onTick(() => { api.destroy(api.first('none')); api.move(api.first('none'), 'x', 5); });`);
+    env.reset(0);
+    expect(env.step(0).info.events.filter((e) => e.type === 'error')).toEqual([]);
+  });
 });
 
 describe('추가 센서', () => {

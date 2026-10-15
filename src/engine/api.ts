@@ -96,6 +96,10 @@ export function createApi(world: World) {
         vy: num(spec.vy),
       });
     },
+    /** 이 태그 객체 중 가장 먼저 만든 것 (없으면 null → 명령이 아무것도 안 한다) */
+    first(tag: string): GameObject | null {
+      return firstOfTag(world.objects, String(tag)) ?? null;
+    },
     destroy(t: Target) {
       for (const o of all(t)) o.alive = false;
     },
@@ -104,6 +108,7 @@ export function createApi(world: World) {
       const b = (world.behaviors[tag] ??= {});
       if (kind === 'gravity') b.gravity = num(param, DEFAULT_GRAVITY);
       else if (kind === 'bounceWalls') b.bounceWalls = param === 'noBottom' ? 'noBottom' : 'all';
+      else if (kind === 'wrap') b.wrap = param === 'x' ? 'x' : true;
       else b[kind] = true;
     },
     clearBehavior(tag: string, kind: BehaviorKind) {

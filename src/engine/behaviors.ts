@@ -27,16 +27,17 @@ export function applyScreenBounds(objects: GameObject[], beh: BehaviorMap): void
   for (const o of objects) {
     const b = beh[o.tag];
     if (!b) continue;
-    if (b.wrap) wrap(o);
+    if (b.wrap) wrap(o, b.wrap === 'x');
     if (b.stayInScreen) stayIn(o);
     if (b.bounceWalls) bounceWalls(o, b.bounceWalls as BounceMode);
   }
 }
 
-/** 화면 반대편으로 이어지기 (seamless): 중심이 화면 밖으로 나가면 반대쪽 끝으로 옮긴다 */
-function wrap(o: GameObject): void {
+/** 화면 반대편으로 이어지기 (seamless): 중심이 화면 밖으로 나가면 반대쪽 끝으로 옮긴다. onlyX 면 좌우만 */
+function wrap(o: GameObject, onlyX: boolean): void {
   if (o.x < 0) o.x += WORLD_W;
   else if (o.x >= WORLD_W) o.x -= WORLD_W;
+  if (onlyX) return;
   if (o.y < 0) o.y += WORLD_H;
   else if (o.y >= WORLD_H) o.y -= WORLD_H;
 }

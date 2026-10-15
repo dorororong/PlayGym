@@ -5,7 +5,7 @@ import { TAG_TYPE } from '../blocks/definitions';
 import type { ActionName } from '../engine/types';
 
 type Json = Record<string, unknown>;
-type Value = number | Json; // 숫자면 math_number 그림자 블록, 아니면 블록
+export type Value = number | Json; // 숫자면 math_number 그림자 블록, 아니면 블록
 
 export class TemplateBuilder {
   private n = 0;
@@ -107,6 +107,9 @@ export class TemplateBuilder {
   // 값
   tag(name: string) { return this.block('pg_tag', { TAG: this.tagF(name) }); }
   self() { return this.block('pg_self'); }
+  first(tag: string) { return this.block('pg_first', { TAG: this.tagF(tag) }); }
+  /** 삼각함수 (Blockly 는 각도를 도 단위로 받는다) */
+  trig(op: 'SIN' | 'COS', deg: Value) { return this.block('math_trig', { OP: op }, { NUM: this.value(deg) }); }
   other() { return this.block('pg_other'); }
   get(t: Json, prop: string) { return this.block('pg_get', { PROP: prop }, { T: { block: t } }); }
   onGround(t: Json) { return this.block('pg_on_ground', {}, { T: { block: t } }); }

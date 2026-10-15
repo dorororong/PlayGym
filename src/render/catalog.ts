@@ -20,6 +20,8 @@ export const COSTUMES = {
   groundRun: '🟫 흐르는 땅',
   star: '⭐ 별',
   coin: '🪙 동전',
+  road: '🛣️ 도로 한 줄',
+  grass: '🌱 풀밭 한 줄',
   hidden: '👻 안 보임',
 } as const;
 export type CostumeName = keyof typeof COSTUMES;

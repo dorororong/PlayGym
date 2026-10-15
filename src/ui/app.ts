@@ -13,6 +13,7 @@ import { CUSTOM_PREFIX, costumesUsedIn, isPixelArt, setActiveAssets, setCustomCo
 import { describeRewards } from '../blocks/rewards';
 import { AssetPanel } from './assetPanel';
 import { Renderer } from '../render/renderer';
+import { initSplitters, loadPref, savePref } from './splitters';
 import { Agent, PLAY_TEMPERATURE, type AgentJson } from '../rl/agent';
 import { resolveConfig, type LearnConfig } from '../rl/config';
 import { canResume } from '../rl/trainer';
@@ -65,7 +66,7 @@ function blankProject(): Project {
 
 export class App {
   private ws!: BlocklyTypes.WorkspaceSvg;
-  private renderer = new Renderer($<HTMLCanvasElement>('#game'));
+  private renderer = new Renderer($<HTMLCanvasElement>('#game'), $<HTMLCanvasElement>('#game-ov'));
   private env: Env | null = null;
   private compileError: string | null = null;
   private keymap: Keymap = normalizeKeymap();
@@ -149,6 +150,7 @@ export class App {
     };
     window.addEventListener('resize', resize);
     new ResizeObserver(resize).observe($('#stage'));
+    initSplitters();
     resize();
     requestAnimationFrame((t) => this.frame(t));
 
@@ -196,8 +198,8 @@ export class App {
     );
 
     // 게임 머리: 점수·프레임·AI 시야·시드
-    this.ui.score = el('b', { textContent: '0' });
-    this.ui.frame = el('b', { textContent: '0' });
+    this.ui.score = el('b', { className: 'fixed w-score', textContent: '0' });
+    this.ui.frame = el('b', { className: 'fixed w-frame', textContent: '0' });
     const overlay = el('input', { type: 'checkbox', checked: true });
     overlay.addEventListener('change', () => (this.overlay = overlay.checked));
     this.ui.seed = el('input', { type: 'number', value: '0', min: '0', step: '1' });
@@ -206,12 +208,19 @@ export class App {
       this.ui.seed.value = String(this.seed);
       this.resetEpisode();
     });
-    this.ui.reward = el('b', { textContent: '0' });
+    this.ui.reward = el('b', { className: 'fixed w-reward', textContent: '0' });
+    const retro = el('input', { type: 'checkbox', checked: loadPref('retro', '1') === '1' });
+    this.renderer.setRetro(retro.checked);
+    retro.addEventListener('change', () => {
+      this.renderer.setRetro(retro.checked);
+      savePref('retro', retro.checked ? '1' : '0');
+    });
     $('#game-head').append(
       el('span', { className: 'pill score' }, `⭐ ${ko.ui.score}`, this.ui.score),
       el('span', { className: 'pill reward', title: ko.reward.pillHint }, `🎁 ${ko.reward.pill}`, this.ui.reward),
       el('span', { className: 'pill' }, `⏱️ ${ko.ui.frame}`, this.ui.frame),
       el('span', { className: 'spacer' }),
+      el('label', { className: 'switch', title: ko.ui.retroHint }, retro, el('span', { className: 'track' }), `🕹️ ${ko.ui.retro}`),
       el('label', { className: 'switch', title: '센서가 무엇을 보고 있는지, 실제 충돌 사각형이 어디인지 화면에 그려요' }, overlay, el('span', { className: 'track' }), `👀 ${ko.ui.aiView}`),
       el('span', { className: 'pill', title: ko.ui.seedHint }, `🌱 ${ko.ui.seed}`, this.ui.seed),
     );
@@ -249,6 +258,14 @@ export class App {
     this.ui.play.innerHTML = on('human') ? `<span class="i">⏸</span>${ko.ui.pause}` : `<span class="i">▶</span>${ko.ui.play}`;
     this.ui.random.innerHTML = on('random') ? `<span class="i">⏸</span>${ko.ui.pause}` : `<span class="i">🎲</span>${ko.ui.randomAi}`;
     this.ui.trained.innerHTML = on('trained') ? `<span class="i">⏸</span>${ko.ui.pause}` : `<span class="i">🧠</span>${ko.ui.trainedAi}`;
+    // "멈춤" 으로 바뀌어도 버튼 폭이 줄지 않게 (폭이 바뀌면 줄바꿈 → 게임 화면 크기가 출렁인다)
+    for (const b of [this.ui.play, this.ui.random, this.ui.trained]) {
+      const w = b.offsetWidth;
+      if (w > (Number(b.dataset.minw) || 0)) {
+        b.dataset.minw = String(w);
+        b.style.minWidth = `${w}px`;
+      }
+    }
     this.ui.play.disabled = this.ui.random.disabled = !this.env;
     this.ui.trained.disabled = !this.modelUsable();
   }

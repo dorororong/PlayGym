@@ -1,0 +1,2263 @@
+{
+  "version": 1,
+  "blocksJson": {
+    "blocks": {
+      "languageVersion": 0,
+      "blocks": [
+        {
+          "type": "pg_settings",
+          "id": "cartpole_1",
+          "x": 20,
+          "y": 20,
+          "fields": {
+            "LEFT": true,
+            "RIGHT": true,
+            "UP": false,
+            "DOWN": false,
+            "A": false,
+            "B": false,
+            "MAXSTEPS": 500,
+            "SCORE_REWARD": true,
+            "BACKDROP": "sky",
+            "BG": "#bfe6ff"
+          }
+        },
+        {
+          "type": "pg_observe",
+          "id": "cartpole_6",
+          "x": 20,
+          "y": 120,
+          "inputs": {
+            "SENSORS": {
+              "block": {
+                "type": "pg_s_variable",
+                "id": "cartpole_2",
+                "fields": {
+                  "VAR": {
+                    "id": "cartpole_var_x"
+                  },
+                  "MIN": -2.4,
+                  "MAX": 2.4
+                },
+                "next": {
+                  "block": {
+                    "type": "pg_s_variable",
+                    "id": "cartpole_3",
+                    "fields": {
+                      "VAR": {
+                        "id": "cartpole_var_xdot"
+                      },
+                      "MIN": -3,
+                      "MAX": 3
+                    },
+                    "next": {
+                      "block": {
+                        "type": "pg_s_variable",
+                        "id": "cartpole_4",
+                        "fields": {
+                          "VAR": {
+                            "id": "cartpole_var_theta"
+                          },
+                          "MIN": -0.21,
+                          "MAX": 0.21
+                        },
+                        "next": {
+                          "block": {
+                            "type": "pg_s_variable",
+                            "id": "cartpole_5",
+                            "fields": {
+                              "VAR": {
+                                "id": "cartpole_var_thetadot"
+                              },
+                              "MIN": -3.5,
+                              "MAX": 3.5
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_start",
+          "id": "cartpole_56",
+          "x": 20,
+          "y": 220,
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_create",
+                "id": "cartpole_14",
+                "fields": {
+                  "TAG": {
+                    "id": "cartpole_Tag_track"
+                  }
+                },
+                "inputs": {
+                  "X": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "cartpole_8",
+                      "fields": {
+                        "NUM": 200
+                      }
+                    }
+                  },
+                  "Y": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "cartpole_9",
+                      "fields": {
+                        "NUM": 236
+                      }
+                    }
+                  },
+                  "W": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "cartpole_10",
+                      "fields": {
+                        "NUM": 400
+                      }
+                    }
+                  },
+                  "H": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "cartpole_11",
+                      "fields": {
+                        "NUM": 6
+                      }
+                    }
+                  },
+                  "COLOR": {
+                    "shadow": {
+                      "type": "pg_colour",
+                      "id": "cartpole_7",
+                      "fields": {
+                        "C": "#555555"
+                      }
+                    }
+                  },
+                  "VX": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "cartpole_12",
+                      "fields": {
+                        "NUM": 0
+                      }
+                    }
+                  },
+                  "VY": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "cartpole_13",
+                      "fields": {
+                        "NUM": 0
+                      }
+                    }
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "variables_set",
+                    "id": "cartpole_20",
+                    "fields": {
+                      "VAR": {
+                        "id": "cartpole_var_x"
+                      }
+                    },
+                    "inputs": {
+                      "VALUE": {
+                        "block": {
+                          "type": "math_arithmetic",
+                          "id": "cartpole_19",
+                          "fields": {
+                            "OP": "MULTIPLY"
+                          },
+                          "inputs": {
+                            "A": {
+                              "block": {
+                                "type": "math_random_int",
+                                "id": "cartpole_17",
+                                "inputs": {
+                                  "FROM": {
+                                    "shadow": {
+                                      "type": "math_number",
+                                      "id": "cartpole_15",
+                                      "fields": {
+                                        "NUM": -50
+                                      }
+                                    }
+                                  },
+                                  "TO": {
+                                    "shadow": {
+                                      "type": "math_number",
+                                      "id": "cartpole_16",
+                                      "fields": {
+                                        "NUM": 50
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "B": {
+                              "shadow": {
+                                "type": "math_number",
+                                "id": "cartpole_18",
+                                "fields": {
+                                  "NUM": 0.001
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "variables_set",
+                        "id": "cartpole_26",
+                        "fields": {
+                          "VAR": {
+                            "id": "cartpole_var_xdot"
+                          }
+                        },
+                        "inputs": {
+                          "VALUE": {
+                            "block": {
+                              "type": "math_arithmetic",
+                              "id": "cartpole_25",
+                              "fields": {
+                                "OP": "MULTIPLY"
+                              },
+                              "inputs": {
+                                "A": {
+                                  "block": {
+                                    "type": "math_random_int",
+                                    "id": "cartpole_23",
+                                    "inputs": {
+                                      "FROM": {
+                                        "shadow": {
+                                          "type": "math_number",
+                                          "id": "cartpole_21",
+                                          "fields": {
+                                            "NUM": -50
+                                          }
+                                        }
+                                      },
+                                      "TO": {
+                                        "shadow": {
+                                          "type": "math_number",
+                                          "id": "cartpole_22",
+                                          "fields": {
+                                            "NUM": 50
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "B": {
+                                  "shadow": {
+                                    "type": "math_number",
+                                    "id": "cartpole_24",
+                                    "fields": {
+                                      "NUM": 0.001
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "next": {
+                          "block": {
+                            "type": "variables_set",
+                            "id": "cartpole_32",
+                            "fields": {
+                              "VAR": {
+                                "id": "cartpole_var_theta"
+                              }
+                            },
+                            "inputs": {
+                              "VALUE": {
+                                "block": {
+                                  "type": "math_arithmetic",
+                                  "id": "cartpole_31",
+                                  "fields": {
+                                    "OP": "MULTIPLY"
+                                  },
+                                  "inputs": {
+                                    "A": {
+                                      "block": {
+                                        "type": "math_random_int",
+                                        "id": "cartpole_29",
+                                        "inputs": {
+                                          "FROM": {
+                                            "shadow": {
+                                              "type": "math_number",
+                                              "id": "cartpole_27",
+                                              "fields": {
+                                                "NUM": -50
+                                              }
+                                            }
+                                          },
+                                          "TO": {
+                                            "shadow": {
+                                              "type": "math_number",
+                                              "id": "cartpole_28",
+                                              "fields": {
+                                                "NUM": 50
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "B": {
+                                      "shadow": {
+                                        "type": "math_number",
+                                        "id": "cartpole_30",
+                                        "fields": {
+                                          "NUM": 0.001
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "next": {
+                              "block": {
+                                "type": "variables_set",
+                                "id": "cartpole_38",
+                                "fields": {
+                                  "VAR": {
+                                    "id": "cartpole_var_thetadot"
+                                  }
+                                },
+                                "inputs": {
+                                  "VALUE": {
+                                    "block": {
+                                      "type": "math_arithmetic",
+                                      "id": "cartpole_37",
+                                      "fields": {
+                                        "OP": "MULTIPLY"
+                                      },
+                                      "inputs": {
+                                        "A": {
+                                          "block": {
+                                            "type": "math_random_int",
+                                            "id": "cartpole_35",
+                                            "inputs": {
+                                              "FROM": {
+                                                "shadow": {
+                                                  "type": "math_number",
+                                                  "id": "cartpole_33",
+                                                  "fields": {
+                                                    "NUM": -50
+                                                  }
+                                                }
+                                              },
+                                              "TO": {
+                                                "shadow": {
+                                                  "type": "math_number",
+                                                  "id": "cartpole_34",
+                                                  "fields": {
+                                                    "NUM": 50
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "B": {
+                                          "shadow": {
+                                            "type": "math_number",
+                                            "id": "cartpole_36",
+                                            "fields": {
+                                              "NUM": 0.001
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "next": {
+                                  "block": {
+                                    "type": "variables_set",
+                                    "id": "cartpole_40",
+                                    "fields": {
+                                      "VAR": {
+                                        "id": "cartpole_var_force"
+                                      }
+                                    },
+                                    "inputs": {
+                                      "VALUE": {
+                                        "shadow": {
+                                          "type": "math_number",
+                                          "id": "cartpole_39",
+                                          "fields": {
+                                            "NUM": 0
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "next": {
+                                      "block": {
+                                        "type": "pg_create",
+                                        "id": "cartpole_52",
+                                        "fields": {
+                                          "TAG": {
+                                            "id": "cartpole_Tag_cart"
+                                          }
+                                        },
+                                        "inputs": {
+                                          "X": {
+                                            "block": {
+                                              "type": "math_arithmetic",
+                                              "id": "cartpole_45",
+                                              "fields": {
+                                                "OP": "ADD"
+                                              },
+                                              "inputs": {
+                                                "A": {
+                                                  "shadow": {
+                                                    "type": "math_number",
+                                                    "id": "cartpole_44",
+                                                    "fields": {
+                                                      "NUM": 200
+                                                    }
+                                                  }
+                                                },
+                                                "B": {
+                                                  "block": {
+                                                    "type": "math_arithmetic",
+                                                    "id": "cartpole_43",
+                                                    "fields": {
+                                                      "OP": "MULTIPLY"
+                                                    },
+                                                    "inputs": {
+                                                      "A": {
+                                                        "block": {
+                                                          "type": "variables_get",
+                                                          "id": "cartpole_41",
+                                                          "fields": {
+                                                            "VAR": {
+                                                              "id": "cartpole_var_x"
+                                                            }
+                                                          }
+                                                        }
+                                                      },
+                                                      "B": {
+                                                        "shadow": {
+                                                          "type": "math_number",
+                                                          "id": "cartpole_42",
+                                                          "fields": {
+                                                            "NUM": 80
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          },
+                                          "Y": {
+                                            "shadow": {
+                                              "type": "math_number",
+                                              "id": "cartpole_47",
+                                              "fields": {
+                                                "NUM": 220
+                                              }
+                                            }
+                                          },
+                                          "W": {
+                                            "shadow": {
+                                              "type": "math_number",
+                                              "id": "cartpole_48",
+                                              "fields": {
+                                                "NUM": 50
+                                              }
+                                            }
+                                          },
+                                          "H": {
+                                            "shadow": {
+                                              "type": "math_number",
+                                              "id": "cartpole_49",
+                                              "fields": {
+                                                "NUM": 26
+                                              }
+                                            }
+                                          },
+                                          "COLOR": {
+                                            "shadow": {
+                                              "type": "pg_colour",
+                                              "id": "cartpole_46",
+                                              "fields": {
+                                                "C": "#3355cc"
+                                              }
+                                            }
+                                          },
+                                          "VX": {
+                                            "shadow": {
+                                              "type": "math_number",
+                                              "id": "cartpole_50",
+                                              "fields": {
+                                                "NUM": 0
+                                              }
+                                            }
+                                          },
+                                          "VY": {
+                                            "shadow": {
+                                              "type": "math_number",
+                                              "id": "cartpole_51",
+                                              "fields": {
+                                                "NUM": 0
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "next": {
+                                          "block": {
+                                            "type": "pg_set_costume",
+                                            "id": "cartpole_53",
+                                            "fields": {
+                                              "TAG": {
+                                                "id": "cartpole_Tag_track"
+                                              },
+                                              "COSTUME": "box"
+                                            },
+                                            "next": {
+                                              "block": {
+                                                "type": "pg_set_costume",
+                                                "id": "cartpole_54",
+                                                "fields": {
+                                                  "TAG": {
+                                                    "id": "cartpole_Tag_cart"
+                                                  },
+                                                  "COSTUME": "box"
+                                                },
+                                                "next": {
+                                                  "block": {
+                                                    "type": "pg_set_costume",
+                                                    "id": "cartpole_55",
+                                                    "fields": {
+                                                      "TAG": {
+                                                        "id": "cartpole_Tag_pole"
+                                                      },
+                                                      "COSTUME": "box"
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_action",
+          "id": "cartpole_59",
+          "x": 20,
+          "y": 320,
+          "fields": {
+            "ACTION": "none"
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "variables_set",
+                "id": "cartpole_58",
+                "fields": {
+                  "VAR": {
+                    "id": "cartpole_var_force"
+                  }
+                },
+                "inputs": {
+                  "VALUE": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "cartpole_57",
+                      "fields": {
+                        "NUM": 0
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_action",
+          "id": "cartpole_62",
+          "x": 20,
+          "y": 420,
+          "fields": {
+            "ACTION": "left"
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "variables_set",
+                "id": "cartpole_61",
+                "fields": {
+                  "VAR": {
+                    "id": "cartpole_var_force"
+                  }
+                },
+                "inputs": {
+                  "VALUE": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "cartpole_60",
+                      "fields": {
+                        "NUM": -10
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_action",
+          "id": "cartpole_65",
+          "x": 20,
+          "y": 520,
+          "fields": {
+            "ACTION": "right"
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "variables_set",
+                "id": "cartpole_64",
+                "fields": {
+                  "VAR": {
+                    "id": "cartpole_var_force"
+                  }
+                },
+                "inputs": {
+                  "VALUE": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "cartpole_63",
+                      "fields": {
+                        "NUM": 10
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_tick",
+          "id": "cartpole_205",
+          "x": 20,
+          "y": 620,
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "variables_set",
+                "id": "cartpole_70",
+                "fields": {
+                  "VAR": {
+                    "id": "cartpole_var_s"
+                  }
+                },
+                "inputs": {
+                  "VALUE": {
+                    "block": {
+                      "type": "math_trig",
+                      "id": "cartpole_69",
+                      "fields": {
+                        "OP": "SIN"
+                      },
+                      "inputs": {
+                        "NUM": {
+                          "block": {
+                            "type": "math_arithmetic",
+                            "id": "cartpole_68",
+                            "fields": {
+                              "OP": "MULTIPLY"
+                            },
+                            "inputs": {
+                              "A": {
+                                "block": {
+                                  "type": "variables_get",
+                                  "id": "cartpole_66",
+                                  "fields": {
+                                    "VAR": {
+                                      "id": "cartpole_var_theta"
+                                    }
+                                  }
+                                }
+                              },
+                              "B": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "cartpole_67",
+                                  "fields": {
+                                    "NUM": 57.29578
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "variables_set",
+                    "id": "cartpole_75",
+                    "fields": {
+                      "VAR": {
+                        "id": "cartpole_var_c"
+                      }
+                    },
+                    "inputs": {
+                      "VALUE": {
+                        "block": {
+                          "type": "math_trig",
+                          "id": "cartpole_74",
+                          "fields": {
+                            "OP": "COS"
+                          },
+                          "inputs": {
+                            "NUM": {
+                              "block": {
+                                "type": "math_arithmetic",
+                                "id": "cartpole_73",
+                                "fields": {
+                                  "OP": "MULTIPLY"
+                                },
+                                "inputs": {
+                                  "A": {
+                                    "block": {
+                                      "type": "variables_get",
+                                      "id": "cartpole_71",
+                                      "fields": {
+                                        "VAR": {
+                                          "id": "cartpole_var_theta"
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "B": {
+                                    "shadow": {
+                                      "type": "math_number",
+                                      "id": "cartpole_72",
+                                      "fields": {
+                                        "NUM": 57.29578
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "variables_set",
+                        "id": "cartpole_87",
+                        "fields": {
+                          "VAR": {
+                            "id": "cartpole_var_temp"
+                          }
+                        },
+                        "inputs": {
+                          "VALUE": {
+                            "block": {
+                              "type": "math_arithmetic",
+                              "id": "cartpole_86",
+                              "fields": {
+                                "OP": "DIVIDE"
+                              },
+                              "inputs": {
+                                "A": {
+                                  "block": {
+                                    "type": "math_arithmetic",
+                                    "id": "cartpole_84",
+                                    "fields": {
+                                      "OP": "ADD"
+                                    },
+                                    "inputs": {
+                                      "A": {
+                                        "block": {
+                                          "type": "variables_get",
+                                          "id": "cartpole_76",
+                                          "fields": {
+                                            "VAR": {
+                                              "id": "cartpole_var_force"
+                                            }
+                                          }
+                                        }
+                                      },
+                                      "B": {
+                                        "block": {
+                                          "type": "math_arithmetic",
+                                          "id": "cartpole_83",
+                                          "fields": {
+                                            "OP": "MULTIPLY"
+                                          },
+                                          "inputs": {
+                                            "A": {
+                                              "block": {
+                                                "type": "math_arithmetic",
+                                                "id": "cartpole_81",
+                                                "fields": {
+                                                  "OP": "MULTIPLY"
+                                                },
+                                                "inputs": {
+                                                  "A": {
+                                                    "shadow": {
+                                                      "type": "math_number",
+                                                      "id": "cartpole_80",
+                                                      "fields": {
+                                                        "NUM": 0.05
+                                                      }
+                                                    }
+                                                  },
+                                                  "B": {
+                                                    "block": {
+                                                      "type": "math_arithmetic",
+                                                      "id": "cartpole_79",
+                                                      "fields": {
+                                                        "OP": "MULTIPLY"
+                                                      },
+                                                      "inputs": {
+                                                        "A": {
+                                                          "block": {
+                                                            "type": "variables_get",
+                                                            "id": "cartpole_77",
+                                                            "fields": {
+                                                              "VAR": {
+                                                                "id": "cartpole_var_thetadot"
+                                                              }
+                                                            }
+                                                          }
+                                                        },
+                                                        "B": {
+                                                          "block": {
+                                                            "type": "variables_get",
+                                                            "id": "cartpole_78",
+                                                            "fields": {
+                                                              "VAR": {
+                                                                "id": "cartpole_var_thetadot"
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            },
+                                            "B": {
+                                              "block": {
+                                                "type": "variables_get",
+                                                "id": "cartpole_82",
+                                                "fields": {
+                                                  "VAR": {
+                                                    "id": "cartpole_var_s"
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "B": {
+                                  "shadow": {
+                                    "type": "math_number",
+                                    "id": "cartpole_85",
+                                    "fields": {
+                                      "NUM": 1.1
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "next": {
+                          "block": {
+                            "type": "variables_set",
+                            "id": "cartpole_107",
+                            "fields": {
+                              "VAR": {
+                                "id": "cartpole_var_tacc"
+                              }
+                            },
+                            "inputs": {
+                              "VALUE": {
+                                "block": {
+                                  "type": "math_arithmetic",
+                                  "id": "cartpole_106",
+                                  "fields": {
+                                    "OP": "DIVIDE"
+                                  },
+                                  "inputs": {
+                                    "A": {
+                                      "block": {
+                                        "type": "math_arithmetic",
+                                        "id": "cartpole_94",
+                                        "fields": {
+                                          "OP": "MINUS"
+                                        },
+                                        "inputs": {
+                                          "A": {
+                                            "block": {
+                                              "type": "math_arithmetic",
+                                              "id": "cartpole_90",
+                                              "fields": {
+                                                "OP": "MULTIPLY"
+                                              },
+                                              "inputs": {
+                                                "A": {
+                                                  "shadow": {
+                                                    "type": "math_number",
+                                                    "id": "cartpole_89",
+                                                    "fields": {
+                                                      "NUM": 9.8
+                                                    }
+                                                  }
+                                                },
+                                                "B": {
+                                                  "block": {
+                                                    "type": "variables_get",
+                                                    "id": "cartpole_88",
+                                                    "fields": {
+                                                      "VAR": {
+                                                        "id": "cartpole_var_s"
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          },
+                                          "B": {
+                                            "block": {
+                                              "type": "math_arithmetic",
+                                              "id": "cartpole_93",
+                                              "fields": {
+                                                "OP": "MULTIPLY"
+                                              },
+                                              "inputs": {
+                                                "A": {
+                                                  "block": {
+                                                    "type": "variables_get",
+                                                    "id": "cartpole_91",
+                                                    "fields": {
+                                                      "VAR": {
+                                                        "id": "cartpole_var_c"
+                                                      }
+                                                    }
+                                                  }
+                                                },
+                                                "B": {
+                                                  "block": {
+                                                    "type": "variables_get",
+                                                    "id": "cartpole_92",
+                                                    "fields": {
+                                                      "VAR": {
+                                                        "id": "cartpole_var_temp"
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "B": {
+                                      "block": {
+                                        "type": "math_arithmetic",
+                                        "id": "cartpole_105",
+                                        "fields": {
+                                          "OP": "MULTIPLY"
+                                        },
+                                        "inputs": {
+                                          "A": {
+                                            "shadow": {
+                                              "type": "math_number",
+                                              "id": "cartpole_104",
+                                              "fields": {
+                                                "NUM": 0.5
+                                              }
+                                            }
+                                          },
+                                          "B": {
+                                            "block": {
+                                              "type": "math_arithmetic",
+                                              "id": "cartpole_103",
+                                              "fields": {
+                                                "OP": "MINUS"
+                                              },
+                                              "inputs": {
+                                                "A": {
+                                                  "shadow": {
+                                                    "type": "math_number",
+                                                    "id": "cartpole_102",
+                                                    "fields": {
+                                                      "NUM": 1.3333
+                                                    }
+                                                  }
+                                                },
+                                                "B": {
+                                                  "block": {
+                                                    "type": "math_arithmetic",
+                                                    "id": "cartpole_101",
+                                                    "fields": {
+                                                      "OP": "DIVIDE"
+                                                    },
+                                                    "inputs": {
+                                                      "A": {
+                                                        "block": {
+                                                          "type": "math_arithmetic",
+                                                          "id": "cartpole_99",
+                                                          "fields": {
+                                                            "OP": "MULTIPLY"
+                                                          },
+                                                          "inputs": {
+                                                            "A": {
+                                                              "shadow": {
+                                                                "type": "math_number",
+                                                                "id": "cartpole_98",
+                                                                "fields": {
+                                                                  "NUM": 0.1
+                                                                }
+                                                              }
+                                                            },
+                                                            "B": {
+                                                              "block": {
+                                                                "type": "math_arithmetic",
+                                                                "id": "cartpole_97",
+                                                                "fields": {
+                                                                  "OP": "MULTIPLY"
+                                                                },
+                                                                "inputs": {
+                                                                  "A": {
+                                                                    "block": {
+                                                                      "type": "variables_get",
+                                                                      "id": "cartpole_95",
+                                                                      "fields": {
+                                                                        "VAR": {
+                                                                          "id": "cartpole_var_c"
+                                                                        }
+                                                                      }
+                                                                    }
+                                                                  },
+                                                                  "B": {
+                                                                    "block": {
+                                                                      "type": "variables_get",
+                                                                      "id": "cartpole_96",
+                                                                      "fields": {
+                                                                        "VAR": {
+                                                                          "id": "cartpole_var_c"
+                                                                        }
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      },
+                                                      "B": {
+                                                        "shadow": {
+                                                          "type": "math_number",
+                                                          "id": "cartpole_100",
+                                                          "fields": {
+                                                            "NUM": 1.1
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "next": {
+                              "block": {
+                                "type": "variables_set",
+                                "id": "cartpole_117",
+                                "fields": {
+                                  "VAR": {
+                                    "id": "cartpole_var_xacc"
+                                  }
+                                },
+                                "inputs": {
+                                  "VALUE": {
+                                    "block": {
+                                      "type": "math_arithmetic",
+                                      "id": "cartpole_116",
+                                      "fields": {
+                                        "OP": "MINUS"
+                                      },
+                                      "inputs": {
+                                        "A": {
+                                          "block": {
+                                            "type": "variables_get",
+                                            "id": "cartpole_108",
+                                            "fields": {
+                                              "VAR": {
+                                                "id": "cartpole_var_temp"
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "B": {
+                                          "block": {
+                                            "type": "math_arithmetic",
+                                            "id": "cartpole_115",
+                                            "fields": {
+                                              "OP": "DIVIDE"
+                                            },
+                                            "inputs": {
+                                              "A": {
+                                                "block": {
+                                                  "type": "math_arithmetic",
+                                                  "id": "cartpole_113",
+                                                  "fields": {
+                                                    "OP": "MULTIPLY"
+                                                  },
+                                                  "inputs": {
+                                                    "A": {
+                                                      "block": {
+                                                        "type": "math_arithmetic",
+                                                        "id": "cartpole_111",
+                                                        "fields": {
+                                                          "OP": "MULTIPLY"
+                                                        },
+                                                        "inputs": {
+                                                          "A": {
+                                                            "shadow": {
+                                                              "type": "math_number",
+                                                              "id": "cartpole_110",
+                                                              "fields": {
+                                                                "NUM": 0.05
+                                                              }
+                                                            }
+                                                          },
+                                                          "B": {
+                                                            "block": {
+                                                              "type": "variables_get",
+                                                              "id": "cartpole_109",
+                                                              "fields": {
+                                                                "VAR": {
+                                                                  "id": "cartpole_var_tacc"
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    },
+                                                    "B": {
+                                                      "block": {
+                                                        "type": "variables_get",
+                                                        "id": "cartpole_112",
+                                                        "fields": {
+                                                          "VAR": {
+                                                            "id": "cartpole_var_c"
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              },
+                                              "B": {
+                                                "shadow": {
+                                                  "type": "math_number",
+                                                  "id": "cartpole_114",
+                                                  "fields": {
+                                                    "NUM": 1.1
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "next": {
+                                  "block": {
+                                    "type": "variables_set",
+                                    "id": "cartpole_123",
+                                    "fields": {
+                                      "VAR": {
+                                        "id": "cartpole_var_x"
+                                      }
+                                    },
+                                    "inputs": {
+                                      "VALUE": {
+                                        "block": {
+                                          "type": "math_arithmetic",
+                                          "id": "cartpole_122",
+                                          "fields": {
+                                            "OP": "ADD"
+                                          },
+                                          "inputs": {
+                                            "A": {
+                                              "block": {
+                                                "type": "variables_get",
+                                                "id": "cartpole_118",
+                                                "fields": {
+                                                  "VAR": {
+                                                    "id": "cartpole_var_x"
+                                                  }
+                                                }
+                                              }
+                                            },
+                                            "B": {
+                                              "block": {
+                                                "type": "math_arithmetic",
+                                                "id": "cartpole_121",
+                                                "fields": {
+                                                  "OP": "MULTIPLY"
+                                                },
+                                                "inputs": {
+                                                  "A": {
+                                                    "shadow": {
+                                                      "type": "math_number",
+                                                      "id": "cartpole_120",
+                                                      "fields": {
+                                                        "NUM": 0.02
+                                                      }
+                                                    }
+                                                  },
+                                                  "B": {
+                                                    "block": {
+                                                      "type": "variables_get",
+                                                      "id": "cartpole_119",
+                                                      "fields": {
+                                                        "VAR": {
+                                                          "id": "cartpole_var_xdot"
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "next": {
+                                      "block": {
+                                        "type": "variables_set",
+                                        "id": "cartpole_129",
+                                        "fields": {
+                                          "VAR": {
+                                            "id": "cartpole_var_xdot"
+                                          }
+                                        },
+                                        "inputs": {
+                                          "VALUE": {
+                                            "block": {
+                                              "type": "math_arithmetic",
+                                              "id": "cartpole_128",
+                                              "fields": {
+                                                "OP": "ADD"
+                                              },
+                                              "inputs": {
+                                                "A": {
+                                                  "block": {
+                                                    "type": "variables_get",
+                                                    "id": "cartpole_124",
+                                                    "fields": {
+                                                      "VAR": {
+                                                        "id": "cartpole_var_xdot"
+                                                      }
+                                                    }
+                                                  }
+                                                },
+                                                "B": {
+                                                  "block": {
+                                                    "type": "math_arithmetic",
+                                                    "id": "cartpole_127",
+                                                    "fields": {
+                                                      "OP": "MULTIPLY"
+                                                    },
+                                                    "inputs": {
+                                                      "A": {
+                                                        "shadow": {
+                                                          "type": "math_number",
+                                                          "id": "cartpole_126",
+                                                          "fields": {
+                                                            "NUM": 0.02
+                                                          }
+                                                        }
+                                                      },
+                                                      "B": {
+                                                        "block": {
+                                                          "type": "variables_get",
+                                                          "id": "cartpole_125",
+                                                          "fields": {
+                                                            "VAR": {
+                                                              "id": "cartpole_var_xacc"
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "next": {
+                                          "block": {
+                                            "type": "variables_set",
+                                            "id": "cartpole_135",
+                                            "fields": {
+                                              "VAR": {
+                                                "id": "cartpole_var_theta"
+                                              }
+                                            },
+                                            "inputs": {
+                                              "VALUE": {
+                                                "block": {
+                                                  "type": "math_arithmetic",
+                                                  "id": "cartpole_134",
+                                                  "fields": {
+                                                    "OP": "ADD"
+                                                  },
+                                                  "inputs": {
+                                                    "A": {
+                                                      "block": {
+                                                        "type": "variables_get",
+                                                        "id": "cartpole_130",
+                                                        "fields": {
+                                                          "VAR": {
+                                                            "id": "cartpole_var_theta"
+                                                          }
+                                                        }
+                                                      }
+                                                    },
+                                                    "B": {
+                                                      "block": {
+                                                        "type": "math_arithmetic",
+                                                        "id": "cartpole_133",
+                                                        "fields": {
+                                                          "OP": "MULTIPLY"
+                                                        },
+                                                        "inputs": {
+                                                          "A": {
+                                                            "shadow": {
+                                                              "type": "math_number",
+                                                              "id": "cartpole_132",
+                                                              "fields": {
+                                                                "NUM": 0.02
+                                                              }
+                                                            }
+                                                          },
+                                                          "B": {
+                                                            "block": {
+                                                              "type": "variables_get",
+                                                              "id": "cartpole_131",
+                                                              "fields": {
+                                                                "VAR": {
+                                                                  "id": "cartpole_var_thetadot"
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            },
+                                            "next": {
+                                              "block": {
+                                                "type": "variables_set",
+                                                "id": "cartpole_141",
+                                                "fields": {
+                                                  "VAR": {
+                                                    "id": "cartpole_var_thetadot"
+                                                  }
+                                                },
+                                                "inputs": {
+                                                  "VALUE": {
+                                                    "block": {
+                                                      "type": "math_arithmetic",
+                                                      "id": "cartpole_140",
+                                                      "fields": {
+                                                        "OP": "ADD"
+                                                      },
+                                                      "inputs": {
+                                                        "A": {
+                                                          "block": {
+                                                            "type": "variables_get",
+                                                            "id": "cartpole_136",
+                                                            "fields": {
+                                                              "VAR": {
+                                                                "id": "cartpole_var_thetadot"
+                                                              }
+                                                            }
+                                                          }
+                                                        },
+                                                        "B": {
+                                                          "block": {
+                                                            "type": "math_arithmetic",
+                                                            "id": "cartpole_139",
+                                                            "fields": {
+                                                              "OP": "MULTIPLY"
+                                                            },
+                                                            "inputs": {
+                                                              "A": {
+                                                                "shadow": {
+                                                                  "type": "math_number",
+                                                                  "id": "cartpole_138",
+                                                                  "fields": {
+                                                                    "NUM": 0.02
+                                                                  }
+                                                                }
+                                                              },
+                                                              "B": {
+                                                                "block": {
+                                                                  "type": "variables_get",
+                                                                  "id": "cartpole_137",
+                                                                  "fields": {
+                                                                    "VAR": {
+                                                                      "id": "cartpole_var_tacc"
+                                                                    }
+                                                                  }
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                },
+                                                "next": {
+                                                  "block": {
+                                                    "type": "pg_set_pos",
+                                                    "id": "cartpole_149",
+                                                    "inputs": {
+                                                      "T": {
+                                                        "block": {
+                                                          "type": "pg_tag",
+                                                          "id": "cartpole_142",
+                                                          "fields": {
+                                                            "TAG": {
+                                                              "id": "cartpole_Tag_cart"
+                                                            }
+                                                          }
+                                                        }
+                                                      },
+                                                      "X": {
+                                                        "block": {
+                                                          "type": "math_arithmetic",
+                                                          "id": "cartpole_147",
+                                                          "fields": {
+                                                            "OP": "ADD"
+                                                          },
+                                                          "inputs": {
+                                                            "A": {
+                                                              "shadow": {
+                                                                "type": "math_number",
+                                                                "id": "cartpole_146",
+                                                                "fields": {
+                                                                  "NUM": 200
+                                                                }
+                                                              }
+                                                            },
+                                                            "B": {
+                                                              "block": {
+                                                                "type": "math_arithmetic",
+                                                                "id": "cartpole_145",
+                                                                "fields": {
+                                                                  "OP": "MULTIPLY"
+                                                                },
+                                                                "inputs": {
+                                                                  "A": {
+                                                                    "block": {
+                                                                      "type": "variables_get",
+                                                                      "id": "cartpole_143",
+                                                                      "fields": {
+                                                                        "VAR": {
+                                                                          "id": "cartpole_var_x"
+                                                                        }
+                                                                      }
+                                                                    }
+                                                                  },
+                                                                  "B": {
+                                                                    "shadow": {
+                                                                      "type": "math_number",
+                                                                      "id": "cartpole_144",
+                                                                      "fields": {
+                                                                        "NUM": 80
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      },
+                                                      "Y": {
+                                                        "shadow": {
+                                                          "type": "math_number",
+                                                          "id": "cartpole_148",
+                                                          "fields": {
+                                                            "NUM": 220
+                                                          }
+                                                        }
+                                                      }
+                                                    },
+                                                    "next": {
+                                                      "block": {
+                                                        "type": "pg_destroy",
+                                                        "id": "cartpole_151",
+                                                        "inputs": {
+                                                          "T": {
+                                                            "block": {
+                                                              "type": "pg_tag",
+                                                              "id": "cartpole_150",
+                                                              "fields": {
+                                                                "TAG": {
+                                                                  "id": "cartpole_Tag_pole"
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        },
+                                                        "next": {
+                                                          "block": {
+                                                            "type": "controls_for",
+                                                            "id": "cartpole_185",
+                                                            "fields": {
+                                                              "VAR": {
+                                                                "id": "cartpole_var_i"
+                                                              }
+                                                            },
+                                                            "inputs": {
+                                                              "FROM": {
+                                                                "shadow": {
+                                                                  "type": "math_number",
+                                                                  "id": "cartpole_182",
+                                                                  "fields": {
+                                                                    "NUM": 1
+                                                                  }
+                                                                }
+                                                              },
+                                                              "BY": {
+                                                                "shadow": {
+                                                                  "type": "math_number",
+                                                                  "id": "cartpole_184",
+                                                                  "fields": {
+                                                                    "NUM": 1
+                                                                  }
+                                                                }
+                                                              },
+                                                              "TO": {
+                                                                "shadow": {
+                                                                  "type": "math_number",
+                                                                  "id": "cartpole_183",
+                                                                  "fields": {
+                                                                    "NUM": 8
+                                                                  }
+                                                                }
+                                                              },
+                                                              "DO": {
+                                                                "block": {
+                                                                  "type": "pg_create",
+                                                                  "id": "cartpole_181",
+                                                                  "fields": {
+                                                                    "TAG": {
+                                                                      "id": "cartpole_Tag_pole"
+                                                                    }
+                                                                  },
+                                                                  "inputs": {
+                                                                    "X": {
+                                                                      "block": {
+                                                                        "type": "math_arithmetic",
+                                                                        "id": "cartpole_165",
+                                                                        "fields": {
+                                                                          "OP": "ADD"
+                                                                        },
+                                                                        "inputs": {
+                                                                          "A": {
+                                                                            "block": {
+                                                                              "type": "math_arithmetic",
+                                                                              "id": "cartpole_156",
+                                                                              "fields": {
+                                                                                "OP": "ADD"
+                                                                              },
+                                                                              "inputs": {
+                                                                                "A": {
+                                                                                  "shadow": {
+                                                                                    "type": "math_number",
+                                                                                    "id": "cartpole_155",
+                                                                                    "fields": {
+                                                                                      "NUM": 200
+                                                                                    }
+                                                                                  }
+                                                                                },
+                                                                                "B": {
+                                                                                  "block": {
+                                                                                    "type": "math_arithmetic",
+                                                                                    "id": "cartpole_154",
+                                                                                    "fields": {
+                                                                                      "OP": "MULTIPLY"
+                                                                                    },
+                                                                                    "inputs": {
+                                                                                      "A": {
+                                                                                        "block": {
+                                                                                          "type": "variables_get",
+                                                                                          "id": "cartpole_152",
+                                                                                          "fields": {
+                                                                                            "VAR": {
+                                                                                              "id": "cartpole_var_x"
+                                                                                            }
+                                                                                          }
+                                                                                        }
+                                                                                      },
+                                                                                      "B": {
+                                                                                        "shadow": {
+                                                                                          "type": "math_number",
+                                                                                          "id": "cartpole_153",
+                                                                                          "fields": {
+                                                                                            "NUM": 80
+                                                                                          }
+                                                                                        }
+                                                                                      }
+                                                                                    }
+                                                                                  }
+                                                                                }
+                                                                              }
+                                                                            }
+                                                                          },
+                                                                          "B": {
+                                                                            "block": {
+                                                                              "type": "math_arithmetic",
+                                                                              "id": "cartpole_164",
+                                                                              "fields": {
+                                                                                "OP": "MULTIPLY"
+                                                                              },
+                                                                              "inputs": {
+                                                                                "A": {
+                                                                                  "block": {
+                                                                                    "type": "math_trig",
+                                                                                    "id": "cartpole_160",
+                                                                                    "fields": {
+                                                                                      "OP": "SIN"
+                                                                                    },
+                                                                                    "inputs": {
+                                                                                      "NUM": {
+                                                                                        "block": {
+                                                                                          "type": "math_arithmetic",
+                                                                                          "id": "cartpole_159",
+                                                                                          "fields": {
+                                                                                            "OP": "MULTIPLY"
+                                                                                          },
+                                                                                          "inputs": {
+                                                                                            "A": {
+                                                                                              "block": {
+                                                                                                "type": "variables_get",
+                                                                                                "id": "cartpole_157",
+                                                                                                "fields": {
+                                                                                                  "VAR": {
+                                                                                                    "id": "cartpole_var_theta"
+                                                                                                  }
+                                                                                                }
+                                                                                              }
+                                                                                            },
+                                                                                            "B": {
+                                                                                              "shadow": {
+                                                                                                "type": "math_number",
+                                                                                                "id": "cartpole_158",
+                                                                                                "fields": {
+                                                                                                  "NUM": 57.29578
+                                                                                                }
+                                                                                              }
+                                                                                            }
+                                                                                          }
+                                                                                        }
+                                                                                      }
+                                                                                    }
+                                                                                  }
+                                                                                },
+                                                                                "B": {
+                                                                                  "block": {
+                                                                                    "type": "math_arithmetic",
+                                                                                    "id": "cartpole_163",
+                                                                                    "fields": {
+                                                                                      "OP": "MULTIPLY"
+                                                                                    },
+                                                                                    "inputs": {
+                                                                                      "A": {
+                                                                                        "block": {
+                                                                                          "type": "variables_get",
+                                                                                          "id": "cartpole_161",
+                                                                                          "fields": {
+                                                                                            "VAR": {
+                                                                                              "id": "cartpole_var_i"
+                                                                                            }
+                                                                                          }
+                                                                                        }
+                                                                                      },
+                                                                                      "B": {
+                                                                                        "shadow": {
+                                                                                          "type": "math_number",
+                                                                                          "id": "cartpole_162",
+                                                                                          "fields": {
+                                                                                            "NUM": 10
+                                                                                          }
+                                                                                        }
+                                                                                      }
+                                                                                    }
+                                                                                  }
+                                                                                }
+                                                                              }
+                                                                            }
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                    },
+                                                                    "Y": {
+                                                                      "block": {
+                                                                        "type": "math_arithmetic",
+                                                                        "id": "cartpole_175",
+                                                                        "fields": {
+                                                                          "OP": "MINUS"
+                                                                        },
+                                                                        "inputs": {
+                                                                          "A": {
+                                                                            "shadow": {
+                                                                              "type": "math_number",
+                                                                              "id": "cartpole_174",
+                                                                              "fields": {
+                                                                                "NUM": 210
+                                                                              }
+                                                                            }
+                                                                          },
+                                                                          "B": {
+                                                                            "block": {
+                                                                              "type": "math_arithmetic",
+                                                                              "id": "cartpole_173",
+                                                                              "fields": {
+                                                                                "OP": "MULTIPLY"
+                                                                              },
+                                                                              "inputs": {
+                                                                                "A": {
+                                                                                  "block": {
+                                                                                    "type": "math_trig",
+                                                                                    "id": "cartpole_169",
+                                                                                    "fields": {
+                                                                                      "OP": "COS"
+                                                                                    },
+                                                                                    "inputs": {
+                                                                                      "NUM": {
+                                                                                        "block": {
+                                                                                          "type": "math_arithmetic",
+                                                                                          "id": "cartpole_168",
+                                                                                          "fields": {
+                                                                                            "OP": "MULTIPLY"
+                                                                                          },
+                                                                                          "inputs": {
+                                                                                            "A": {
+                                                                                              "block": {
+                                                                                                "type": "variables_get",
+                                                                                                "id": "cartpole_166",
+                                                                                                "fields": {
+                                                                                                  "VAR": {
+                                                                                                    "id": "cartpole_var_theta"
+                                                                                                  }
+                                                                                                }
+                                                                                              }
+                                                                                            },
+                                                                                            "B": {
+                                                                                              "shadow": {
+                                                                                                "type": "math_number",
+                                                                                                "id": "cartpole_167",
+                                                                                                "fields": {
+                                                                                                  "NUM": 57.29578
+                                                                                                }
+                                                                                              }
+                                                                                            }
+                                                                                          }
+                                                                                        }
+                                                                                      }
+                                                                                    }
+                                                                                  }
+                                                                                },
+                                                                                "B": {
+                                                                                  "block": {
+                                                                                    "type": "math_arithmetic",
+                                                                                    "id": "cartpole_172",
+                                                                                    "fields": {
+                                                                                      "OP": "MULTIPLY"
+                                                                                    },
+                                                                                    "inputs": {
+                                                                                      "A": {
+                                                                                        "block": {
+                                                                                          "type": "variables_get",
+                                                                                          "id": "cartpole_170",
+                                                                                          "fields": {
+                                                                                            "VAR": {
+                                                                                              "id": "cartpole_var_i"
+                                                                                            }
+                                                                                          }
+                                                                                        }
+                                                                                      },
+                                                                                      "B": {
+                                                                                        "shadow": {
+                                                                                          "type": "math_number",
+                                                                                          "id": "cartpole_171",
+                                                                                          "fields": {
+                                                                                            "NUM": 10
+                                                                                          }
+                                                                                        }
+                                                                                      }
+                                                                                    }
+                                                                                  }
+                                                                                }
+                                                                              }
+                                                                            }
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                    },
+                                                                    "W": {
+                                                                      "shadow": {
+                                                                        "type": "math_number",
+                                                                        "id": "cartpole_177",
+                                                                        "fields": {
+                                                                          "NUM": 7
+                                                                        }
+                                                                      }
+                                                                    },
+                                                                    "H": {
+                                                                      "shadow": {
+                                                                        "type": "math_number",
+                                                                        "id": "cartpole_178",
+                                                                        "fields": {
+                                                                          "NUM": 9
+                                                                        }
+                                                                      }
+                                                                    },
+                                                                    "COLOR": {
+                                                                      "shadow": {
+                                                                        "type": "pg_colour",
+                                                                        "id": "cartpole_176",
+                                                                        "fields": {
+                                                                          "C": "#f39c12"
+                                                                        }
+                                                                      }
+                                                                    },
+                                                                    "VX": {
+                                                                      "shadow": {
+                                                                        "type": "math_number",
+                                                                        "id": "cartpole_179",
+                                                                        "fields": {
+                                                                          "NUM": 0
+                                                                        }
+                                                                      }
+                                                                    },
+                                                                    "VY": {
+                                                                      "shadow": {
+                                                                        "type": "math_number",
+                                                                        "id": "cartpole_180",
+                                                                        "fields": {
+                                                                          "NUM": 0
+                                                                        }
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                }
+                                                              }
+                                                            },
+                                                            "next": {
+                                                              "block": {
+                                                                "type": "pg_add_score",
+                                                                "id": "cartpole_187",
+                                                                "inputs": {
+                                                                  "N": {
+                                                                    "shadow": {
+                                                                      "type": "math_number",
+                                                                      "id": "cartpole_186",
+                                                                      "fields": {
+                                                                        "NUM": 1
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                },
+                                                                "next": {
+                                                                  "block": {
+                                                                    "type": "controls_if",
+                                                                    "id": "cartpole_204",
+                                                                    "inputs": {
+                                                                      "IF0": {
+                                                                        "block": {
+                                                                          "type": "logic_operation",
+                                                                          "id": "cartpole_202",
+                                                                          "fields": {
+                                                                            "OP": "OR"
+                                                                          },
+                                                                          "inputs": {
+                                                                            "A": {
+                                                                              "block": {
+                                                                                "type": "logic_operation",
+                                                                                "id": "cartpole_194",
+                                                                                "fields": {
+                                                                                  "OP": "OR"
+                                                                                },
+                                                                                "inputs": {
+                                                                                  "A": {
+                                                                                    "block": {
+                                                                                      "type": "logic_compare",
+                                                                                      "id": "cartpole_190",
+                                                                                      "fields": {
+                                                                                        "OP": "GT"
+                                                                                      },
+                                                                                      "inputs": {
+                                                                                        "A": {
+                                                                                          "block": {
+                                                                                            "type": "variables_get",
+                                                                                            "id": "cartpole_188",
+                                                                                            "fields": {
+                                                                                              "VAR": {
+                                                                                                "id": "cartpole_var_theta"
+                                                                                              }
+                                                                                            }
+                                                                                          }
+                                                                                        },
+                                                                                        "B": {
+                                                                                          "shadow": {
+                                                                                            "type": "math_number",
+                                                                                            "id": "cartpole_189",
+                                                                                            "fields": {
+                                                                                              "NUM": 0.2095
+                                                                                            }
+                                                                                          }
+                                                                                        }
+                                                                                      }
+                                                                                    }
+                                                                                  },
+                                                                                  "B": {
+                                                                                    "block": {
+                                                                                      "type": "logic_compare",
+                                                                                      "id": "cartpole_193",
+                                                                                      "fields": {
+                                                                                        "OP": "LT"
+                                                                                      },
+                                                                                      "inputs": {
+                                                                                        "A": {
+                                                                                          "block": {
+                                                                                            "type": "variables_get",
+                                                                                            "id": "cartpole_191",
+                                                                                            "fields": {
+                                                                                              "VAR": {
+                                                                                                "id": "cartpole_var_theta"
+                                                                                              }
+                                                                                            }
+                                                                                          }
+                                                                                        },
+                                                                                        "B": {
+                                                                                          "shadow": {
+                                                                                            "type": "math_number",
+                                                                                            "id": "cartpole_192",
+                                                                                            "fields": {
+                                                                                              "NUM": -0.2095
+                                                                                            }
+                                                                                          }
+                                                                                        }
+                                                                                      }
+                                                                                    }
+                                                                                  }
+                                                                                }
+                                                                              }
+                                                                            },
+                                                                            "B": {
+                                                                              "block": {
+                                                                                "type": "logic_operation",
+                                                                                "id": "cartpole_201",
+                                                                                "fields": {
+                                                                                  "OP": "OR"
+                                                                                },
+                                                                                "inputs": {
+                                                                                  "A": {
+                                                                                    "block": {
+                                                                                      "type": "logic_compare",
+                                                                                      "id": "cartpole_197",
+                                                                                      "fields": {
+                                                                                        "OP": "GT"
+                                                                                      },
+                                                                                      "inputs": {
+                                                                                        "A": {
+                                                                                          "block": {
+                                                                                            "type": "variables_get",
+                                                                                            "id": "cartpole_195",
+                                                                                            "fields": {
+                                                                                              "VAR": {
+                                                                                                "id": "cartpole_var_x"
+                                                                                              }
+                                                                                            }
+                                                                                          }
+                                                                                        },
+                                                                                        "B": {
+                                                                                          "shadow": {
+                                                                                            "type": "math_number",
+                                                                                            "id": "cartpole_196",
+                                                                                            "fields": {
+                                                                                              "NUM": 2.4
+                                                                                            }
+                                                                                          }
+                                                                                        }
+                                                                                      }
+                                                                                    }
+                                                                                  },
+                                                                                  "B": {
+                                                                                    "block": {
+                                                                                      "type": "logic_compare",
+                                                                                      "id": "cartpole_200",
+                                                                                      "fields": {
+                                                                                        "OP": "LT"
+                                                                                      },
+                                                                                      "inputs": {
+                                                                                        "A": {
+                                                                                          "block": {
+                                                                                            "type": "variables_get",
+                                                                                            "id": "cartpole_198",
+                                                                                            "fields": {
+                                                                                              "VAR": {
+                                                                                                "id": "cartpole_var_x"
+                                                                                              }
+                                                                                            }
+                                                                                          }
+                                                                                        },
+                                                                                        "B": {
+                                                                                          "shadow": {
+                                                                                            "type": "math_number",
+                                                                                            "id": "cartpole_199",
+                                                                                            "fields": {
+                                                                                              "NUM": -2.4
+                                                                                            }
+                                                                                          }
+                                                                                        }
+                                                                                      }
+                                                                                    }
+                                                                                  }
+                                                                                }
+                                                                              }
+                                                                            }
+                                                                          }
+                                                                        }
+                                                                      },
+                                                                      "DO0": {
+                                                                        "block": {
+                                                                          "type": "pg_game_over",
+                                                                          "id": "cartpole_203"
+                                                                        }
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "variables": [
+      {
+        "name": "player",
+        "id": "cartpole_Tag_player",
+        "type": "Tag"
+      },
+      {
+        "name": "obstacle",
+        "id": "cartpole_Tag_obstacle",
+        "type": "Tag"
+      },
+      {
+        "name": "ground",
+        "id": "cartpole_Tag_ground",
+        "type": "Tag"
+      },
+      {
+        "name": "track",
+        "id": "cartpole_Tag_track",
+        "type": "Tag"
+      },
+      {
+        "name": "cart",
+        "id": "cartpole_Tag_cart",
+        "type": "Tag"
+      },
+      {
+        "name": "pole",
+        "id": "cartpole_Tag_pole",
+        "type": "Tag"
+      },
+      {
+        "name": "x",
+        "id": "cartpole_var_x"
+      },
+      {
+        "name": "xdot",
+        "id": "cartpole_var_xdot"
+      },
+      {
+        "name": "theta",
+        "id": "cartpole_var_theta"
+      },
+      {
+        "name": "thetadot",
+        "id": "cartpole_var_thetadot"
+      },
+      {
+        "name": "force",
+        "id": "cartpole_var_force"
+      },
+      {
+        "name": "s",
+        "id": "cartpole_var_s"
+      },
+      {
+        "name": "c",
+        "id": "cartpole_var_c"
+      },
+      {
+        "name": "temp",
+        "id": "cartpole_var_temp"
+      },
+      {
+        "name": "tacc",
+        "id": "cartpole_var_tacc"
+      },
+      {
+        "name": "xacc",
+        "id": "cartpole_var_xacc"
+      },
+      {
+        "name": "i",
+        "id": "cartpole_var_i"
+      }
+    ]
+  },
+  "generatedCode": "\n\n\napi.$b('cartpole_1');\napi.$b('cartpole_6');\napi.sensors([\n  api.sensor.variable('x', -2.4, 2.4),\n  api.sensor.variable('xdot', -3, 3),\n  api.sensor.variable('theta', -0.21, 0.21),\n  api.sensor.variable('thetadot', -3.5, 3.5),\n]);\napi.$b('cartpole_56');\napi.onStart(() => {\n  api.$b('cartpole_14');\n  api.create({ tag: 'track', x: 200, y: 236, w: 400, h: 6, color: '#555555', vx: 0, vy: 0 });\n  api.$b('cartpole_20');\n  api.vars['x'] = api.randInt(-50, 50) * 0.001;\n  api.$b('cartpole_26');\n  api.vars['xdot'] = api.randInt(-50, 50) * 0.001;\n  api.$b('cartpole_32');\n  api.vars['theta'] = api.randInt(-50, 50) * 0.001;\n  api.$b('cartpole_38');\n  api.vars['thetadot'] = api.randInt(-50, 50) * 0.001;\n  api.$b('cartpole_40');\n  api.vars['force'] = 0;\n  api.$b('cartpole_52');\n  api.create({ tag: 'cart', x: 200 + api.vars['x'] * 80, y: 220, w: 50, h: 26, color: '#3355cc', vx: 0, vy: 0 });\n  api.$b('cartpole_53');\n  api.setCostume('track', 'box');\n  api.$b('cartpole_54');\n  api.setCostume('cart', 'box');\n  api.$b('cartpole_55');\n  api.setCostume('pole', 'box');\n});\napi.$b('cartpole_59');\napi.onAction('none', () => {\n  api.$b('cartpole_58');\n  api.vars['force'] = 0;\n});\napi.$b('cartpole_62');\napi.onAction('left', () => {\n  api.$b('cartpole_61');\n  api.vars['force'] = -10;\n});\napi.$b('cartpole_65');\napi.onAction('right', () => {\n  api.$b('cartpole_64');\n  api.vars['force'] = 10;\n});\napi.$b('cartpole_205');\napi.onTick(() => {\n  api.$b('cartpole_70');\n  api.vars['s'] = Math.sin((api.vars['theta'] * 57.29578) / 180 * Math.PI);\n  api.$b('cartpole_75');\n  api.vars['c'] = Math.cos((api.vars['theta'] * 57.29578) / 180 * Math.PI);\n  api.$b('cartpole_87');\n  api.vars['temp'] = (api.vars['force'] + 0.05 * api.vars['thetadot'] * api.vars['thetadot'] * api.vars['s']) / 1.1;\n  api.$b('cartpole_107');\n  api.vars['tacc'] = (9.8 * api.vars['s'] - api.vars['c'] * api.vars['temp']) / (0.5 * (1.3333 - (0.1 * api.vars['c'] * api.vars['c']) / 1.1));\n  api.$b('cartpole_117');\n  api.vars['xacc'] = api.vars['temp'] - (0.05 * api.vars['tacc'] * api.vars['c']) / 1.1;\n  api.$b('cartpole_123');\n  api.vars['x'] = api.vars['x'] + 0.02 * api.vars['xdot'];\n  api.$b('cartpole_129');\n  api.vars['xdot'] = api.vars['xdot'] + 0.02 * api.vars['xacc'];\n  api.$b('cartpole_135');\n  api.vars['theta'] = api.vars['theta'] + 0.02 * api.vars['thetadot'];\n  api.$b('cartpole_141');\n  api.vars['thetadot'] = api.vars['thetadot'] + 0.02 * api.vars['tacc'];\n  api.$b('cartpole_149');\n  api.setPos('cart', 200 + api.vars['x'] * 80, 220);\n  api.$b('cartpole_151');\n  api.destroy('pole');\n  api.$b('cartpole_185');\n  {\n    const $a = 1, $z = 8, $s = ($a <= $z ? 1 : -1) * (Math.abs(1) || 1);\n    for (api.vars['i'] = $a; $s > 0 ? api.vars['i'] <= $z : api.vars['i'] >= $z; api.vars['i'] += $s) {\n      api.$loop();\n      api.$b('cartpole_181');\n      api.create({ tag: 'pole', x: 200 + api.vars['x'] * 80 + Math.sin((api.vars['theta'] * 57.29578) / 180 * Math.PI) * api.vars['i'] * 10, y: 210 - Math.cos((api.vars['theta'] * 57.29578) / 180 * Math.PI) * api.vars['i'] * 10, w: 7, h: 9, color: '#f39c12', vx: 0, vy: 0 });\n      api.$b('cartpole_185');\n    }\n  }\n  api.$b('cartpole_187');\n  api.addScore(1);\n  api.$b('cartpole_204');\n  if (api.vars['theta'] > 0.2095 || api.vars['theta'] < -0.2095 || api.vars['x'] > 2.4 || api.vars['x'] < -2.4) {\n    api.$b('cartpole_203');\n    api.gameOver();\n  }\n});\n",
+  "settings": {
+    "actions": [
+      "none",
+      "left",
+      "right"
+    ],
+    "maxSteps": 500,
+    "background": "#bfe6ff",
+    "backdrop": "sky",
+    "scoreReward": true
+  },
+  "keymap": {
+    "left": [
+      "ArrowLeft",
+      "KeyA"
+    ],
+    "right": [
+      "ArrowRight",
+      "KeyD"
+    ],
+    "up": [
+      "ArrowUp"
+    ],
+    "down": [
+      "ArrowDown"
+    ],
+    "a": [
+      "Space"
+    ],
+    "b": [
+      "KeyS"
+    ]
+  },
+  "training": {
+    "steps": 300000,
+    "frameSkip": 1
+  }
+}

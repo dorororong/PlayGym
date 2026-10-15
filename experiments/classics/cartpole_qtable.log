@@ -1,0 +1,10 @@
+
+> playgym@0.1.0 train
+> tsx scripts/train.ts cartpole --algo qtable --bins 8 --steps 300000 --seed 0 --out experiments/classics/cartpole_qtable
+
+[cartpole] Q-table · 칸 8개씩 · 행동 유지 1 · 300,000 프레임
+  무작위 행동: 점수 22.4 · 보상 22.4 · 길이 22
+    301056 프레임    1초 | 점수 158.3 보상 158.3 길이 158 | epsilon=0.05 states=582 full=0
+[cartpole] 학습 301,056 프레임 / 1초 (249,504 프레임/초)
+  학습된 AI (최선만)   : 점수 182.6 · 보상 182.6 · 길이 183
+  학습된 AI (화면 방식): 점수 167.1 · 보상 167.1 · 길이 167

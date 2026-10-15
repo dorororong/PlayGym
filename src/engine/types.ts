@@ -27,8 +27,8 @@ export interface GameObject {
 
 export type BehaviorKind = 'gravity' | 'solid' | 'stayInScreen' | 'bounceWalls' | 'destroyOffscreen' | 'wrap';
 export type BounceMode = 'all' | 'noBottom';
-/** gravity → g, bounceWalls → 모드, 나머지 → 매개변수 없음(true) */
-export type BehaviorParam = number | BounceMode | true;
+/** gravity → g, bounceWalls → 모드, wrap → true(상하좌우) 또는 'x'(좌우만), 나머지 → 매개변수 없음(true) */
+export type BehaviorParam = number | BounceMode | 'x' | true;
 export type TagBehaviors = Partial<Record<BehaviorKind, BehaviorParam>>;
 
 export type GameEvent =

@@ -54,7 +54,7 @@ button { cursor: pointer; }
 #file-actions { display: flex; gap: 8px; }
 
 /* ───── 본문 ───── */
-#app { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 56fr) minmax(0, 44fr); gap: 14px; padding: 0 14px 14px; }
+#app { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 52fr) 14px minmax(0, 48fr); padding: 0 14px 14px; }
 #editor { position: relative; overflow: hidden; display: flex; flex-direction: column; }
 #editor-tabs { display: flex; gap: 4px; padding: 6px 10px 0; border-bottom: 1px solid var(--line); background: #fff; }
 #editor-body { position: relative; flex: 1; min-height: 0; }
@@ -62,17 +62,35 @@ button { cursor: pointer; }
 #blockly[hidden] { display: block !important; visibility: hidden; }
 #assets { position: absolute; inset: 0; display: flex; flex-direction: column; gap: 14px; padding: 14px; overflow: auto; }
 #assets[hidden] { display: none; }
-#side { display: grid; grid-template-rows: minmax(0, 1fr) minmax(230px, 36%); gap: 14px; min-height: 0; }
+#side { display: grid; grid-template-rows: minmax(0, 1fr) 14px minmax(180px, 32%); min-height: 0; min-width: 0; }
+/* 끌어서 크기 바꾸는 선 */
+.splitter { position: relative; touch-action: none; user-select: none; }
+.splitter.v { cursor: col-resize; }
+.splitter.h { cursor: row-resize; }
+.splitter::after { content: ''; position: absolute; border-radius: 999px; background: #d9d3f3; opacity: 0; transition: opacity 0.15s, background 0.15s; }
+.splitter.v::after { top: 50%; left: 5px; width: 4px; height: 56px; transform: translateY(-50%); }
+.splitter.h::after { left: 50%; top: 5px; height: 4px; width: 56px; transform: translateX(-50%); }
+.splitter:hover::after, .splitter.drag::after { opacity: 1; }
+.splitter.drag::after { background: var(--primary); }
+body.dragging { cursor: col-resize; user-select: none; }
+body.dragging.rows { cursor: row-resize; }
+body.dragging iframe, body.dragging #blockly { pointer-events: none; }
 
 /* ───── 게임 카드 ───── */
 #game-card { display: flex; flex-direction: column; padding: 12px 14px; gap: 10px; min-height: 0; }
 #game-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .pill { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px; background: var(--primary-soft); font-size: 13px; font-weight: 600; }
+.pill { white-space: nowrap; }
 .pill b { font-family: var(--mono); font-size: 14px; color: var(--primary); }
+/* 숫자 폭이 바뀌어도 줄바꿈이 달라지지 않게 (줄이 바뀌면 게임 화면 크기가 출렁인다) */
+.pill b.fixed { display: inline-block; text-align: left; overflow: hidden; text-overflow: clip; }
+.pill b.w-score { width: 5ch; }
+.pill b.w-reward { width: 16ch; }
+.pill b.w-frame { width: 11ch; }
 .pill.score { background: #fff4d6; }
 .pill.score b { color: #b7791f; font-size: 16px; }
 .pill.reward { background: #e7f8ee; cursor: help; }
-.pill.reward b { color: #15803d; font-size: 14px; min-width: 60px; }
+.pill.reward b { color: #15803d; font-size: 14px; }
 .pill input { width: 64px; border: none; background: #fff; border-radius: 8px; padding: 2px 6px; font-family: var(--mono); text-align: right; }
 .spacer { flex: 1; }
 .switch { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; cursor: pointer; user-select: none; }
@@ -85,6 +103,8 @@ button { cursor: pointer; }
 #stage { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; }
 #screen { position: relative; border-radius: 14px; overflow: hidden; box-shadow: 0 0 0 4px #fff, 0 0 0 6px #e4def9, 0 8px 24px rgba(76, 58, 180, 0.15); }
 #game { display: block; outline: none; }
+#game.retro { image-rendering: pixelated; image-rendering: crisp-edges; }
+#game-ov { position: absolute; left: 0; top: 0; pointer-events: none; }
 #screen-overlay { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; }
 #screen-overlay:empty { display: none; }
 .ov {

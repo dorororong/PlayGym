@@ -30,18 +30,23 @@
         <div id="editor-body"><div id="blockly"></div><div id="assets" hidden></div></div>
       </section>
 
+      <div id="split-v" class="splitter v" title="끌어서 블록 화면과 게임 화면 크기 바꾸기 (두 번 누르면 처음대로)"></div>
+
       <section id="side">
         <div id="game-card" class="card">
           <div id="game-head"></div>
           <div id="stage">
             <div id="screen">
               <canvas id="game" tabindex="0"></canvas>
+              <canvas id="game-ov"></canvas>
               <div id="screen-overlay"></div>
             </div>
           </div>
           <div id="controls"></div>
           <div id="pad"></div>
         </div>
+
+        <div id="split-h" class="splitter h" title="끌어서 게임 화면과 아래 패널 크기 바꾸기 (두 번 누르면 처음대로)"></div>
 
         <div id="bottom" class="card">
           <div id="tabs"></div>

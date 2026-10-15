@@ -1,0 +1,16 @@
+
+> playgym@0.1.0 train
+> tsx scripts/train.ts snake --seed 0 --out experiments/classics/snake_ppo
+
+[snake] PPO · 64×64 tanh · 행동 유지 6 · 1,500,000 프레임
+  무작위 행동: 점수 0.1 · 보상 0.1 · 길이 551
+    190464 프레임   10초 | 점수 0.5 보상 0.5 길이 344 | entropy=1.4651 approxKl=0.0008 clipFrac=0.0017
+    411648 프레임   20초 | 점수 5.3 보상 5.3 길이 1003 | entropy=0.8207 approxKl=0.0027 clipFrac=0.0186
+    608256 프레임   30초 | 점수 6.5 보상 6.5 길이 1166 | entropy=0.7494 approxKl=-0.0005 clipFrac=0.0151
+    817152 프레임   41초 | 점수 6.7 보상 6.7 길이 1163 | entropy=0.6816 approxKl=0.0007 clipFrac=0.0078
+   1062912 프레임   51초 | 점수 8.1 보상 8.1 길이 1326 | entropy=0.6142 approxKl=0.0066 clipFrac=0.0339
+   1320960 프레임   61초 | 점수 7.0 보상 7.0 길이 1133 | entropy=0.5972 approxKl=0.0092 clipFrac=0.0876
+   1505280 프레임   68초 | 점수 8.4 보상 8.4 길이 1457 | entropy=0.5548 approxKl=0.0034 clipFrac=0.0444
+[snake] 학습 1,505,280 프레임 / 68초 (22,248 프레임/초)
+  학습된 AI (최선만)   : 점수 3.0 · 보상 3.0 · 길이 2239
+  학습된 AI (화면 방식): 점수 8.8 · 보상 8.8 · 길이 1693

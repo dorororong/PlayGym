@@ -73,6 +73,7 @@ const BEHAVIOR_SET_OPTIONS = {
   bounceWalls_noBottom: ko.behaviors.bounceWalls_noBottom,
   destroyOffscreen: ko.behaviors.destroyOffscreen,
   wrap: ko.behaviors.wrap,
+  wrap_x: ko.behaviors.wrapX,
 };
 const BEHAVIOR_CLEAR_OPTIONS = {
   gravity: ko.behaviors.gravity,
@@ -180,6 +181,7 @@ export const BLOCK_DEFS = [
   { type: 'pg_self', message0: ko.blocks.self, output: 'Target', colour: HUE.values, extensions: ['pg_collide_only'] },
   { type: 'pg_other', message0: ko.blocks.other, output: 'Target', colour: HUE.values, extensions: ['pg_collide_only'] },
   { type: 'pg_tag', message0: ko.blocks.tag, args0: [tagField('TAG', 'player')], output: 'Target', colour: HUE.tags },
+  { type: 'pg_first', message0: ko.blocks.first, args0: [tagField('TAG', 'player')], output: 'Target', colour: HUE.values, tooltip: ko.blocks.firstHint },
   {
     type: 'pg_get',
     message0: ko.blocks.get,

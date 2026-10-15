@@ -507,6 +507,31 @@ const coin: Draw = (ctx, o, t, _L, _T, W, H) => {
   ctx.fill();
 };
 
+/** 도로 한 줄 (끝없는 길 건너기). 가운데 점선은 객체 x 와 상관없이 화면에 고정 */
+const roadStrip: Draw = (ctx, _o, _t, L, T, W, H) => {
+  ctx.fillStyle = '#4a4a5e';
+  ctx.fillRect(L, T, W, H);
+  ctx.fillStyle = '#5d5d74';
+  ctx.fillRect(L, T, W, 2);
+  ctx.fillStyle = '#3a3a4c';
+  ctx.fillRect(L, T + H - 2, W, 2);
+  ctx.fillStyle = 'rgba(255,255,255,0.32)';
+  for (let x = L + 6; x < L + W; x += 32) ctx.fillRect(x, T + H / 2 - 1, 14, 2);
+};
+
+/** 풀밭 한 줄. 색은 객체 색을 쓴다 */
+const grassStrip: Draw = (ctx, o, _t, L, T, W, H) => {
+  ctx.fillStyle = o.color;
+  ctx.fillRect(L, T, W, H);
+  ctx.fillStyle = shade(o.color, -0.18);
+  for (let i = 0; i < W / 22; i++) {
+    const x = L + i * 22 + hash(i * 3 + Math.round(T)) * 14;
+    const y = T + 4 + hash(i * 5 + 1) * Math.max(1, H - 10);
+    ctx.fillRect(x, y, 2, 4);
+    ctx.fillRect(x + 3, y + 1, 2, 3);
+  }
+};
+
 const DRAW: Record<string, Draw> = {
   box,
   dino,
@@ -526,6 +551,8 @@ const DRAW: Record<string, Draw> = {
   groundRun: groundDraw(5),
   star,
   coin,
+  road: roadStrip,
+  grass: grassStrip,
   hidden: () => {},
 };
 

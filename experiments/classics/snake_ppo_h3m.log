@@ -1,0 +1,20 @@
+
+> playgym@0.1.0 train
+> tsx scripts/train.ts snake --steps 3000000 --seed 1 --out experiments/classics/snake_ppo_h3m
+
+[snake] PPO · 64×64 tanh · 행동 유지 6 · 3,000,000 프레임
+  무작위 행동: 점수 0.1 · 보상 0.1 · 길이 413
+    270336 프레임   10초 | 점수 1.7 보상 1.7 길이 367 | entropy=1.15 approxKl=0.0083 clipFrac=0.0278
+    516096 프레임   20초 | 점수 4.5 보상 4.5 길이 579 | entropy=0.7642 approxKl=0.0069 clipFrac=0.0435
+    786432 프레임   31초 | 점수 5.6 보상 5.6 길이 736 | entropy=0.6592 approxKl=0.0027 clipFrac=0.0313
+   1062912 프레임   41초 | 점수 7.7 보상 7.7 길이 997 | entropy=0.5472 approxKl=0.0078 clipFrac=0.0615
+   1333248 프레임   51초 | 점수 6.2 보상 6.2 길이 788 | entropy=0.5056 approxKl=0.0056 clipFrac=0.0481
+   1609728 프레임   61초 | 점수 6.9 보상 6.9 길이 1025 | entropy=0.4724 approxKl=0.0011 clipFrac=0.0256
+   1892352 프레임   71초 | 점수 6.9 보상 6.9 길이 986 | entropy=0.467 approxKl=0.0032 clipFrac=0.0452
+   2181120 프레임   81초 | 점수 7.0 보상 7.0 길이 1063 | entropy=0.4561 approxKl=-0.0008 clipFrac=0.0273
+   2463744 프레임   91초 | 점수 7.5 보상 7.5 길이 1093 | entropy=0.4489 approxKl=0.001 clipFrac=0.0427
+   2734080 프레임  101초 | 점수 8.4 보상 8.4 길이 995 | entropy=0.4806 approxKl=0.0076 clipFrac=0.0574
+   3004416 프레임  111초 | 점수 8.1 보상 8.1 길이 1014 | entropy=0.4311 approxKl=0 clipFrac=0.0327
+[snake] 학습 3,004,416 프레임 / 111초 (26,979 프레임/초)
+  학습된 AI (최선만)   : 점수 4.1 · 보상 4.1 · 길이 812
+  학습된 AI (화면 방식): 점수 5.4 · 보상 5.4 · 길이 829

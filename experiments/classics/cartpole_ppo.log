@@ -1,0 +1,14 @@
+
+> playgym@0.1.0 train
+> tsx scripts/train.ts cartpole --seed 0 --out experiments/classics/cartpole_ppo
+
+[cartpole] PPO · 64×64 tanh · 행동 유지 1 · 200,000 프레임
+  무작위 행동: 점수 22.4 · 보상 22.4 · 길이 22
+     35840 프레임   10초 | 점수 243.7 보상 243.7 길이 244 | entropy=0.8865 approxKl=0.0002 clipFrac=0
+     76800 프레임   20초 | 점수 266.4 보상 266.4 길이 266 | entropy=0.9192 approxKl=0.0115 clipFrac=0.1138
+    113664 프레임   30초 | 점수 288.4 보상 288.4 길이 288 | entropy=0.906 approxKl=0.0025 clipFrac=0.0273
+    154624 프레임   40초 | 점수 368.6 보상 368.6 길이 369 | entropy=0.8915 approxKl=0.0053 clipFrac=0.0183
+    200704 프레임   50초 | 점수 239.6 보상 239.6 길이 240 | entropy=0.8075 approxKl=0.0086 clipFrac=0.0576
+[cartpole] 학습 200,704 프레임 / 50초 (3,980 프레임/초)
+  학습된 AI (최선만)   : 점수 390.4 · 보상 390.4 · 길이 390
+  학습된 AI (화면 방식): 점수 345.3 · 보상 345.3 · 길이 345

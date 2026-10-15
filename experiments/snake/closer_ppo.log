@@ -1,0 +1,15 @@
+
+> playgym@0.1.0 train
+> tsx scripts/train.ts experiments/snake/closer.json --seed 0 --out experiments/snake/closer_ppo
+
+[experiments/snake/closer.json] PPO · 64×64 tanh · 행동 유지 6 · 1,500,000 프레임
+  무작위 행동: 점수 0.1 · 보상 -2.0 · 길이 413
+    264192 프레임   10초 | 점수 0.5 보상 0.3 길이 235 | entropy=1.2001 approxKl=0.0017 clipFrac=0.0198
+    540672 프레임   20초 | 점수 5.7 보상 10.6 길이 776 | entropy=0.5979 approxKl=0.0082 clipFrac=0.075
+    823296 프레임   30초 | 점수 6.2 보상 11.4 길이 781 | entropy=0.505 approxKl=0.0037 clipFrac=0.0415
+   1105920 프레임   40초 | 점수 7.1 보상 13.6 길이 949 | entropy=0.529 approxKl=0.0019 clipFrac=0.0271
+   1394688 프레임   51초 | 점수 7.4 보상 13.4 길이 935 | entropy=0.4491 approxKl=0.0011 clipFrac=0.0679
+   1505280 프레임   54초 | 점수 7.3 보상 13.7 길이 831 | entropy=0.4341 approxKl=0.0017 clipFrac=0.0217
+[experiments/snake/closer.json] 학습 1,505,280 프레임 / 54초 (27,631 프레임/초)
+  학습된 AI (최선만)   : 점수 3.5 · 보상 5.6 · 길이 673
+  학습된 AI (화면 방식): 점수 7.8 · 보상 14.6 · 길이 993
