@@ -28,6 +28,32 @@ describe('화면 반대편으로 이어지기 (seamless)', () => {
   });
 });
 
+describe('라이다를 원하는 곳에서 원하는 방향으로', () => {
+  // 보이지 않는 "눈" 객체를 만들어 그 자리에서 쏜다. 광선 1개면 시작 각도 방향 (0° 오른쪽, 90° 위, 180° 왼쪽, 270° 아래)
+  const code = (eyeX: number, follow: boolean) => `
+    api.sensors([api.sensor.lidar('eye', 1, 90, 90, 200, 'brick')]);
+    api.onStart(() => {
+      api.create({tag:'brick', x:100, y:40, w:40, h:16});
+      api.create({tag:'ball', x:100, y:200, vx:0, vy:0});
+      api.create({tag:'eye', x:${eyeX}, y:200, w:1, h:1});
+      api.setCostume('eye', 'hidden');
+    });
+    ${follow ? "api.onTick(() => api.setPos('eye', api.get('ball', 'x'), api.get('ball', 'y')));" : ''}`;
+
+  it('정한 자리에서 위로 쏘면 그 위의 벽돌까지 거리', () => {
+    const env = envFromCode(code(100, false));
+    expect(env.reset(0).obs[0]).toBeCloseTo((200 - 48) / 200);
+    const env2 = envFromCode(code(300, false)); // 벽돌이 없는 자리
+    expect(env2.reset(0).obs[0]).toBe(1);
+  });
+
+  it('눈이 공을 따라다니게 할 수도 있다', () => {
+    const env = envFromCode(code(300, true));
+    env.reset(0);
+    expect(env.step(0).obs[0]).toBeCloseTo((200 - 48) / 200);
+  });
+});
+
 describe('가장 먼저 만든 객체', () => {
   it('가장 오래된 것 하나만 지운다 (뱀 꼬리)', () => {
     const env = envFromCode(`
