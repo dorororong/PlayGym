@@ -24,6 +24,8 @@ export interface TrainingRun {
 export interface TrainHooks {
   project(): Project;
   config(): LearnConfig;
+  /** "이 게임의 보상 규칙" 문장들 */
+  rewardRules(): string[];
   codeHash(): string;
   /** 학습 중 스냅샷(final=false) 또는 학습 끝(final=true) */
   onAgent(a: AgentJson, final: boolean): void;
@@ -57,6 +59,7 @@ export class TrainPanel {
     tip: HTMLElement;
     cps: HTMLElement;
     live: HTMLInputElement;
+    rules: HTMLElement;
   };
 
   constructor(
@@ -111,9 +114,11 @@ export class TrainPanel {
       tip,
       cps: el('div', { className: 'cp-strip' }),
       live,
+      rules: el('div', { className: 'reward-rules', title: ko.reward.rulesHint }),
     };
     this.root.append(
       el('div', { className: 'train-row' }, this.els.summary, el('span', { className: 'spacer' }), design, resume, start),
+      this.els.rules,
       el('div', { className: 'train-bar' }, this.els.bar),
       this.els.stat,
       el(
@@ -161,6 +166,8 @@ export class TrainPanel {
 
   private sync(): void {
     const t = ko.train;
+    const rules = this.hooks.rewardRules();
+    this.els.rules.replaceChildren(el('b', { textContent: `🎁 ${ko.reward.rules}` }), ...rules.map((r) => el('div', { textContent: r })));
     const cfg = this.hooks.config();
     this.els.summary.textContent = `${describeConfig(cfg)} · ${shortNum(cfg.steps)} ${t.framesUnit}`;
     const r = this.hooks.resumeFrom();

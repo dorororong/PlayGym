@@ -43,6 +43,7 @@ export function actionNames(actions: readonly string[]): ActionName[] {
 export function createEnv(project: Project): Env {
   const settings = { ...DEFAULT_SETTINGS, ...project.settings };
   const names = actionNames(settings.actions);
+  const scoreReward = settings.scoreReward !== false;
   const maxSteps = Math.max(1, Math.round(Number(settings.maxSteps) || DEFAULT_SETTINGS.maxSteps));
   const program: Program = compile(project.generatedCode);
   // reset(seed) 에 시드를 주지 않으면 이 수열에서 꺼낸다 (전역 난수는 쓰지 않는다)
@@ -114,7 +115,7 @@ export function createEnv(project: Project): Env {
       const truncated = !terminated && world.frame >= maxSteps;
       done = terminated || truncated;
       terminatedAt = terminated;
-      return { obs, reward: world.score - before + world.rewardAcc, terminated, truncated, info: info() };
+      return { obs, reward: (scoreReward ? world.score - before : 0) + world.rewardAcc, terminated, truncated, info: info() };
     },
     getWorld: () => world,
     getDebugShapes() {

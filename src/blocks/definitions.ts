@@ -4,7 +4,7 @@ import { Blockly, KoMsg } from './blockly';
 import type * as BlocklyTypes from 'blockly/core';
 import { ko } from '../i18n/ko';
 import { BACKDROPS, COSTUMES } from '../render/catalog';
-import { CUSTOM_PREFIX, customCostumes } from '../render/pixelArt';
+import { CUSTOM_PREFIX, customCostumes, isActiveAsset } from '../render/pixelArt';
 
 export const TAG_TYPE = 'Tag';
 export const DEFAULT_TAGS = ['player', 'obstacle', 'ground'];
@@ -128,8 +128,8 @@ export const BLOCK_DEFS = [
       { type: 'field_checkbox', name: 'A', checked: false },
       { type: 'field_checkbox', name: 'B', checked: false },
     ],
-    message3: `${ko.blocks.settingsMaxSteps} %1`,
-    args3: [{ type: 'field_number', name: 'MAXSTEPS', value: 3000, min: 1, precision: 1 }],
+    message3: `${ko.blocks.settingsMaxSteps} %1 ${ko.blocks.settingsScoreReward} %2`,
+    args3: [{ type: 'field_number', name: 'MAXSTEPS', value: 3000, min: 1, precision: 1 }, { type: 'field_checkbox', name: 'SCORE_REWARD', checked: true }],
     message4: `${ko.blocks.settingsBackdrop} %1 ${ko.blocks.settingsBg} %2`,
     args4: [dropdown('BACKDROP', BACKDROPS), colourField('BG', '#f4f4f4')],
     colour: HUE.settings,
@@ -284,11 +284,20 @@ export function registerBlocks(): void {
     const input = this.inputList.find((i) => i.fieldRow.some((f) => f.name === 'COSTUME'))!;
     const idx = input.fieldRow.findIndex((f) => f.name === 'COSTUME');
     input.removeField('COSTUME');
-    const options = (): [string, string][] => [
-      ...Object.entries(COSTUMES).map(([k, v]) => [v, k] as [string, string]),
-      ...Object.keys(customCostumes()).map((n) => [`🖌️ ${n}`, `${CUSTOM_PREFIX}${n}`] as [string, string]),
-    ];
-    input.insertFieldAt(idx, new Blockly.FieldDropdown(options), 'COSTUME');
+    // 모양 탭에서 활성화한 것만 (지금 고른 값은 항상 남긴다)
+    const field = new Blockly.FieldDropdown(function (this: BlocklyTypes.FieldDropdown) {
+      const cur = this?.getValue?.();
+      const opts: [string, string][] = [
+        ...Object.entries(COSTUMES)
+          .filter(([k]) => k === 'box' || k === cur || isActiveAsset(k))
+          .map(([k, v]) => [v, k] as [string, string]),
+        ...Object.keys(customCostumes())
+          .filter((n) => CUSTOM_PREFIX + n === cur || isActiveAsset(CUSTOM_PREFIX + n))
+          .map((n) => [`🖌️ ${n}`, `${CUSTOM_PREFIX}${n}`] as [string, string]),
+      ];
+      return opts;
+    });
+    input.insertFieldAt(idx, field, 'COSTUME');
   });
 
   Blockly.common.defineBlocksWithJsonArray(BLOCK_DEFS);

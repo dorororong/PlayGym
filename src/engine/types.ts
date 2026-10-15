@@ -56,6 +56,8 @@ export interface Settings {
   background: string;
   /** 배경 그림 이름 ('none' 이면 단색 background). 그리기 전용 */
   backdrop: string;
+  /** 점수 변화를 AI 보상에 넣을지 (끄면 "AI 에게 보상 주기" 블록만 보상이 된다). 기본 true */
+  scoreReward?: boolean;
 }
 
 export interface Project {
@@ -71,6 +73,8 @@ export interface Project {
   model?: unknown;
   /** 사용자가 그린 픽셀 그림 (이름 → src/render/pixelArt.ts 의 PixelArt). 그리기 전용 */
   costumes?: Record<string, unknown>;
+  /** 모양 탭에서 활성화한 모양 키 (블록의 모양 목록에 나오는 것) */
+  assets?: string[];
   /** 마지막 학습 기록: 학습 곡선과 체크포인트 녹화 (src/ui/trainPanel.ts 의 TrainingRun) */
   trainingRun?: unknown;
 }

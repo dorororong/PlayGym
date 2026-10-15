@@ -38,3 +38,29 @@ export function setCustomCostumes(c: Record<string, PixelArt> | undefined): void
 export function customCostumes(): Record<string, PixelArt> {
   return registry;
 }
+
+/** 모양 탭에서 활성화한 모양 키. null 이면 전부 (Node 에서 블록을 코드로 바꿀 때) */
+let active: Set<string> | null = null;
+
+export function setActiveAssets(list: string[] | null): void {
+  active = list ? new Set(list) : null;
+}
+
+export function isActiveAsset(key: string): boolean {
+  return !active || active.has(key);
+}
+
+/** 블록 JSON 에서 "모양" 블록이 쓰는 모양 키를 모은다 (불러올 때 자동 활성화용) */
+export function costumesUsedIn(blocksJson: unknown): string[] {
+  const found = new Set<string>();
+  const walk = (v: unknown) => {
+    if (!v || typeof v !== 'object') return;
+    const o = v as Record<string, unknown>;
+    if (o.type === 'pg_set_costume' && o.fields && typeof (o.fields as Record<string, unknown>).COSTUME === 'string') {
+      found.add((o.fields as Record<string, string>).COSTUME);
+    }
+    for (const x of Object.values(o)) walk(x);
+  };
+  walk(blocksJson);
+  return [...found];
+}

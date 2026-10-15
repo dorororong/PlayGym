@@ -17,6 +17,7 @@
             "A": false,
             "B": false,
             "MAXSTEPS": 3000,
+            "SCORE_REWARD": true,
             "BACKDROP": "space",
             "BG": "#20202a"
           }
@@ -1180,7 +1181,8 @@
     ],
     "maxSteps": 3000,
     "background": "#20202a",
-    "backdrop": "space"
+    "backdrop": "space",
+    "scoreReward": true
   },
   "keymap": {
     "left": [

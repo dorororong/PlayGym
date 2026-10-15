@@ -60,11 +60,11 @@ export class TemplateBuilder {
   }
 
   // 설정
-  settings(actions: ActionName[], maxSteps: number, bg: string, backdrop = 'none') {
+  settings(actions: ActionName[], maxSteps: number, bg: string, backdrop = 'none', scoreReward = true) {
     const on = (a: ActionName) => (actions.includes(a) ? 'TRUE' : 'FALSE');
     this.hat(
       'pg_settings',
-      { LEFT: on('left'), RIGHT: on('right'), UP: on('up'), DOWN: on('down'), A: on('a'), B: on('b'), MAXSTEPS: maxSteps, BACKDROP: backdrop, BG: bg },
+      { LEFT: on('left'), RIGHT: on('right'), UP: on('up'), DOWN: on('down'), A: on('a'), B: on('b'), MAXSTEPS: maxSteps, SCORE_REWARD: scoreReward ? 'TRUE' : 'FALSE', BACKDROP: backdrop, BG: bg },
       [],
     );
   }

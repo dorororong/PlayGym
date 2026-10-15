@@ -160,6 +160,7 @@ export function readSettings(ws: BlocklyTypes.Workspace): Settings {
     maxSteps: Math.max(1, Math.round(Number(b.getFieldValue('MAXSTEPS')) || DEFAULT_SETTINGS.maxSteps)),
     background: b.getFieldValue('BG') || DEFAULT_SETTINGS.background,
     backdrop: b.getFieldValue('BACKDROP') || DEFAULT_SETTINGS.backdrop,
+    scoreReward: b.getFieldValue('SCORE_REWARD') !== 'FALSE',
   };
 }
 

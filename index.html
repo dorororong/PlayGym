@@ -25,7 +25,10 @@
     </header>
 
     <main id="app">
-      <section id="editor" class="card"><div id="blockly"></div></section>
+      <section id="editor" class="card">
+        <div id="editor-tabs"></div>
+        <div id="editor-body"><div id="blockly"></div><div id="assets" hidden></div></div>
+      </section>
 
       <section id="side">
         <div id="game-card" class="card">
@@ -50,7 +53,6 @@
     </main>
 
     <dialog id="keymap-dialog"></dialog>
-    <dialog id="paint-dialog"></dialog>
     <dialog id="design-dialog"></dialog>
     <dialog id="library-dialog"></dialog>
     <script type="module" src="/src/main.ts"></script>

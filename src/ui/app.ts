@@ -9,7 +9,9 @@ import { createEnv, type Env, type StepResult } from '../engine/env';
 import { Rng } from '../engine/rng';
 import type { ActionName, GameEvent, Keymap, Project } from '../engine/types';
 import { ko } from '../i18n/ko';
-import { CUSTOM_PREFIX, isPixelArt, setCustomCostumes, type PixelArt } from '../render/pixelArt';
+import { CUSTOM_PREFIX, costumesUsedIn, isPixelArt, setActiveAssets, setCustomCostumes, type PixelArt } from '../render/pixelArt';
+import { describeRewards } from '../blocks/rewards';
+import { AssetPanel } from './assetPanel';
 import { Renderer } from '../render/renderer';
 import { Agent, PLAY_TEMPERATURE, type AgentJson } from '../rl/agent';
 import { resolveConfig, type LearnConfig } from '../rl/config';
@@ -22,7 +24,6 @@ import { keyLabel, keyLookup, normalizeKeymap } from './keys';
 import { ACTION_ICONS, openKeymapDialog } from './keymapDialog';
 import { currentId, getGame, listGames, migrateLegacy, newId, putGame, setCurrentId, thumbnail, type StoredGame } from './library';
 import { openLibraryDialog } from './libraryDialog';
-import { openPixelEditor } from './pixelEditor';
 import { TrainPanel, shortNum, type TrainingRun } from './trainPanel';
 
 const STEP_HZ = 60;
@@ -34,7 +35,7 @@ const SPEEDS = [
   { v: 16, label: '16×', title: '16배속' },
   { v: 64, label: '🐇', title: `${ko.ui.fast} (64×)` },
 ];
-const LOG_ICON: Record<string, string> = { score: '⭐', gameOver: '💥', warn: '⚠️', error: '🐞', info: '💡' };
+const LOG_ICON: Record<string, string> = { score: '⭐', reward: '🎁', gameOver: '💥', warn: '⚠️', error: '🐞', info: '💡' };
 
 /** human 사람, random 무작위, trained 학습된 AI, watch 학습 중 실시간 보기, replay 체크포인트 다시 보기 */
 type Mode = 'human' | 'random' | 'trained' | 'watch' | 'replay';
@@ -110,6 +111,12 @@ export class App {
   private replayPause = 0;
   private trainPanel!: TrainPanel;
   private costumes: Record<string, PixelArt> = {};
+  /** 모양 탭에서 활성화한 모양 (블록 목록에 나오는 것) */
+  private assets: string[] = ['box'];
+  private assetPanel!: AssetPanel;
+  /** 이번 판에 받은 보상 합과 방금 받은 보상 */
+  private epReward = 0;
+  private lastReward = 0;
   private uiKey = '';
   private ui = {} as {
     name: HTMLInputElement;
@@ -117,6 +124,7 @@ export class App {
     score: HTMLElement;
     frame: HTMLElement;
     seed: HTMLInputElement;
+    reward: HTMLElement;
     play: HTMLButtonElement;
     random: HTMLButtonElement;
     trained: HTMLButtonElement;
@@ -131,7 +139,8 @@ export class App {
     this.buildTabs();
     this.ws = createWorkspace($('#blockly'));
     this.ws.addChangeListener((e) => this.onWorkspaceChange(e));
-    this.ws.registerButtonCallback('PG_PAINT', () => this.openPaint());
+    this.ws.registerButtonCallback('PG_PAINT', () => this.showAssets(true));
+    this.buildEditorTabs();
     this.bindKeyboard();
     const resize = () => {
       this.renderer.fit($('#stage'));
@@ -182,7 +191,7 @@ export class App {
     );
 
     $('#file-actions').append(
-      this.button(`<span class="i">🖌️</span>${ko.paint.open}`, 'ghost', () => this.openPaint()),
+      this.button(`<span class="i">🎨</span>${ko.assets.tab}`, 'ghost', () => this.showAssets(false)),
       this.button(`<span class="i">⌨️</span>${ko.ui.keys}`, 'ghost', () => this.openKeys()),
     );
 
@@ -197,8 +206,10 @@ export class App {
       this.ui.seed.value = String(this.seed);
       this.resetEpisode();
     });
+    this.ui.reward = el('b', { textContent: '0' });
     $('#game-head').append(
       el('span', { className: 'pill score' }, `⭐ ${ko.ui.score}`, this.ui.score),
+      el('span', { className: 'pill reward', title: ko.reward.pillHint }, `🎁 ${ko.reward.pill}`, this.ui.reward),
       el('span', { className: 'pill' }, `⏱️ ${ko.ui.frame}`, this.ui.frame),
       el('span', { className: 'spacer' }),
       el('label', { className: 'switch', title: '센서가 무엇을 보고 있는지, 실제 충돌 사각형이 어디인지 화면에 그려요' }, overlay, el('span', { className: 'track' }), `👀 ${ko.ui.aiView}`),
@@ -262,24 +273,101 @@ export class App {
     pad.append(edit, el('span', { className: 'spacer' }), this.ui.seg);
   }
 
-  private openPaint(): void {
-    openPixelEditor($<HTMLDialogElement>('#paint-dialog'), this.costumes, {
-      onChange: (c) => {
+  // ───────────── 블록 / 모양 탭 ─────────────
+
+  private buildEditorTabs(): void {
+    const tabs = $('#editor-tabs');
+    const mk = (label: string, fn: () => void) => {
+      const b = el('button', { className: 'tab', textContent: label });
+      b.addEventListener('click', fn);
+      return b;
+    };
+    tabs.append(mk(`🧩 ${ko.assets.blocksTab}`, () => this.showBlocks()), mk(`🎨 ${ko.assets.tab}`, () => this.showAssets(false)));
+    tabs.children[0].classList.add('on');
+    this.assetPanel = new AssetPanel($('#assets'), {
+      costumes: () => this.costumes,
+      setCostumes: (c) => {
         this.costumes = c;
         setCustomCostumes(c);
         this.autosave();
       },
-      onRename: (from, to) => {
+      active: () => this.assets,
+      setActive: (list) => this.setAssets(list),
+      usage: () => this.costumeUsage(),
+      tags: () =>
+        this.ws
+          .getVariableMap()
+          .getVariablesOfType('Tag')
+          .map((v) => v.getName())
+          .sort(),
+      applyToTag: (key, tag) => this.applyCostume(key, tag),
+      renameDrawing: (from, to) => {
         const c = { ...this.costumes, [to]: this.costumes[from] };
         delete c[from];
         this.costumes = c;
         setCustomCostumes(c);
+        this.setAssets(this.assets.map((k) => (k === CUSTOM_PREFIX + from ? CUSTOM_PREFIX + to : k)));
         // 그 그림을 쓰던 모양 블록도 새 이름으로
         for (const b of this.ws.getBlocksByType('pg_set_costume', false)) {
-          if (b.getFieldValue('COSTUME') === CUSTOM_PREFIX + from) b.setFieldValue(CUSTOM_PREFIX + to, 'COSTUME');
+          if (b.getFieldValue('COSTUME') === CUSTOM_PREFIX + from) setCostumeField(b, CUSTOM_PREFIX + to);
         }
       },
     });
+  }
+
+  private showBlocks(): void {
+    $('#assets').hidden = true;
+    $('#blockly').hidden = false;
+    [...$('#editor-tabs').children].forEach((x, i) => x.classList.toggle('on', i === 0));
+    Blockly.svgResize(this.ws);
+  }
+
+  /** 모양 탭 열기. draw 면 새 그림을 바로 만든다 */
+  private showAssets(draw: boolean): void {
+    $('#assets').hidden = false;
+    $('#blockly').hidden = true;
+    [...$('#editor-tabs').children].forEach((x, i) => x.classList.toggle('on', i === 1));
+    if (draw) this.assetPanel.newDrawing();
+    else this.assetPanel.render();
+  }
+
+  /** 블록에서 쓰는 모양은 항상 활성 상태로 둔다 */
+  private setAssets(list: string[]): void {
+    const used = this.ws ? [...this.costumeUsage().keys()] : [];
+    this.assets = [...new Set(['box', ...list, ...used])].filter((k) => !k.startsWith(CUSTOM_PREFIX) || this.costumes[k.slice(CUSTOM_PREFIX.length)]);
+    setActiveAssets(this.assets);
+    this.autosave();
+  }
+
+  /** 모양 키 → 그 모양을 입은 태그들 */
+  private costumeUsage(): Map<string, string[]> {
+    const m = new Map<string, string[]>();
+    for (const b of this.ws.getBlocksByType('pg_set_costume', false)) {
+      if (!b.isEnabled()) continue;
+      const key = b.getFieldValue('COSTUME');
+      const tag = b.getField('TAG')?.getText() ?? '';
+      m.set(key, [...new Set([...(m.get(key) ?? []), tag])]);
+    }
+    return m;
+  }
+
+  /** 모양 탭의 "태그에 입히기": 그 태그의 모양 블록을 바꾸거나, "게임 시작할 때" 끝에 새로 넣는다 */
+  private applyCostume(key: string, tag: string): void {
+    if (!this.assets.includes(key)) this.setAssets([...this.assets, key]);
+    const existing = this.ws.getBlocksByType('pg_set_costume', false).find((b) => b.getField('TAG')?.getText() === tag);
+    if (existing) setCostumeField(existing, key);
+    else {
+      const v = this.ws.getVariableMap().getVariable(tag, 'Tag');
+      let start = this.ws.getTopBlocks(true).find((b) => b.type === 'pg_on_start');
+      if (!start) start = Blockly.serialization.blocks.append({ type: 'pg_on_start', x: 20, y: 20 }, this.ws) as BlocklyTypes.BlockSvg;
+      const nb = Blockly.serialization.blocks.append({ type: 'pg_set_costume', fields: { TAG: { id: v?.getId() }, COSTUME: key } }, this.ws);
+      let last = start.getInputTargetBlock('DO');
+      while (last?.getNextBlock()) last = last.getNextBlock();
+      if (last) last.nextConnection!.connect(nb.previousConnection!);
+      else start.getInput('DO')!.connection!.connect(nb.previousConnection!);
+    }
+    this.addLog({ kind: 'info', frame: 0, text: ko.assets.applied(key.startsWith(CUSTOM_PREFIX) ? key.slice(CUSTOM_PREFIX.length) : key, tag) });
+    this.assetPanel.render();
   }
 
   private openKeys(): void {
@@ -326,6 +414,7 @@ export class App {
     this.trainPanel = new TrainPanel(panels.train, {
       project: () => this.currentProject(),
       config: () => this.training,
+      rewardRules: () => (this.ws ? describeRewards(this.ws) : []),
       codeHash: () => this.codeHash(),
       onAgent: (a, final) => this.setAgent(a, final),
       onRun: (r) => {
@@ -460,10 +549,13 @@ export class App {
   private loadProject(p: Project, tidy: boolean): void {
     this.pause();
     this.loading = true;
-    // 모양 블록이 사용자 그림 이름을 고를 수 있도록 블록보다 먼저 등록한다
+    // 모양 블록이 사용자 그림·활성 모양을 고를 수 있도록 블록보다 먼저 등록한다
     this.costumes = {};
     for (const [k2, v] of Object.entries(p.costumes ?? {})) if (isPixelArt(v)) this.costumes[k2] = v;
     setCustomCostumes(this.costumes);
+    const savedAssets = Array.isArray(p.assets) ? p.assets.filter((x): x is string => typeof x === 'string') : Object.keys(this.costumes).map((n) => CUSTOM_PREFIX + n);
+    this.assets = [...new Set(['box', ...savedAssets, ...costumesUsedIn(p.blocksJson)])];
+    setActiveAssets(this.assets);
     Blockly.Events.disable();
     try {
       this.ws.clear();
@@ -525,6 +617,7 @@ export class App {
       training: this.training as unknown as Record<string, unknown>,
       model: this.model?.toJSON(),
       costumes: this.costumes,
+      assets: this.assets,
       trainingRun: this.run_ ?? undefined,
     };
   }
@@ -545,6 +638,7 @@ export class App {
     this.buildPad();
     this.syncModel();
     this.trainPanel.refresh();
+    if (!$('#assets').hidden) this.assetPanel.render();
     if (!this.loading) this.autosave();
   }
 
@@ -572,6 +666,8 @@ export class App {
     this.lastAction = 'none';
     this.ws?.highlightBlock(null);
     this.agentRng = new Rng((seed ^ 0x9e3779b9) >>> 0);
+    this.epReward = 0;
+    this.lastReward = 0;
     if (this.env) {
       const r = this.env.reset(seed);
       this.obs = r.obs;
@@ -679,6 +775,8 @@ export class App {
     this.lastAction = env.actionSpace.names[a];
     const r: StepResult = env.step(a);
     this.obs = r.obs;
+    this.epReward += r.reward;
+    this.lastReward = r.reward;
     this.obsDirty = true;
     this.handleEvents(r.info.events);
     if (this.done !== 'error' && (r.terminated || r.truncated)) {
@@ -716,7 +814,17 @@ export class App {
 
   private handleEvents(events: GameEvent[]): void {
     for (const e of events) {
-      if (e.type === 'collide' || e.type === 'reward') continue;
+      if (e.type === 'collide') continue;
+      if (e.type === 'reward') {
+        // "AI 에게 보상 주기" 블록이 준 보상. 연속되면 한 줄로 합친다
+        const top = this.log[0];
+        const sign = (v: number) => `${v >= 0 ? '+' : ''}${+v.toFixed(3)}`;
+        const text = ko.reward.log(sign(e.value), (this.epReward + e.value).toFixed(2));
+        if (top?.kind === 'reward') Object.assign(top, { frame: e.frame, text });
+        else this.addLog({ kind: 'reward', frame: e.frame, text });
+        this.logDirty = true;
+        continue;
+      }
       if (e.type === 'score') {
         const top = this.log[0];
         const text = ko.log.score(e.delta, e.score);
@@ -815,6 +923,7 @@ export class App {
       const w = env.getWorld();
       this.renderer.draw(w, { background: env.background, backdrop: env.backdrop, overlay: this.overlay ? env.getDebugShapes() : null });
       this.ui.score.textContent = String(w.score);
+      this.ui.reward.textContent = `${this.epReward.toFixed(2)}${this.lastReward ? ` (${this.lastReward > 0 ? '+' : ''}${+this.lastReward.toFixed(3)})` : ''}`;
       this.ui.frame.textContent = `${w.frame} / ${env.maxSteps}`;
     }
     this.updateBadge();
@@ -956,4 +1065,13 @@ export class App {
         : [el('div', { className: 'empty', textContent: ko.panel.emptyLog })]),
     );
   }
+}
+
+/**
+ * 모양 블록 값 바꾸기. 드롭다운은 만들어 둔 선택지 목록(캐시)으로 값을 검사하므로,
+ * 새 그림·새로 활성화한 모양을 고르려면 먼저 목록을 새로 만든다.
+ */
+function setCostumeField(b: BlocklyTypes.Block, key: string): void {
+  (b.getField('COSTUME') as BlocklyTypes.FieldDropdown).getOptions(false);
+  b.setFieldValue(key, 'COSTUME');
 }

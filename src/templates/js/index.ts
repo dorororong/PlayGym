@@ -3,7 +3,7 @@
 
 import type { Project, Settings } from '../../engine/types';
 
-const js = (settings: Settings, code: string): Project => ({ version: 1, blocksJson: {}, generatedCode: code, settings });
+const js = (settings: Settings, code: string): Project => ({ version: 1, blocksJson: {}, generatedCode: code, settings: { scoreReward: true, ...settings } });
 
 export const dinoJs = js(
   { actions: ['none', 'up'], maxSteps: 3000, background: '#f7f7f2', backdrop: 'desert' },

@@ -12,5 +12,18 @@ if (import.meta.env.DEV) {
   if (demo) setTimeout(() => app.demo(demo, Number(q.get('steps') ?? 120)), 800);
   if (q.get('tab') === 'train') setTimeout(() => document.querySelectorAll<HTMLElement>('.tab')[1]?.click(), 900);
   const open = q.get('open');
-  if (open) setTimeout(() => (app as unknown as Record<string, () => void>)[open === 'library' ? 'openLibrary' : 'openDesign']?.call(app), 1200);
+  const priv = app as unknown as Record<string, (...a: unknown[]) => void>;
+  if (open === 'assets') setTimeout(() => priv.showAssets.call(app, false), 1200);
+  else if (open) setTimeout(() => priv[open === 'library' ? 'openLibrary' : 'openDesign']?.call(app), 1200);
+  // ?train=qtable 등: 학습을 바로 시작 (스크린샷용)
+  const train = q.get('train');
+  if (train)
+    setTimeout(async () => {
+      const { resolveConfig } = await import('./rl/config');
+      const a = app as unknown as { training: unknown; trainPanel: { start(r?: boolean): void; refresh(): void } };
+      a.training = resolveConfig({ ...(a.training as object), algo: train, steps: Number(q.get('trainSteps') ?? 300000) });
+      a.trainPanel.refresh();
+      document.querySelectorAll<HTMLElement>('#tabs .tab')[1]?.click();
+      a.trainPanel.start();
+    }, 1500);
 }

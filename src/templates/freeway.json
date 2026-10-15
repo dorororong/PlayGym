@@ -17,6 +17,7 @@
             "A": false,
             "B": false,
             "MAXSTEPS": 2000,
+            "SCORE_REWARD": true,
             "BACKDROP": "road",
             "BG": "#2e8b3e"
           }
@@ -1034,7 +1035,8 @@
     ],
     "maxSteps": 2000,
     "background": "#2e8b3e",
-    "backdrop": "road"
+    "backdrop": "road",
+    "scoreReward": true
   },
   "keymap": {
     "left": [

@@ -247,3 +247,17 @@ describe('보상 블록', () => {
     expect(r.info.score).toBe(2);
   });
 });
+
+describe('점수를 보상으로 끄기', () => {
+  it('끄면 보상 블록만 보상이 된다', () => {
+    const code = `api.onTick(() => { api.addScore(2); api.reward(0.5); });`;
+    const on = envFromCode(code);
+    const off = envFromCode(code, { scoreReward: false });
+    on.reset(0);
+    off.reset(0);
+    expect(on.step(0).reward).toBe(2.5);
+    const r = off.step(0);
+    expect(r.reward).toBe(0.5);
+    expect(r.info.score).toBe(2);
+  });
+});
