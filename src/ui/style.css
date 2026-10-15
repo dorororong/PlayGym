@@ -62,7 +62,7 @@ button { cursor: pointer; }
 #blockly[hidden] { display: block !important; visibility: hidden; }
 #assets { position: absolute; inset: 0; display: flex; flex-direction: column; gap: 14px; padding: 14px; overflow: auto; }
 #assets[hidden] { display: none; }
-#side { display: grid; grid-template-rows: minmax(0, 1fr) 14px minmax(180px, 32%); min-height: 0; min-width: 0; }
+#side { display: grid; grid-template-rows: minmax(0, 1fr) 14px minmax(180px, 30%); min-height: 0; min-width: 0; }
 /* 끌어서 크기 바꾸는 선 */
 .splitter { position: relative; touch-action: none; user-select: none; }
 .splitter.v { cursor: col-resize; }
@@ -77,21 +77,26 @@ body.dragging.rows { cursor: row-resize; }
 body.dragging iframe, body.dragging #blockly { pointer-events: none; }
 
 /* ───── 게임 카드 ───── */
-#game-card { display: flex; flex-direction: column; padding: 12px 14px; gap: 10px; min-height: 0; }
+#game-card { display: flex; flex-direction: column; padding: 10px 12px; gap: 6px; min-height: 0; }
 #game-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.pill { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px; background: var(--primary-soft); font-size: 13px; font-weight: 600; }
+.pill { display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 999px; background: var(--primary-soft); font-size: 12px; font-weight: 600; }
 .pill { white-space: nowrap; }
-.pill b { font-family: var(--mono); font-size: 14px; color: var(--primary); }
+.pill b { font-family: var(--mono); font-size: 13px; color: var(--primary); }
 /* 숫자 폭이 바뀌어도 줄바꿈이 달라지지 않게 (줄이 바뀌면 게임 화면 크기가 출렁인다) */
 .pill b.fixed { display: inline-block; text-align: left; overflow: hidden; text-overflow: clip; }
 .pill b.w-score { width: 5ch; }
-.pill b.w-reward { width: 16ch; }
+.pill b.w-reward { width: 15ch; }
 .pill b.w-frame { width: 11ch; }
 .pill.score { background: #fff4d6; }
-.pill.score b { color: #b7791f; font-size: 16px; }
+.pill.score b { color: #b7791f; font-size: 15px; }
 .pill.reward { background: #e7f8ee; cursor: help; }
-.pill.reward b { color: #15803d; font-size: 14px; }
-.pill input { width: 64px; border: none; background: #fff; border-radius: 8px; padding: 2px 6px; font-family: var(--mono); text-align: right; }
+.pill.reward b { color: #15803d; font-size: 13px; }
+.pill input { width: 52px; border: none; background: #fff; border-radius: 8px; padding: 1px 6px; font-family: var(--mono); text-align: right; }
+#game-head { gap: 6px; }
+/* 켜고 끄는 작은 버튼 (레트로·AI 시야) */
+.tog { border: none; border-radius: 999px; padding: 4px 10px; font-size: 12px; font-weight: 700; background: #f0eef8; color: var(--muted); box-shadow: inset 0 0 0 1.5px var(--line); white-space: nowrap; }
+.tog.on { background: var(--primary-soft); color: var(--primary); box-shadow: inset 0 0 0 1.5px var(--primary); }
+.tog:hover { filter: brightness(0.98); }
 .spacer { flex: 1; }
 .switch { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; cursor: pointer; user-select: none; }
 .switch input { display: none; }
@@ -120,7 +125,7 @@ body.dragging iframe, body.dragging #blockly { pointer-events: none; }
 @keyframes pop { from { transform: scale(0.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
 /* ───── 조작 버튼 ───── */
-#controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+#controls { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 .btn {
   display: inline-flex; align-items: center; gap: 6px; border: none; border-radius: 12px; padding: 8px 14px;
   font-weight: 700; font-size: 14px; background: var(--primary-soft); color: var(--text);
@@ -135,20 +140,21 @@ body.dragging iframe, body.dragging #blockly { pointer-events: none; }
 .btn.on { outline: 3px solid #2d2a4a22; }
 .btn.ghost { background: #fff; box-shadow: 0 0 0 2px var(--line); }
 .btn.icon { padding: 8px 11px; }
-#controls .btn.big { padding: 9px 15px; font-size: 15px; }
+#controls .btn.big { padding: 7px 13px; font-size: 14px; }
+#controls .btn.icon { padding: 6px 10px; }
 .btn:disabled { opacity: 0.5; cursor: default; transform: none; }
 .seg { display: inline-flex; background: var(--primary-soft); border-radius: 12px; padding: 3px; }
-.seg button { border: none; background: transparent; padding: 5px 11px; min-width: 38px; border-radius: 9px; font-size: 13px; font-weight: 600; color: var(--muted); }
+.seg button { border: none; background: transparent; padding: 3px 9px; min-width: 34px; border-radius: 9px; font-size: 13px; font-weight: 600; color: var(--muted); }
 .seg button.on { background: #fff; color: var(--primary); box-shadow: 0 1px 3px rgba(76, 58, 180, 0.2); }
 
 /* ───── 조작 키 안내 (게임패드) ───── */
-#pad { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 13px; }
+#pad { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 12px; }
 #pad .title { color: var(--muted); font-weight: 600; margin-right: 2px; }
 .key {
   display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px 4px 6px; border-radius: 10px;
   background: #fff; box-shadow: 0 0 0 2px var(--line), 0 3px 0 var(--line); transition: all 0.06s;
 }
-.key .cap { min-width: 22px; height: 22px; padding: 0 5px; display: inline-grid; place-items: center; border-radius: 6px; background: #f4f2fb; font-family: var(--mono); font-size: 12px; font-weight: 700; }
+.key .cap { min-width: 19px; height: 19px; padding: 0 4px; display: inline-grid; place-items: center; border-radius: 6px; background: #f4f2fb; font-family: var(--mono); font-size: 12px; font-weight: 700; }
 .key .what { font-weight: 600; }
 .key.on { background: var(--primary); color: #fff; box-shadow: 0 0 0 2px var(--primary), 0 1px 0 var(--primary); transform: translateY(2px); }
 .key.on .cap { background: rgba(255, 255, 255, 0.25); }

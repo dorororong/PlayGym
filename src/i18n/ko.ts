@@ -106,6 +106,7 @@ export const ko = {
     normal: '보통',
     fast: '빠르게',
     aiView: 'AI 시야 보기',
+    aiViewShort: 'AI 시야',
     retro: '레트로',
     retroHint: '200×150 픽셀로 그려서 크게 보여 줘요 (오락실 느낌). 게임 좌표와 AI 가 보는 값은 그대로예요',
     seed: '시드',

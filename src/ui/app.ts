@@ -131,6 +131,7 @@ export class App {
     trained: HTMLButtonElement;
     speed: HTMLButtonElement[];
     seg: HTMLElement;
+    seedPill: HTMLElement;
     meta: HTMLElement | null;
     badge: HTMLElement;
   };
@@ -200,8 +201,22 @@ export class App {
     // 게임 머리: 점수·프레임·AI 시야·시드
     this.ui.score = el('b', { className: 'fixed w-score', textContent: '0' });
     this.ui.frame = el('b', { className: 'fixed w-frame', textContent: '0' });
-    const overlay = el('input', { type: 'checkbox', checked: true });
-    overlay.addEventListener('change', () => (this.overlay = overlay.checked));
+    // 켜고 끄는 작은 버튼 (스위치보다 자리를 덜 차지한다)
+    const toggle = (label: string, title: string, on: boolean, fn: (on: boolean) => void) => {
+      const b = el('button', { className: 'tog', innerHTML: label, title });
+      const set = (v: boolean) => {
+        b.classList.toggle('on', v);
+        b.setAttribute('aria-pressed', String(v));
+      };
+      set(on);
+      b.addEventListener('click', () => {
+        const v = !b.classList.contains('on');
+        set(v);
+        fn(v);
+      });
+      return b;
+    };
+    const overlay = toggle(`👀 ${ko.ui.aiViewShort}`, '센서가 무엇을 보고 있는지, 실제 충돌 사각형이 어디인지 화면에 그려요', true, (v) => (this.overlay = v));
     this.ui.seed = el('input', { type: 'number', value: '0', min: '0', step: '1' });
     this.ui.seed.addEventListener('change', () => {
       this.seed = Math.max(0, Math.floor(Number(this.ui.seed.value) || 0));
@@ -209,20 +224,20 @@ export class App {
       this.resetEpisode();
     });
     this.ui.reward = el('b', { className: 'fixed w-reward', textContent: '0' });
-    const retro = el('input', { type: 'checkbox', checked: loadPref('retro', '1') === '1' });
-    this.renderer.setRetro(retro.checked);
-    retro.addEventListener('change', () => {
-      this.renderer.setRetro(retro.checked);
-      savePref('retro', retro.checked ? '1' : '0');
+    const retroOn = loadPref('retro', '1') === '1';
+    this.renderer.setRetro(retroOn);
+    const retro = toggle(`🕹️ ${ko.ui.retro}`, ko.ui.retroHint, retroOn, (v) => {
+      this.renderer.setRetro(v);
+      savePref('retro', v ? '1' : '0');
     });
+    // 한 줄: 점수·보상·프레임 | 레트로·AI 시야
     $('#game-head').append(
       el('span', { className: 'pill score' }, `⭐ ${ko.ui.score}`, this.ui.score),
       el('span', { className: 'pill reward', title: ko.reward.pillHint }, `🎁 ${ko.reward.pill}`, this.ui.reward),
-      el('span', { className: 'pill' }, `⏱️ ${ko.ui.frame}`, this.ui.frame),
+      el('span', { className: 'pill', title: ko.ui.frame }, '⏱️', this.ui.frame),
       el('span', { className: 'spacer' }),
-      el('label', { className: 'switch', title: ko.ui.retroHint }, retro, el('span', { className: 'track' }), `🕹️ ${ko.ui.retro}`),
-      el('label', { className: 'switch', title: '센서가 무엇을 보고 있는지, 실제 충돌 사각형이 어디인지 화면에 그려요' }, overlay, el('span', { className: 'track' }), `👀 ${ko.ui.aiView}`),
-      el('span', { className: 'pill', title: ko.ui.seedHint }, `🌱 ${ko.ui.seed}`, this.ui.seed),
+      retro,
+      overlay,
     );
     this.ui.badge = el('div', { className: 'mode-badge' });
     $('#screen').append(this.ui.badge);
@@ -245,7 +260,10 @@ export class App {
       this.ui.trained,
       this.button(`<span class="i">↺</span>`, 'ghost icon', () => this.resetEpisode(), ko.ui.restart),
       this.button(`<span class="i">⏭</span>`, 'ghost icon', () => this.stepOnce(), `${ko.ui.step} (한 프레임만 진행)`),
+      el('span', { className: 'spacer' }),
+      seg,
     );
+    this.ui.seedPill = el('span', { className: 'pill seed', title: ko.ui.seedHint }, `🌱 ${ko.ui.seed}`, this.ui.seed);
   }
 
   private setSpeed(v: number): void {
@@ -287,7 +305,7 @@ export class App {
     }
     const edit = el('button', { className: 'linkbtn', textContent: `⌨️ ${ko.ui.editKeys}` });
     edit.addEventListener('click', () => this.openKeys());
-    pad.append(edit, el('span', { className: 'spacer' }), this.ui.seg);
+    pad.append(edit, el('span', { className: 'spacer' }), this.ui.seedPill);
   }
 
   // ───────────── 블록 / 모양 탭 ─────────────
