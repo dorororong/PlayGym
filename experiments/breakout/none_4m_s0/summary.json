@@ -1,0 +1,70 @@
+{
+  "target": "experiments/breakout/none.json",
+  "resumedFrom": 0,
+  "cfg": {
+    "algo": "ppo",
+    "steps": 4000000,
+    "frameSkip": 4,
+    "seed": 0,
+    "gamma": 0.99,
+    "lr": 0.0005,
+    "network": {
+      "hidden": [
+        64,
+        64
+      ],
+      "activation": "tanh"
+    },
+    "ppo": {
+      "nEnvs": 8,
+      "nSteps": 128,
+      "epochs": 4,
+      "minibatch": 256,
+      "clip": 0.2,
+      "lambda": 0.95,
+      "entCoef": 0.03
+    },
+    "dqn": {
+      "buffer": 50000,
+      "batch": 64,
+      "learningStarts": 1000,
+      "trainFreq": 4,
+      "targetUpdate": 1000,
+      "epsStart": 1,
+      "epsEnd": 0.05,
+      "epsFraction": 0.3,
+      "double": true
+    },
+    "reinforce": {
+      "episodes": 8,
+      "entCoef": 0.01
+    },
+    "qtable": {
+      "bins": 8,
+      "alpha": 0.1,
+      "epsStart": 1,
+      "epsEnd": 0.05,
+      "epsFraction": 0.5
+    }
+  },
+  "steps": 4002721,
+  "seconds": 261.6208007,
+  "random": {
+    "meanReturn": 0.8,
+    "meanScore": 0.8,
+    "meanLength": 95.1,
+    "episodes": 30
+  },
+  "greedy": {
+    "meanReturn": 28,
+    "meanScore": 28,
+    "meanLength": 3000,
+    "episodes": 30
+  },
+  "play": {
+    "meanReturn": 27.233333333333334,
+    "meanScore": 27.233333333333334,
+    "meanLength": 2971.0666666666666,
+    "episodes": 30
+  }
+}

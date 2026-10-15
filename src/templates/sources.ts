@@ -54,10 +54,12 @@ export function flappyBlocks() {
   return t.build();
 }
 
-export function breakoutBlocks() {
+/** bricks: 벽돌 관찰 — 'none' 없음, 'grid5' 화면 5×8 칸, 'grid15' 화면 15×8 칸 (벽돌 하나 = 한 칸), 'near' 패들 위 가까운 벽돌 2개 */
+export function breakoutBlocks(opt: { bricks?: 'none' | 'grid5' | 'grid15' | 'near' } = {}) {
   const t = new TemplateBuilder('breakout');
   t.settings(['none', 'left', 'right'], 3000, '#1d2330', 'arcade');
-  t.observe([t.sPosition('paddle'), t.sPosition('ball'), t.sVelocity('ball')]);
+  const bricks = opt.bricks === 'grid5' ? [t.sGrid('paddle', 5, 8, 0, 'brick')] : opt.bricks === 'grid15' ? [t.sGrid('paddle', 15, 8, 0, 'brick')] : opt.bricks === 'near' ? [t.sNearestK(2, 'paddle', 'brick', 'up')] : [];
+  t.observe([t.sPosition('paddle'), t.sPosition('ball'), t.sVelocity('ball'), ...bricks]);
   t.onStart([
     t.create('paddle', 200, 280, 60, 10, '#4a90d9', 0, 0),
     t.create('ball', 200, 200, 8, 8, '#ffffff', 1, 4),
@@ -490,7 +492,7 @@ export function snakeBlocks(opt: { closer?: boolean } = {}) {
 export const TEMPLATE_SOURCES = {
   dino: dinoBlocks,
   flappy: flappyBlocks,
-  breakout: breakoutBlocks,
+  breakout: () => breakoutBlocks(),
   dodge: dodgeBlocks,
   invaders: invadersBlocks,
   pong: pongBlocks,

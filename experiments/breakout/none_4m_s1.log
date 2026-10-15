@@ -1,0 +1,36 @@
+
+> playgym@0.1.0 train
+> tsx scripts/train.ts experiments/breakout/none.json --steps 4000000 --seed 1 --eval 30 --out experiments/breakout/none_4m_s1
+
+[experiments/breakout/none.json] PPO · 64×64 tanh · 행동 유지 4 · 4,000,000 프레임
+  무작위 행동: 점수 0.8 · 보상 0.8 · 길이 95
+    146563 프레임   10초 | 점수 0.7 보상 0.7 길이 74 | entropy=1.0682 explore=0.9723 approxKl=0.0008 clipFrac=0
+    293248 프레임   20초 | 점수 1.9 보상 1.9 길이 157 | entropy=0.9545 explore=0.8688 approxKl=0.0059 clipFrac=0.0603
+    436231 프레임   31초 | 점수 6.9 보상 6.9 길이 617 | entropy=0.8727 explore=0.7944 approxKl=0.0038 clipFrac=0.0251
+    583534 프레임   41초 | 점수 11.2 보상 11.2 길이 1036 | entropy=0.8688 explore=0.7908 approxKl=0.008 clipFrac=0.0808
+    730905 프레임   51초 | 점수 12.1 보상 12.1 길이 1105 | entropy=0.7422 explore=0.6756 approxKl=0.015 clipFrac=0.1287
+    874190 프레임   61초 | 점수 15.7 보상 15.7 길이 1552 | entropy=0.7487 explore=0.6815 approxKl=0.0066 clipFrac=0.0518
+   1017490 프레임   71초 | 점수 16.6 보상 16.6 길이 1619 | entropy=0.7958 explore=0.7244 approxKl=0.0024 clipFrac=0.051
+   1164877 프레임   81초 | 점수 17.1 보상 17.1 길이 1682 | entropy=0.813 explore=0.74 approxKl=0.0006 clipFrac=0.0166
+   1312295 프레임   91초 | 점수 19.8 보상 19.8 길이 2027 | entropy=0.7764 explore=0.7067 approxKl=0.004 clipFrac=0.0437
+   1455620 프레임  102초 | 점수 23.9 보상 23.9 길이 2467 | entropy=0.7746 explore=0.7051 approxKl=0.0015 clipFrac=0.0413
+   1603028 프레임  112초 | 점수 19.1 보상 19.1 길이 1991 | entropy=0.7235 explore=0.6586 approxKl=0.0029 clipFrac=0.0464
+   1750433 프레임  122초 | 점수 19.1 보상 19.1 길이 1827 | entropy=0.7504 explore=0.6831 approxKl=0.0012 clipFrac=0.0266
+   1897850 프레임  132초 | 점수 20.3 보상 20.3 길이 1948 | entropy=0.777 explore=0.7073 approxKl=0.003 clipFrac=0.0098
+   2045275 프레임  142초 | 점수 17.8 보상 17.8 길이 1742 | entropy=0.7411 explore=0.6746 approxKl=0.0028 clipFrac=0.04
+   2196786 프레임  153초 | 점수 19.8 보상 19.8 길이 1975 | entropy=0.7827 explore=0.7125 approxKl=0.0032 clipFrac=0.0313
+   2372858 프레임  163초 | 점수 17.9 보상 17.9 길이 1817 | entropy=0.7349 explore=0.669 approxKl=0.0047 clipFrac=0.0444
+   2544835 프레임  173초 | 점수 20.3 보상 20.3 길이 2100 | entropy=0.755 explore=0.6872 approxKl=0.0023 clipFrac=0.0024
+   2700428 프레임  183초 | 점수 14.9 보상 14.9 길이 1532 | entropy=0.7327 explore=0.6669 approxKl=0.0035 clipFrac=0.042
+   2851928 프레임  193초 | 점수 18.8 보상 18.8 길이 1771 | entropy=0.7663 explore=0.6975 approxKl=0.0032 clipFrac=0.0408
+   2999342 프레임  203초 | 점수 18.0 보상 18.0 길이 1880 | entropy=0.6607 explore=0.6014 approxKl=0.0044 clipFrac=0.0471
+   3150880 프레임  213초 | 점수 24.7 보상 24.7 길이 2585 | entropy=0.6747 explore=0.6141 approxKl=0.0034 clipFrac=0.0249
+   3326972 프레임  223초 | 점수 18.4 보상 18.4 길이 1889 | entropy=0.7631 explore=0.6946 approxKl=-0.0003 clipFrac=0.0171
+   3482591 프레임  233초 | 점수 19.1 보상 19.1 길이 1975 | entropy=0.7427 explore=0.676 approxKl=0 clipFrac=0.0283
+   3638202 프레임  243초 | 점수 16.1 보상 16.1 길이 1633 | entropy=0.7709 explore=0.7017 approxKl=0.0086 clipFrac=0.1296
+   3793817 프레임  254초 | 점수 17.2 보상 17.2 길이 1668 | entropy=0.7368 explore=0.6707 approxKl=0.0077 clipFrac=0.0718
+   3949430 프레임  264초 | 점수 19.5 보상 19.5 길이 1968 | entropy=0.7589 explore=0.6908 approxKl=0.0062 clipFrac=0.0532
+   4002666 프레임  267초 | 점수 18.4 보상 18.4 길이 1815 | entropy=0.7345 explore=0.6685 approxKl=0.0006 clipFrac=0.0022
+[experiments/breakout/none.json] 학습 4,002,666 프레임 / 267초 (14,986 프레임/초)
+  학습된 AI (최선만)   : 점수 21.0 · 보상 21.0 · 길이 3000
+  학습된 AI (화면 방식): 점수 20.0 · 보상 20.0 · 길이 2294
