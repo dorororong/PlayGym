@@ -152,9 +152,24 @@ export class Renderer {
     ctx.lineWidth = 1;
     for (const s of shapes) {
       if (s.type === 'ray') {
-        // 가까울수록 진한 색
+        // 가까울수록 진한 색. 눈 블록의 광선은 하늘색이고 시작점에 눈을 그린다
         const a = s.hit ? 0.35 + 0.65 * (1 - s.t) : 0.25;
-        ctx.strokeStyle = s.hit ? `rgba(255,60,120,${a})` : `rgba(255,170,0,${a})`;
+        ctx.strokeStyle = s.hit ? `rgba(255,60,120,${a})` : s.eye ? `rgba(40,170,255,${Math.max(a, 0.6)})` : `rgba(255,170,0,${a})`;
+        if (s.eye) {
+          ctx.save();
+          ctx.fillStyle = '#ffffff';
+          ctx.strokeStyle = '#1d6fd1';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.ellipse(s.x0, s.y0, 5, 3.5, 0, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+          ctx.fillStyle = '#1d3557';
+          ctx.beginPath();
+          ctx.arc(s.x0, s.y0, 1.8, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        }
         ctx.beginPath();
         ctx.moveTo(s.x0, s.y0);
         ctx.lineTo(s.x1, s.y1);

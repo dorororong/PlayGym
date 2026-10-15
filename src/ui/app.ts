@@ -2,7 +2,8 @@
 
 import type * as BlocklyTypes from 'blockly/core';
 import { Blockly } from '../blocks/blockly';
-import { SINGLETON_TYPES, ensureDefaultTags } from '../blocks/definitions';
+import { SINGLETON_TYPES, ensureDefaultTags, setPickHandler } from '../blocks/definitions';
+import { Picker } from './picker';
 import { projectFromWorkspace } from '../blocks/generators';
 import { createWorkspace } from '../blocks/toolbox';
 import { createEnv, type Env, type StepResult } from '../engine/env';
@@ -115,6 +116,7 @@ export class App {
   /** 모양 탭에서 활성화한 모양 (블록 목록에 나오는 것) */
   private assets: string[] = ['box'];
   private assetPanel!: AssetPanel;
+  private picker!: Picker;
   /** 이번 판에 받은 보상 합과 방금 받은 보상 */
   private epReward = 0;
   private lastReward = 0;
@@ -142,6 +144,15 @@ export class App {
     this.ws = createWorkspace($('#blockly'));
     this.ws.addChangeListener((e) => this.onWorkspaceChange(e));
     this.ws.registerButtonCallback('PG_PAINT', () => this.showAssets(true));
+    // 📍 위치 고르기
+    this.picker = new Picker($('#screen'), $<HTMLCanvasElement>('#game'), {
+      findObject: (tag) => {
+        const o = this.env?.getWorld().objects.find((x) => x.alive && x.tag === tag);
+        return o ? { x: o.x, y: o.y, w: o.w, h: o.h } : null;
+      },
+      log: (text) => this.addLog({ kind: 'info', frame: 0, text }),
+    });
+    setPickHandler((b) => this.picker.start(b));
     this.buildEditorTabs();
     this.bindKeyboard();
     const resize = () => {

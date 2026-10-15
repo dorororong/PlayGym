@@ -54,6 +54,53 @@ describe('라이다를 원하는 곳에서 원하는 방향으로', () => {
   });
 });
 
+describe('눈 블록 (광선 하나, 여러 개를 따로)', () => {
+  const code = `
+    api.sensors([
+      api.sensor.eye('', 100, 200, 90, 200, 'brick'),        // 화면 (100, 200) 에서 위로
+      api.sensor.eye('', 300, 200, 90, 200, 'brick'),        // 벽돌 없는 자리
+      api.sensor.eye('paddle', 0, 0, 90, 200, 'brick'),      // 패들을 따라다니는 눈
+      api.sensor.eye('paddle', -40, 0, 0, 200, 'brick', true), // 패들 왼쪽 40 에서 오른쪽으로, 화면 경계도
+    ]);
+    api.onStart(() => {
+      api.create({tag:'brick', x:100, y:40, w:40, h:16});
+      api.create({tag:'paddle', x:300, y:200, w:60, h:10});
+    });
+    api.onTick(() => api.setPos('paddle', 100, 200));`;
+
+  it('눈마다 따로 값이 나오고, 이름표는 eye0, eye1, …', () => {
+    const env = envFromCode(code);
+    expect(env.observationSpace.labels).toEqual(['eye0→brick', 'eye1→brick', 'eye2→brick', 'eye3→brick']);
+    const o = env.reset(0).obs;
+    expect(o[0]).toBeCloseTo((200 - 48) / 200);
+    expect(o[1]).toBe(1);
+    expect(o[2]).toBe(1); // 패들이 아직 x 300
+    expect(o[3]).toBeCloseTo((400 - 260) / 200); // 화면 오른쪽 끝까지 140
+  });
+
+  it('붙은 눈은 객체를 따라간다', () => {
+    const env = envFromCode(code);
+    env.reset(0);
+    expect(env.step(0).obs[2]).toBeCloseTo((200 - 48) / 200);
+  });
+
+  it('기준 객체가 없으면 1', () => {
+    const env = envFromCode(`api.sensors([api.sensor.eye('none', 0, 0, 90, 100, 'brick')]);`);
+    expect(env.reset(0).obs).toEqual([1]);
+  });
+
+  it('블록에서 만든 눈도 같은 값 (headless 변환)', () => {
+    const t = new TemplateBuilder('eye');
+    t.settings(['none', 'left', 'right'], 100, '#1d2330');
+    t.observe([t.sEye('', 100, 200, 90, 200, 'brick'), t.sEye('paddle', 0, -10, 90, 200, 'brick')]);
+    t.onStart([t.create('brick', 100, 40, 40, 16, '#cc3333', 0, 0), t.create('paddle', 100, 210, 60, 10, '#4a90d9', 0, 0)]);
+    const env = createEnv(projectFromBlocksJson(t.build()));
+    const o = env.reset(0).obs;
+    expect(o[0]).toBeCloseTo((200 - 48) / 200);
+    expect(o[1]).toBeCloseTo((200 - 48) / 200);
+  });
+});
+
 describe('가장 먼저 만든 객체', () => {
   it('가장 오래된 것 하나만 지운다 (뱀 꼬리)', () => {
     const env = envFromCode(`

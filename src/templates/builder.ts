@@ -155,6 +155,11 @@ export class TemplateBuilder {
   sGrid(subject: string, rows: number, cols: number, cell: number, target: string) {
     return this.block('pg_s_grid', { SUBJECT: this.tagF(subject), ROWS: rows, COLS: cols, CELL: cell, TARGET: this.tagF(target) });
   }
+  /** 눈: base 가 '' 이면 화면 좌표, 태그면 그 객체에서 옮긴 곳 */
+  sEye(base: string, x: number, y: number, deg: number, maxDist: number, target: string, bounds = false) {
+    const f = { X: x, Y: y, DEG: deg, MAXDIST: maxDist, TARGET: this.tagF(target), BOUNDS: bounds ? 'TRUE' : 'FALSE' };
+    return base ? this.block('pg_s_eye_on', { BASE: this.tagF(base), ...f }) : this.block('pg_s_eye', f);
+  }
   sScore(min: number, max: number) { return this.block('pg_s_score', { MIN: min, MAX: max }); }
   sProp(subject: string, prop: string, min: number, max: number) {
     return this.block('pg_s_prop', { SUBJECT: this.tagF(subject), PROP: prop, MIN: min, MAX: max });

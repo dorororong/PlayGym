@@ -19,6 +19,8 @@ export type SensorDesc =
       target: string;
       bounds: boolean;
     }
+  /** 눈: 한 점에서 한 방향으로 광선 하나. base 가 '' 이면 화면 좌표 (x, y), 태그면 그 객체에서 (x, y) 만큼 옮긴 곳 */
+  | { kind: 'eye'; base: string; x: number; y: number; deg: number; maxDist: number; target: string; bounds: boolean }
   | { kind: 'onGround'; subject: string }
   | { kind: 'variable'; name: string; min: number; max: number }
   | { kind: 'nearestK'; subject: string; target: string; k: number; dir: Direction }
@@ -31,7 +33,7 @@ export type Prop = 'x' | 'y' | 'vx' | 'vy' | 'w' | 'h';
 
 /** 오버레이용 도형. headless 에서는 계산하지 않는다 */
 export type DebugShape =
-  | { type: 'ray'; x0: number; y0: number; x1: number; y1: number; hit: boolean; t: number }
+  | { type: 'ray'; x0: number; y0: number; x1: number; y1: number; hit: boolean; t: number; eye?: boolean }
   | { type: 'link'; x0: number; y0: number; x1: number; y1: number }
   | { type: 'cell'; x: number; y: number; w: number; h: number; on: boolean };
 
@@ -63,6 +65,16 @@ export const sensorFactory = {
     rays: Math.max(1, Math.min(32, Math.round(Number(rays) || 1))),
     startDeg: Number(startDeg) || 0,
     endDeg: Number(endDeg) || 0,
+    maxDist: Math.max(1, Number(maxDist) || 1),
+    target,
+    bounds: !!bounds,
+  }),
+  eye: (base: string, x: number, y: number, deg: number, maxDist: number, target: string, bounds = false): SensorDesc => ({
+    kind: 'eye',
+    base: base ? String(base) : '',
+    x: Number(x) || 0,
+    y: Number(y) || 0,
+    deg: Number(deg) || 0,
     maxDist: Math.max(1, Number(maxDist) || 1),
     target,
     bounds: !!bounds,
@@ -120,8 +132,10 @@ export function describeSensors(sensors: SensorDesc[]): ObsSpace {
   };
   let lidarIdx = 0;
   let gridIdx = 0;
+  let eyeIdx = 0;
   for (const s of sensors) {
     switch (s.kind) {
+      case 'eye': add(`eye${eyeIdx++}→${s.target}`, 0); break;
       case 'position': add(`${s.subject}.x`, 0); add(`${s.subject}.y`, 0); break;
       case 'velocity': add(`${s.subject}.vx`, -1); add(`${s.subject}.vy`, -1); break;
       case 'nearest': add(`${s.subject}→${s.target}.dx`, -1); add(`${s.subject}→${s.target}.dy`, -1); break;
@@ -210,6 +224,24 @@ export function computeObservation(world: WorldState, sensors: SensorDesc[], deb
           out.push(clip(t, 0, 1));
           debug?.push({ type: 'ray', x0: o.x, y0: o.y, x1: o.x + dx * d, y1: o.y + dy * d, hit: d < s.maxDist, t });
         }
+        break;
+      }
+      case 'eye': {
+        const o = s.base ? firstOfTag(objs, s.base) : undefined;
+        if (s.base && !o) {
+          out.push(1);
+          break;
+        }
+        const ox = (o?.x ?? 0) + s.x;
+        const oy = (o?.y ?? 0) + s.y;
+        const targets = objs.filter((t) => t.alive && t.tag === s.target && t !== o);
+        const rad = (s.deg * Math.PI) / 180;
+        const dx = Math.cos(rad);
+        const dy = -Math.sin(rad);
+        const d = castRay(ox, oy, dx, dy, s.maxDist, targets, s.bounds);
+        const t = d / s.maxDist;
+        out.push(clip(t, 0, 1));
+        debug?.push({ type: 'ray', x0: ox, y0: oy, x1: ox + dx * d, y1: oy + dy * d, hit: d < s.maxDist, t, eye: true });
         break;
       }
       case 'onGround': {

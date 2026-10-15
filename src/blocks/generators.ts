@@ -23,6 +23,10 @@ const SENSOR_GEN: Record<string, (b: B) => string> = {
     `api.sensor.lidar(${q(text(b, 'SUBJECT'))}, ${n(b, 'RAYS')}, ${n(b, 'START')}, ${n(b, 'END')}, ${n(b, 'MAXDIST')}, ${q(
       text(b, 'TARGET'),
     )}, ${b.getFieldValue('BOUNDS') === 'TRUE'})`,
+  pg_s_eye: (b) =>
+    `api.sensor.eye('', ${n(b, 'X')}, ${n(b, 'Y')}, ${n(b, 'DEG')}, ${n(b, 'MAXDIST')}, ${q(text(b, 'TARGET'))}, ${b.getFieldValue('BOUNDS') === 'TRUE'})`,
+  pg_s_eye_on: (b) =>
+    `api.sensor.eye(${q(text(b, 'BASE'))}, ${n(b, 'X')}, ${n(b, 'Y')}, ${n(b, 'DEG')}, ${n(b, 'MAXDIST')}, ${q(text(b, 'TARGET'))}, ${b.getFieldValue('BOUNDS') === 'TRUE'})`,
   pg_s_on_ground: (b) => `api.sensor.onGround(${q(text(b, 'SUBJECT'))})`,
   pg_s_variable: (b) => `api.sensor.variable(${q(text(b, 'VAR'))}, ${n(b, 'MIN')}, ${n(b, 'MAX')})`,
   pg_s_nearest_k: (b) =>

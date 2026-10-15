@@ -375,3 +375,18 @@ dialog.px-dialog { width: 880px; }
 .reward-rules { background: #f0fbf4; border: 1px solid #c9eed6; border-radius: 12px; padding: 7px 10px; font-size: 12px; line-height: 1.6; margin-bottom: 8px; cursor: help; }
 .reward-rules b { color: #166534; }
 .log-row.reward { background: #f0fbf4; }
+
+/* ───── 📍 위치 고르기 ───── */
+.coord-readout { position: absolute; left: 8px; bottom: 8px; pointer-events: none; background: rgba(29, 27, 47, 0.72); color: #fff; font-family: var(--mono); font-size: 11px; padding: 2px 8px; border-radius: 999px; }
+.pick-layer { position: absolute; left: 0; top: 0; width: 100%; height: 100%; cursor: crosshair; z-index: 5; background: rgba(255, 255, 255, 0.08); }
+/* 고르는 동안에는 "플레이를 누르면…" 카드·배지를 숨긴다 (눌러도 버튼이 안 눌리게) */
+#screen.picking #screen-overlay, #screen.picking .mode-badge, #screen.picking .badge-paused { display: none; }
+.pk-grid { stroke: rgba(255, 255, 255, 0.25); stroke-width: 0.5; }
+.pk-cross { stroke: #7c6cf2; stroke-width: 0.8; stroke-dasharray: 3 3; }
+.pk-ghost { fill: rgba(124, 108, 242, 0.25); stroke: #7c6cf2; stroke-width: 1; stroke-dasharray: 2 2; }
+.pk-look { stroke: #28aaff; stroke-width: 1.5; }
+.pk-eye { fill: #fff; stroke: #1d6fd1; stroke-width: 1.2; }
+.pk-text { font: 700 11px var(--mono); fill: #fff; stroke: #1d1b2f; stroke-width: 3px; paint-order: stroke; }
+.pick-banner { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); z-index: 6; pointer-events: none; background: var(--primary); color: #fff; font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 999px; box-shadow: 0 2px 8px #0003; white-space: nowrap; }
+/* 툴박스: 구분선 아래 AI 학습 */
+.blocklyTreeSeparator, .blocklyToolboxSeparator { border-bottom: 1px dashed #d9d3f3 !important; margin: 8px 12px !important; }

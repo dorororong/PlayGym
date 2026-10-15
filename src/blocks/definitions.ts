@@ -102,6 +102,15 @@ const cmd = (type: string, message0: string, args0: object[], colour: string, ex
   colour,
   ...extra,
 });
+/** 📍 칸: 누르면 게임 화면에서 위치를 고른다 (브라우저 앱이 setPickHandler 로 연결). 저장되지 않는다 */
+let pickHandler: ((block: BlocklyTypes.Block) => void) | null = null;
+export function setPickHandler(fn: ((block: BlocklyTypes.Block) => void) | null): void {
+  pickHandler = fn;
+}
+const pick = { type: 'field_pg_pick', name: 'PICK' };
+/** 📍 로 x, y 를 고를 수 있는 블록 */
+export const PICK_TYPES = ['pg_create', 'pg_set_pos', 'pg_s_eye', 'pg_s_eye_on'];
+
 const sensor = (type: string, message0: string, args0: object[]) => ({
   type,
   message0,
@@ -150,8 +159,8 @@ export const BLOCK_DEFS = [
   hat('pg_on_collide', ko.blocks.onCollide, [tagField('A', 'player'), tagField('B', 'obstacle')]),
   // 객체
   cmd('pg_create', ko.blocks.create, [tagField('TAG', 'obstacle')], HUE.objects, {
-    message1: `x %1 y %2 ${ko.props.w} %3 ${ko.props.h} %4`,
-    args1: [num('X'), num('Y'), num('W'), num('H')],
+    message1: `x %1 y %2 %3 ${ko.props.w} %4 ${ko.props.h} %5`,
+    args1: [num('X'), num('Y'), pick, num('W'), num('H')],
     message2: `색 %1 ${ko.props.vx} %2 ${ko.props.vy} %3`,
     args2: [{ type: 'input_value', name: 'COLOR', check: 'Colour' }, num('VX'), num('VY')],
   }),
@@ -167,7 +176,7 @@ export const BLOCK_DEFS = [
   { type: 'pg_colour', message0: '%1', args0: [colourField('C', '#cc3333')], output: 'Colour', colour: HUE.decor },
   { type: 'pg_rainbow', message0: ko.blocks.rainbow, args0: [num('N')], inputsInline: true, output: 'Colour', colour: HUE.decor },
   // 움직임
-  cmd('pg_set_pos', ko.blocks.setPos, [target(), num('X'), num('Y')], HUE.motion),
+  cmd('pg_set_pos', ko.blocks.setPos, [target(), num('X'), num('Y'), pick], HUE.motion),
   cmd('pg_move', ko.blocks.move, [target(), axis(), num('D')], HUE.motion),
   cmd('pg_set_vel', ko.blocks.setVel, [target(), axis(), num('V')], HUE.motion),
   cmd('pg_change_vel', ko.blocks.changeVel, [target(), axis(), num('DV')], HUE.motion),
@@ -208,6 +217,31 @@ export const BLOCK_DEFS = [
     tagField('TARGET', 'obstacle'),
     { type: 'field_checkbox', name: 'BOUNDS', checked: false },
   ]),
+  {
+    ...sensor('pg_s_eye', ko.blocks.sEye, [
+      { type: 'field_number', name: 'X', value: 200 },
+      { type: 'field_number', name: 'Y', value: 150 },
+      pick,
+      { type: 'field_number', name: 'DEG', value: 90 },
+      { type: 'field_number', name: 'MAXDIST', value: 300, min: 1 },
+      tagField('TARGET', 'obstacle'),
+      { type: 'field_checkbox', name: 'BOUNDS', checked: false },
+    ]),
+    tooltip: ko.blocks.sEyeHint,
+  },
+  {
+    ...sensor('pg_s_eye_on', ko.blocks.sEyeOn, [
+      tagField('BASE', 'player'),
+      { type: 'field_number', name: 'X', value: 0 },
+      { type: 'field_number', name: 'Y', value: 0 },
+      pick,
+      { type: 'field_number', name: 'DEG', value: 90 },
+      { type: 'field_number', name: 'MAXDIST', value: 300, min: 1 },
+      tagField('TARGET', 'obstacle'),
+      { type: 'field_checkbox', name: 'BOUNDS', checked: false },
+    ]),
+    tooltip: ko.blocks.sEyeOnHint,
+  },
   sensor('pg_s_on_ground', ko.blocks.sOnGround, [tagField('SUBJECT', 'player')]),
   sensor('pg_s_nearest_k', ko.blocks.sNearestK, [
     { type: 'field_number', name: 'K', value: 3, min: 1, max: 8, precision: 1 },
@@ -301,6 +335,26 @@ export function registerBlocks(): void {
     });
     input.insertFieldAt(idx, field, 'COSTUME');
   });
+
+  // 📍 칸
+  class FieldPick extends Blockly.Field<string> {
+    override SERIALIZABLE = false;
+    // 누를 수 있는(편집 가능한) 칸은 Blockly 가 저장하려 해서 직접 막는다
+    override isSerializable(): boolean {
+      return false;
+    }
+    constructor() {
+      super('📍');
+    }
+    static fromJson() {
+      return new FieldPick();
+    }
+    protected override showEditor_(): void {
+      const b = this.getSourceBlock();
+      if (b && !b.isInFlyout) pickHandler?.(b);
+    }
+  }
+  Blockly.fieldRegistry.register('field_pg_pick', FieldPick);
 
   Blockly.common.defineBlocksWithJsonArray(BLOCK_DEFS);
 }
