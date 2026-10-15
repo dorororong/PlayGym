@@ -1,0 +1,5 @@
+{"game":"pong","algo":"ppo","seed":0,"frames":1500045,"frameSkip":4,"seconds":85.1,"fps":17637,"randomScore":1,"greedyScore":0.47,"playScore":0.57,"playLength":730,"secondsTo2x":null}
+{"game":"pong","algo":"ppo","seed":1,"frames":1500304,"frameSkip":4,"seconds":83.4,"fps":17990,"randomScore":1,"greedyScore":0.93,"playScore":1.33,"playLength":1577,"secondsTo2x":75.4}
+{"game":"freeway","algo":"ppo","seed":0,"frames":1503232,"frameSkip":4,"seconds":93.5,"fps":16072,"randomScore":0,"greedyScore":8.3,"playScore":8.3,"playLength":2000,"secondsTo2x":3.3}
+{"game":"freeway","algo":"ppo","seed":1,"frames":1503232,"frameSkip":4,"seconds":92.3,"fps":16278,"randomScore":0,"greedyScore":8.3,"playScore":8.3,"playLength":2000,"secondsTo2x":2}
+결과: experiments/atari/ppo2/results.md

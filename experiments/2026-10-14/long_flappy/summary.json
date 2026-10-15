@@ -1,0 +1,42 @@
+{
+  "target": "flappy",
+  "cfg": {
+    "frameSkip": 2,
+    "nEnvs": 8,
+    "nSteps": 128,
+    "epochs": 4,
+    "minibatch": 256,
+    "gamma": 0.99,
+    "lambda": 0.95,
+    "clip": 0.2,
+    "lr": 0.0005,
+    "entCoef": 0.01,
+    "vfCoef": 0.5,
+    "maxGradNorm": 0.5,
+    "hidden": [
+      64,
+      64
+    ],
+    "seed": 0
+  },
+  "steps": 3001002,
+  "seconds": 371.4017931,
+  "random": {
+    "meanReturn": 1.686666666666691,
+    "meanScore": 0,
+    "meanLength": 26.866666666666667,
+    "episodes": 30
+  },
+  "greedy": {
+    "meanReturn": 129.84333333329158,
+    "meanScore": 11.133333333333333,
+    "meanLength": 1196.1,
+    "episodes": 30
+  },
+  "sampled": {
+    "meanReturn": 153.84999999993823,
+    "meanScore": 13.533333333333333,
+    "meanLength": 1411.8333333333333,
+    "episodes": 30
+  }
+}

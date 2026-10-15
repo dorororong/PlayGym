@@ -1,0 +1,69 @@
+{
+  "target": "invaders",
+  "cfg": {
+    "algo": "dqn",
+    "steps": 3000000,
+    "frameSkip": 4,
+    "seed": 0,
+    "gamma": 0.99,
+    "lr": 0.0005,
+    "network": {
+      "hidden": [
+        64,
+        64
+      ],
+      "activation": "relu"
+    },
+    "ppo": {
+      "nEnvs": 8,
+      "nSteps": 128,
+      "epochs": 4,
+      "minibatch": 256,
+      "clip": 0.2,
+      "lambda": 0.95,
+      "entCoef": 0.01
+    },
+    "dqn": {
+      "buffer": 50000,
+      "batch": 64,
+      "learningStarts": 1000,
+      "trainFreq": 4,
+      "targetUpdate": 1000,
+      "epsStart": 1,
+      "epsEnd": 0.05,
+      "epsFraction": 0.3,
+      "double": true
+    },
+    "reinforce": {
+      "episodes": 8,
+      "entCoef": 0.01
+    },
+    "qtable": {
+      "bins": 6,
+      "alpha": 0.1,
+      "epsStart": 1,
+      "epsEnd": 0.05,
+      "epsFraction": 0.5
+    }
+  },
+  "steps": 3001684,
+  "seconds": 355.40390239999994,
+  "random": {
+    "meanReturn": 8.566666666666666,
+    "meanScore": 9.533333333333333,
+    "meanLength": 500.1,
+    "episodes": 30
+  },
+  "greedy": {
+    "meanReturn": 15.933333333333334,
+    "meanScore": 16.366666666666667,
+    "meanLength": 1384.7,
+    "episodes": 30
+  },
+  "play": {
+    "meanReturn": 16.5,
+    "meanScore": 16.866666666666667,
+    "meanLength": 1520.4333333333334,
+    "episodes": 30
+  }
+}

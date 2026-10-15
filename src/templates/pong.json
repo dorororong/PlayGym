@@ -1,0 +1,2189 @@
+{
+  "version": 1,
+  "blocksJson": {
+    "blocks": {
+      "languageVersion": 0,
+      "blocks": [
+        {
+          "type": "pg_settings",
+          "id": "pong_1",
+          "x": 20,
+          "y": 20,
+          "fields": {
+            "LEFT": false,
+            "RIGHT": false,
+            "UP": true,
+            "DOWN": true,
+            "A": false,
+            "B": false,
+            "MAXSTEPS": 3000,
+            "BACKDROP": "arcade",
+            "BG": "#1d2330"
+          }
+        },
+        {
+          "type": "pg_observe",
+          "id": "pong_6",
+          "x": 20,
+          "y": 120,
+          "inputs": {
+            "SENSORS": {
+              "block": {
+                "type": "pg_s_position",
+                "id": "pong_2",
+                "fields": {
+                  "SUBJECT": {
+                    "id": "pong_Tag_player"
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "pg_s_position",
+                    "id": "pong_3",
+                    "fields": {
+                      "SUBJECT": {
+                        "id": "pong_Tag_ball"
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "pg_s_velocity",
+                        "id": "pong_4",
+                        "fields": {
+                          "SUBJECT": {
+                            "id": "pong_Tag_ball"
+                          }
+                        },
+                        "next": {
+                          "block": {
+                            "type": "pg_s_prop",
+                            "id": "pong_5",
+                            "fields": {
+                              "SUBJECT": {
+                                "id": "pong_Tag_cpu"
+                              },
+                              "PROP": "y",
+                              "MIN": 0,
+                              "MAX": 300
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_start",
+          "id": "pong_55",
+          "x": 20,
+          "y": 220,
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_create",
+                "id": "pong_14",
+                "fields": {
+                  "TAG": {
+                    "id": "pong_Tag_player"
+                  }
+                },
+                "inputs": {
+                  "X": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "pong_8",
+                      "fields": {
+                        "NUM": 385
+                      }
+                    }
+                  },
+                  "Y": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "pong_9",
+                      "fields": {
+                        "NUM": 150
+                      }
+                    }
+                  },
+                  "W": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "pong_10",
+                      "fields": {
+                        "NUM": 8
+                      }
+                    }
+                  },
+                  "H": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "pong_11",
+                      "fields": {
+                        "NUM": 50
+                      }
+                    }
+                  },
+                  "COLOR": {
+                    "shadow": {
+                      "type": "pg_colour",
+                      "id": "pong_7",
+                      "fields": {
+                        "C": "#5ad1ff"
+                      }
+                    }
+                  },
+                  "VX": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "pong_12",
+                      "fields": {
+                        "NUM": 0
+                      }
+                    }
+                  },
+                  "VY": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "pong_13",
+                      "fields": {
+                        "NUM": 0
+                      }
+                    }
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "pg_create",
+                    "id": "pong_22",
+                    "fields": {
+                      "TAG": {
+                        "id": "pong_Tag_cpu"
+                      }
+                    },
+                    "inputs": {
+                      "X": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "pong_16",
+                          "fields": {
+                            "NUM": 15
+                          }
+                        }
+                      },
+                      "Y": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "pong_17",
+                          "fields": {
+                            "NUM": 150
+                          }
+                        }
+                      },
+                      "W": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "pong_18",
+                          "fields": {
+                            "NUM": 8
+                          }
+                        }
+                      },
+                      "H": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "pong_19",
+                          "fields": {
+                            "NUM": 50
+                          }
+                        }
+                      },
+                      "COLOR": {
+                        "shadow": {
+                          "type": "pg_colour",
+                          "id": "pong_15",
+                          "fields": {
+                            "C": "#ff6b6b"
+                          }
+                        }
+                      },
+                      "VX": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "pong_20",
+                          "fields": {
+                            "NUM": 0
+                          }
+                        }
+                      },
+                      "VY": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "pong_21",
+                          "fields": {
+                            "NUM": 0
+                          }
+                        }
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "pg_create",
+                        "id": "pong_30",
+                        "fields": {
+                          "TAG": {
+                            "id": "pong_Tag_ball"
+                          }
+                        },
+                        "inputs": {
+                          "X": {
+                            "shadow": {
+                              "type": "math_number",
+                              "id": "pong_24",
+                              "fields": {
+                                "NUM": 200
+                              }
+                            }
+                          },
+                          "Y": {
+                            "shadow": {
+                              "type": "math_number",
+                              "id": "pong_25",
+                              "fields": {
+                                "NUM": 150
+                              }
+                            }
+                          },
+                          "W": {
+                            "shadow": {
+                              "type": "math_number",
+                              "id": "pong_26",
+                              "fields": {
+                                "NUM": 8
+                              }
+                            }
+                          },
+                          "H": {
+                            "shadow": {
+                              "type": "math_number",
+                              "id": "pong_27",
+                              "fields": {
+                                "NUM": 8
+                              }
+                            }
+                          },
+                          "COLOR": {
+                            "shadow": {
+                              "type": "pg_colour",
+                              "id": "pong_23",
+                              "fields": {
+                                "C": "#ffffff"
+                              }
+                            }
+                          },
+                          "VX": {
+                            "shadow": {
+                              "type": "math_number",
+                              "id": "pong_28",
+                              "fields": {
+                                "NUM": 0
+                              }
+                            }
+                          },
+                          "VY": {
+                            "shadow": {
+                              "type": "math_number",
+                              "id": "pong_29",
+                              "fields": {
+                                "NUM": 0
+                              }
+                            }
+                          }
+                        },
+                        "next": {
+                          "block": {
+                            "type": "pg_create",
+                            "id": "pong_38",
+                            "fields": {
+                              "TAG": {
+                                "id": "pong_Tag_edge"
+                              }
+                            },
+                            "inputs": {
+                              "X": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "pong_32",
+                                  "fields": {
+                                    "NUM": 200
+                                  }
+                                }
+                              },
+                              "Y": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "pong_33",
+                                  "fields": {
+                                    "NUM": -5
+                                  }
+                                }
+                              },
+                              "W": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "pong_34",
+                                  "fields": {
+                                    "NUM": 400
+                                  }
+                                }
+                              },
+                              "H": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "pong_35",
+                                  "fields": {
+                                    "NUM": 10
+                                  }
+                                }
+                              },
+                              "COLOR": {
+                                "shadow": {
+                                  "type": "pg_colour",
+                                  "id": "pong_31",
+                                  "fields": {
+                                    "C": "#ffffff"
+                                  }
+                                }
+                              },
+                              "VX": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "pong_36",
+                                  "fields": {
+                                    "NUM": 0
+                                  }
+                                }
+                              },
+                              "VY": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "pong_37",
+                                  "fields": {
+                                    "NUM": 0
+                                  }
+                                }
+                              }
+                            },
+                            "next": {
+                              "block": {
+                                "type": "pg_create",
+                                "id": "pong_46",
+                                "fields": {
+                                  "TAG": {
+                                    "id": "pong_Tag_edge"
+                                  }
+                                },
+                                "inputs": {
+                                  "X": {
+                                    "shadow": {
+                                      "type": "math_number",
+                                      "id": "pong_40",
+                                      "fields": {
+                                        "NUM": 200
+                                      }
+                                    }
+                                  },
+                                  "Y": {
+                                    "shadow": {
+                                      "type": "math_number",
+                                      "id": "pong_41",
+                                      "fields": {
+                                        "NUM": 305
+                                      }
+                                    }
+                                  },
+                                  "W": {
+                                    "shadow": {
+                                      "type": "math_number",
+                                      "id": "pong_42",
+                                      "fields": {
+                                        "NUM": 400
+                                      }
+                                    }
+                                  },
+                                  "H": {
+                                    "shadow": {
+                                      "type": "math_number",
+                                      "id": "pong_43",
+                                      "fields": {
+                                        "NUM": 10
+                                      }
+                                    }
+                                  },
+                                  "COLOR": {
+                                    "shadow": {
+                                      "type": "pg_colour",
+                                      "id": "pong_39",
+                                      "fields": {
+                                        "C": "#ffffff"
+                                      }
+                                    }
+                                  },
+                                  "VX": {
+                                    "shadow": {
+                                      "type": "math_number",
+                                      "id": "pong_44",
+                                      "fields": {
+                                        "NUM": 0
+                                      }
+                                    }
+                                  },
+                                  "VY": {
+                                    "shadow": {
+                                      "type": "math_number",
+                                      "id": "pong_45",
+                                      "fields": {
+                                        "NUM": 0
+                                      }
+                                    }
+                                  }
+                                },
+                                "next": {
+                                  "block": {
+                                    "type": "variables_set",
+                                    "id": "pong_48",
+                                    "fields": {
+                                      "VAR": {
+                                        "id": "pong_var_cpuScore"
+                                      }
+                                    },
+                                    "inputs": {
+                                      "VALUE": {
+                                        "shadow": {
+                                          "type": "math_number",
+                                          "id": "pong_47",
+                                          "fields": {
+                                            "NUM": 0
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "next": {
+                                      "block": {
+                                        "type": "pg_set_behavior",
+                                        "id": "pong_49",
+                                        "fields": {
+                                          "TAG": {
+                                            "id": "pong_Tag_player"
+                                          },
+                                          "KIND": "stayInScreen",
+                                          "PARAM": 0.5
+                                        },
+                                        "next": {
+                                          "block": {
+                                            "type": "pg_set_behavior",
+                                            "id": "pong_50",
+                                            "fields": {
+                                              "TAG": {
+                                                "id": "pong_Tag_cpu"
+                                              },
+                                              "KIND": "stayInScreen",
+                                              "PARAM": 0.5
+                                            },
+                                            "next": {
+                                              "block": {
+                                                "type": "pg_set_costume",
+                                                "id": "pong_51",
+                                                "fields": {
+                                                  "TAG": {
+                                                    "id": "pong_Tag_player"
+                                                  },
+                                                  "COSTUME": "paddle"
+                                                },
+                                                "next": {
+                                                  "block": {
+                                                    "type": "pg_set_costume",
+                                                    "id": "pong_52",
+                                                    "fields": {
+                                                      "TAG": {
+                                                        "id": "pong_Tag_cpu"
+                                                      },
+                                                      "COSTUME": "paddle"
+                                                    },
+                                                    "next": {
+                                                      "block": {
+                                                        "type": "pg_set_costume",
+                                                        "id": "pong_53",
+                                                        "fields": {
+                                                          "TAG": {
+                                                            "id": "pong_Tag_ball"
+                                                          },
+                                                          "COSTUME": "ball"
+                                                        },
+                                                        "next": {
+                                                          "block": {
+                                                            "type": "pg_set_costume",
+                                                            "id": "pong_54",
+                                                            "fields": {
+                                                              "TAG": {
+                                                                "id": "pong_Tag_edge"
+                                                              },
+                                                              "COSTUME": "hidden"
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_tick",
+          "id": "pong_176",
+          "x": 20,
+          "y": 320,
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_set_vel",
+                "id": "pong_58",
+                "fields": {
+                  "AXIS": "y"
+                },
+                "inputs": {
+                  "T": {
+                    "block": {
+                      "type": "pg_tag",
+                      "id": "pong_56",
+                      "fields": {
+                        "TAG": {
+                          "id": "pong_Tag_cpu"
+                        }
+                      }
+                    }
+                  },
+                  "V": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "pong_57",
+                      "fields": {
+                        "NUM": 0
+                      }
+                    }
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "controls_if",
+                    "id": "pong_74",
+                    "inputs": {
+                      "IF0": {
+                        "block": {
+                          "type": "logic_operation",
+                          "id": "pong_70",
+                          "fields": {
+                            "OP": "AND"
+                          },
+                          "inputs": {
+                            "A": {
+                              "block": {
+                                "type": "logic_compare",
+                                "id": "pong_62",
+                                "fields": {
+                                  "OP": "LT"
+                                },
+                                "inputs": {
+                                  "A": {
+                                    "block": {
+                                      "type": "pg_get",
+                                      "id": "pong_60",
+                                      "fields": {
+                                        "PROP": "vx"
+                                      },
+                                      "inputs": {
+                                        "T": {
+                                          "block": {
+                                            "type": "pg_tag",
+                                            "id": "pong_59",
+                                            "fields": {
+                                              "TAG": {
+                                                "id": "pong_Tag_ball"
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "B": {
+                                    "shadow": {
+                                      "type": "math_number",
+                                      "id": "pong_61",
+                                      "fields": {
+                                        "NUM": 0
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "B": {
+                              "block": {
+                                "type": "logic_compare",
+                                "id": "pong_69",
+                                "fields": {
+                                  "OP": "LT"
+                                },
+                                "inputs": {
+                                  "A": {
+                                    "block": {
+                                      "type": "pg_get",
+                                      "id": "pong_64",
+                                      "fields": {
+                                        "PROP": "y"
+                                      },
+                                      "inputs": {
+                                        "T": {
+                                          "block": {
+                                            "type": "pg_tag",
+                                            "id": "pong_63",
+                                            "fields": {
+                                              "TAG": {
+                                                "id": "pong_Tag_cpu"
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "B": {
+                                    "block": {
+                                      "type": "math_arithmetic",
+                                      "id": "pong_68",
+                                      "fields": {
+                                        "OP": "MINUS"
+                                      },
+                                      "inputs": {
+                                        "A": {
+                                          "block": {
+                                            "type": "pg_get",
+                                            "id": "pong_66",
+                                            "fields": {
+                                              "PROP": "y"
+                                            },
+                                            "inputs": {
+                                              "T": {
+                                                "block": {
+                                                  "type": "pg_tag",
+                                                  "id": "pong_65",
+                                                  "fields": {
+                                                    "TAG": {
+                                                      "id": "pong_Tag_ball"
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "B": {
+                                          "shadow": {
+                                            "type": "math_number",
+                                            "id": "pong_67",
+                                            "fields": {
+                                              "NUM": 6
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "DO0": {
+                        "block": {
+                          "type": "pg_set_vel",
+                          "id": "pong_73",
+                          "fields": {
+                            "AXIS": "y"
+                          },
+                          "inputs": {
+                            "T": {
+                              "block": {
+                                "type": "pg_tag",
+                                "id": "pong_71",
+                                "fields": {
+                                  "TAG": {
+                                    "id": "pong_Tag_cpu"
+                                  }
+                                }
+                              }
+                            },
+                            "V": {
+                              "shadow": {
+                                "type": "math_number",
+                                "id": "pong_72",
+                                "fields": {
+                                  "NUM": 2.5
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "controls_if",
+                        "id": "pong_90",
+                        "inputs": {
+                          "IF0": {
+                            "block": {
+                              "type": "logic_operation",
+                              "id": "pong_86",
+                              "fields": {
+                                "OP": "AND"
+                              },
+                              "inputs": {
+                                "A": {
+                                  "block": {
+                                    "type": "logic_compare",
+                                    "id": "pong_78",
+                                    "fields": {
+                                      "OP": "LT"
+                                    },
+                                    "inputs": {
+                                      "A": {
+                                        "block": {
+                                          "type": "pg_get",
+                                          "id": "pong_76",
+                                          "fields": {
+                                            "PROP": "vx"
+                                          },
+                                          "inputs": {
+                                            "T": {
+                                              "block": {
+                                                "type": "pg_tag",
+                                                "id": "pong_75",
+                                                "fields": {
+                                                  "TAG": {
+                                                    "id": "pong_Tag_ball"
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      },
+                                      "B": {
+                                        "shadow": {
+                                          "type": "math_number",
+                                          "id": "pong_77",
+                                          "fields": {
+                                            "NUM": 0
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "B": {
+                                  "block": {
+                                    "type": "logic_compare",
+                                    "id": "pong_85",
+                                    "fields": {
+                                      "OP": "GT"
+                                    },
+                                    "inputs": {
+                                      "A": {
+                                        "block": {
+                                          "type": "pg_get",
+                                          "id": "pong_80",
+                                          "fields": {
+                                            "PROP": "y"
+                                          },
+                                          "inputs": {
+                                            "T": {
+                                              "block": {
+                                                "type": "pg_tag",
+                                                "id": "pong_79",
+                                                "fields": {
+                                                  "TAG": {
+                                                    "id": "pong_Tag_cpu"
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      },
+                                      "B": {
+                                        "block": {
+                                          "type": "math_arithmetic",
+                                          "id": "pong_84",
+                                          "fields": {
+                                            "OP": "ADD"
+                                          },
+                                          "inputs": {
+                                            "A": {
+                                              "block": {
+                                                "type": "pg_get",
+                                                "id": "pong_82",
+                                                "fields": {
+                                                  "PROP": "y"
+                                                },
+                                                "inputs": {
+                                                  "T": {
+                                                    "block": {
+                                                      "type": "pg_tag",
+                                                      "id": "pong_81",
+                                                      "fields": {
+                                                        "TAG": {
+                                                          "id": "pong_Tag_ball"
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            },
+                                            "B": {
+                                              "shadow": {
+                                                "type": "math_number",
+                                                "id": "pong_83",
+                                                "fields": {
+                                                  "NUM": 6
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "DO0": {
+                            "block": {
+                              "type": "pg_set_vel",
+                              "id": "pong_89",
+                              "fields": {
+                                "AXIS": "y"
+                              },
+                              "inputs": {
+                                "T": {
+                                  "block": {
+                                    "type": "pg_tag",
+                                    "id": "pong_87",
+                                    "fields": {
+                                      "TAG": {
+                                        "id": "pong_Tag_cpu"
+                                      }
+                                    }
+                                  }
+                                },
+                                "V": {
+                                  "shadow": {
+                                    "type": "math_number",
+                                    "id": "pong_88",
+                                    "fields": {
+                                      "NUM": -2.5
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "next": {
+                          "block": {
+                            "type": "controls_if",
+                            "id": "pong_112",
+                            "inputs": {
+                              "IF0": {
+                                "block": {
+                                  "type": "logic_compare",
+                                  "id": "pong_93",
+                                  "fields": {
+                                    "OP": "EQ"
+                                  },
+                                  "inputs": {
+                                    "A": {
+                                      "block": {
+                                        "type": "pg_frame",
+                                        "id": "pong_91"
+                                      }
+                                    },
+                                    "B": {
+                                      "shadow": {
+                                        "type": "math_number",
+                                        "id": "pong_92",
+                                        "fields": {
+                                          "NUM": 1
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "DO0": {
+                                "block": {
+                                  "type": "pg_set_pos",
+                                  "id": "pong_97",
+                                  "inputs": {
+                                    "T": {
+                                      "block": {
+                                        "type": "pg_tag",
+                                        "id": "pong_94",
+                                        "fields": {
+                                          "TAG": {
+                                            "id": "pong_Tag_ball"
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "X": {
+                                      "shadow": {
+                                        "type": "math_number",
+                                        "id": "pong_95",
+                                        "fields": {
+                                          "NUM": 200
+                                        }
+                                      }
+                                    },
+                                    "Y": {
+                                      "shadow": {
+                                        "type": "math_number",
+                                        "id": "pong_96",
+                                        "fields": {
+                                          "NUM": 150
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "next": {
+                                    "block": {
+                                      "type": "pg_set_vel",
+                                      "id": "pong_106",
+                                      "fields": {
+                                        "AXIS": "x"
+                                      },
+                                      "inputs": {
+                                        "T": {
+                                          "block": {
+                                            "type": "pg_tag",
+                                            "id": "pong_98",
+                                            "fields": {
+                                              "TAG": {
+                                                "id": "pong_Tag_ball"
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "V": {
+                                          "block": {
+                                            "type": "math_arithmetic",
+                                            "id": "pong_105",
+                                            "fields": {
+                                              "OP": "MINUS"
+                                            },
+                                            "inputs": {
+                                              "A": {
+                                                "block": {
+                                                  "type": "math_arithmetic",
+                                                  "id": "pong_103",
+                                                  "fields": {
+                                                    "OP": "MULTIPLY"
+                                                  },
+                                                  "inputs": {
+                                                    "A": {
+                                                      "block": {
+                                                        "type": "math_random_int",
+                                                        "id": "pong_101",
+                                                        "inputs": {
+                                                          "FROM": {
+                                                            "shadow": {
+                                                              "type": "math_number",
+                                                              "id": "pong_99",
+                                                              "fields": {
+                                                                "NUM": 0
+                                                              }
+                                                            }
+                                                          },
+                                                          "TO": {
+                                                            "shadow": {
+                                                              "type": "math_number",
+                                                              "id": "pong_100",
+                                                              "fields": {
+                                                                "NUM": 1
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    },
+                                                    "B": {
+                                                      "shadow": {
+                                                        "type": "math_number",
+                                                        "id": "pong_102",
+                                                        "fields": {
+                                                          "NUM": 8
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              },
+                                              "B": {
+                                                "shadow": {
+                                                  "type": "math_number",
+                                                  "id": "pong_104",
+                                                  "fields": {
+                                                    "NUM": 4
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      },
+                                      "next": {
+                                        "block": {
+                                          "type": "pg_set_vel",
+                                          "id": "pong_111",
+                                          "fields": {
+                                            "AXIS": "y"
+                                          },
+                                          "inputs": {
+                                            "T": {
+                                              "block": {
+                                                "type": "pg_tag",
+                                                "id": "pong_107",
+                                                "fields": {
+                                                  "TAG": {
+                                                    "id": "pong_Tag_ball"
+                                                  }
+                                                }
+                                              }
+                                            },
+                                            "V": {
+                                              "block": {
+                                                "type": "math_random_int",
+                                                "id": "pong_110",
+                                                "inputs": {
+                                                  "FROM": {
+                                                    "shadow": {
+                                                      "type": "math_number",
+                                                      "id": "pong_108",
+                                                      "fields": {
+                                                        "NUM": -3
+                                                      }
+                                                    }
+                                                  },
+                                                  "TO": {
+                                                    "shadow": {
+                                                      "type": "math_number",
+                                                      "id": "pong_109",
+                                                      "fields": {
+                                                        "NUM": 3
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "next": {
+                              "block": {
+                                "type": "controls_if",
+                                "id": "pong_137",
+                                "inputs": {
+                                  "IF0": {
+                                    "block": {
+                                      "type": "logic_compare",
+                                      "id": "pong_116",
+                                      "fields": {
+                                        "OP": "LT"
+                                      },
+                                      "inputs": {
+                                        "A": {
+                                          "block": {
+                                            "type": "pg_get",
+                                            "id": "pong_114",
+                                            "fields": {
+                                              "PROP": "x"
+                                            },
+                                            "inputs": {
+                                              "T": {
+                                                "block": {
+                                                  "type": "pg_tag",
+                                                  "id": "pong_113",
+                                                  "fields": {
+                                                    "TAG": {
+                                                      "id": "pong_Tag_ball"
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "B": {
+                                          "shadow": {
+                                            "type": "math_number",
+                                            "id": "pong_115",
+                                            "fields": {
+                                              "NUM": 0
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "DO0": {
+                                    "block": {
+                                      "type": "pg_add_score",
+                                      "id": "pong_118",
+                                      "inputs": {
+                                        "N": {
+                                          "shadow": {
+                                            "type": "math_number",
+                                            "id": "pong_117",
+                                            "fields": {
+                                              "NUM": 1
+                                            }
+                                          }
+                                        }
+                                      },
+                                      "next": {
+                                        "block": {
+                                          "type": "pg_set_pos",
+                                          "id": "pong_122",
+                                          "inputs": {
+                                            "T": {
+                                              "block": {
+                                                "type": "pg_tag",
+                                                "id": "pong_119",
+                                                "fields": {
+                                                  "TAG": {
+                                                    "id": "pong_Tag_ball"
+                                                  }
+                                                }
+                                              }
+                                            },
+                                            "X": {
+                                              "shadow": {
+                                                "type": "math_number",
+                                                "id": "pong_120",
+                                                "fields": {
+                                                  "NUM": 200
+                                                }
+                                              }
+                                            },
+                                            "Y": {
+                                              "shadow": {
+                                                "type": "math_number",
+                                                "id": "pong_121",
+                                                "fields": {
+                                                  "NUM": 150
+                                                }
+                                              }
+                                            }
+                                          },
+                                          "next": {
+                                            "block": {
+                                              "type": "pg_set_vel",
+                                              "id": "pong_131",
+                                              "fields": {
+                                                "AXIS": "x"
+                                              },
+                                              "inputs": {
+                                                "T": {
+                                                  "block": {
+                                                    "type": "pg_tag",
+                                                    "id": "pong_123",
+                                                    "fields": {
+                                                      "TAG": {
+                                                        "id": "pong_Tag_ball"
+                                                      }
+                                                    }
+                                                  }
+                                                },
+                                                "V": {
+                                                  "block": {
+                                                    "type": "math_arithmetic",
+                                                    "id": "pong_130",
+                                                    "fields": {
+                                                      "OP": "MINUS"
+                                                    },
+                                                    "inputs": {
+                                                      "A": {
+                                                        "block": {
+                                                          "type": "math_arithmetic",
+                                                          "id": "pong_128",
+                                                          "fields": {
+                                                            "OP": "MULTIPLY"
+                                                          },
+                                                          "inputs": {
+                                                            "A": {
+                                                              "block": {
+                                                                "type": "math_random_int",
+                                                                "id": "pong_126",
+                                                                "inputs": {
+                                                                  "FROM": {
+                                                                    "shadow": {
+                                                                      "type": "math_number",
+                                                                      "id": "pong_124",
+                                                                      "fields": {
+                                                                        "NUM": 0
+                                                                      }
+                                                                    }
+                                                                  },
+                                                                  "TO": {
+                                                                    "shadow": {
+                                                                      "type": "math_number",
+                                                                      "id": "pong_125",
+                                                                      "fields": {
+                                                                        "NUM": 1
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                }
+                                                              }
+                                                            },
+                                                            "B": {
+                                                              "shadow": {
+                                                                "type": "math_number",
+                                                                "id": "pong_127",
+                                                                "fields": {
+                                                                  "NUM": 8
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      },
+                                                      "B": {
+                                                        "shadow": {
+                                                          "type": "math_number",
+                                                          "id": "pong_129",
+                                                          "fields": {
+                                                            "NUM": 4
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              },
+                                              "next": {
+                                                "block": {
+                                                  "type": "pg_set_vel",
+                                                  "id": "pong_136",
+                                                  "fields": {
+                                                    "AXIS": "y"
+                                                  },
+                                                  "inputs": {
+                                                    "T": {
+                                                      "block": {
+                                                        "type": "pg_tag",
+                                                        "id": "pong_132",
+                                                        "fields": {
+                                                          "TAG": {
+                                                            "id": "pong_Tag_ball"
+                                                          }
+                                                        }
+                                                      }
+                                                    },
+                                                    "V": {
+                                                      "block": {
+                                                        "type": "math_random_int",
+                                                        "id": "pong_135",
+                                                        "inputs": {
+                                                          "FROM": {
+                                                            "shadow": {
+                                                              "type": "math_number",
+                                                              "id": "pong_133",
+                                                              "fields": {
+                                                                "NUM": -3
+                                                              }
+                                                            }
+                                                          },
+                                                          "TO": {
+                                                            "shadow": {
+                                                              "type": "math_number",
+                                                              "id": "pong_134",
+                                                              "fields": {
+                                                                "NUM": 3
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "next": {
+                                  "block": {
+                                    "type": "controls_if",
+                                    "id": "pong_166",
+                                    "inputs": {
+                                      "IF0": {
+                                        "block": {
+                                          "type": "logic_compare",
+                                          "id": "pong_141",
+                                          "fields": {
+                                            "OP": "GT"
+                                          },
+                                          "inputs": {
+                                            "A": {
+                                              "block": {
+                                                "type": "pg_get",
+                                                "id": "pong_139",
+                                                "fields": {
+                                                  "PROP": "x"
+                                                },
+                                                "inputs": {
+                                                  "T": {
+                                                    "block": {
+                                                      "type": "pg_tag",
+                                                      "id": "pong_138",
+                                                      "fields": {
+                                                        "TAG": {
+                                                          "id": "pong_Tag_ball"
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            },
+                                            "B": {
+                                              "shadow": {
+                                                "type": "math_number",
+                                                "id": "pong_140",
+                                                "fields": {
+                                                  "NUM": 400
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      },
+                                      "DO0": {
+                                        "block": {
+                                          "type": "variables_set",
+                                          "id": "pong_145",
+                                          "fields": {
+                                            "VAR": {
+                                              "id": "pong_var_cpuScore"
+                                            }
+                                          },
+                                          "inputs": {
+                                            "VALUE": {
+                                              "block": {
+                                                "type": "math_arithmetic",
+                                                "id": "pong_144",
+                                                "fields": {
+                                                  "OP": "ADD"
+                                                },
+                                                "inputs": {
+                                                  "A": {
+                                                    "block": {
+                                                      "type": "variables_get",
+                                                      "id": "pong_142",
+                                                      "fields": {
+                                                        "VAR": {
+                                                          "id": "pong_var_cpuScore"
+                                                        }
+                                                      }
+                                                    }
+                                                  },
+                                                  "B": {
+                                                    "shadow": {
+                                                      "type": "math_number",
+                                                      "id": "pong_143",
+                                                      "fields": {
+                                                        "NUM": 1
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          },
+                                          "next": {
+                                            "block": {
+                                              "type": "pg_reward",
+                                              "id": "pong_147",
+                                              "inputs": {
+                                                "N": {
+                                                  "shadow": {
+                                                    "type": "math_number",
+                                                    "id": "pong_146",
+                                                    "fields": {
+                                                      "NUM": -1
+                                                    }
+                                                  }
+                                                }
+                                              },
+                                              "next": {
+                                                "block": {
+                                                  "type": "pg_set_pos",
+                                                  "id": "pong_151",
+                                                  "inputs": {
+                                                    "T": {
+                                                      "block": {
+                                                        "type": "pg_tag",
+                                                        "id": "pong_148",
+                                                        "fields": {
+                                                          "TAG": {
+                                                            "id": "pong_Tag_ball"
+                                                          }
+                                                        }
+                                                      }
+                                                    },
+                                                    "X": {
+                                                      "shadow": {
+                                                        "type": "math_number",
+                                                        "id": "pong_149",
+                                                        "fields": {
+                                                          "NUM": 200
+                                                        }
+                                                      }
+                                                    },
+                                                    "Y": {
+                                                      "shadow": {
+                                                        "type": "math_number",
+                                                        "id": "pong_150",
+                                                        "fields": {
+                                                          "NUM": 150
+                                                        }
+                                                      }
+                                                    }
+                                                  },
+                                                  "next": {
+                                                    "block": {
+                                                      "type": "pg_set_vel",
+                                                      "id": "pong_160",
+                                                      "fields": {
+                                                        "AXIS": "x"
+                                                      },
+                                                      "inputs": {
+                                                        "T": {
+                                                          "block": {
+                                                            "type": "pg_tag",
+                                                            "id": "pong_152",
+                                                            "fields": {
+                                                              "TAG": {
+                                                                "id": "pong_Tag_ball"
+                                                              }
+                                                            }
+                                                          }
+                                                        },
+                                                        "V": {
+                                                          "block": {
+                                                            "type": "math_arithmetic",
+                                                            "id": "pong_159",
+                                                            "fields": {
+                                                              "OP": "MINUS"
+                                                            },
+                                                            "inputs": {
+                                                              "A": {
+                                                                "block": {
+                                                                  "type": "math_arithmetic",
+                                                                  "id": "pong_157",
+                                                                  "fields": {
+                                                                    "OP": "MULTIPLY"
+                                                                  },
+                                                                  "inputs": {
+                                                                    "A": {
+                                                                      "block": {
+                                                                        "type": "math_random_int",
+                                                                        "id": "pong_155",
+                                                                        "inputs": {
+                                                                          "FROM": {
+                                                                            "shadow": {
+                                                                              "type": "math_number",
+                                                                              "id": "pong_153",
+                                                                              "fields": {
+                                                                                "NUM": 0
+                                                                              }
+                                                                            }
+                                                                          },
+                                                                          "TO": {
+                                                                            "shadow": {
+                                                                              "type": "math_number",
+                                                                              "id": "pong_154",
+                                                                              "fields": {
+                                                                                "NUM": 1
+                                                                              }
+                                                                            }
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                    },
+                                                                    "B": {
+                                                                      "shadow": {
+                                                                        "type": "math_number",
+                                                                        "id": "pong_156",
+                                                                        "fields": {
+                                                                          "NUM": 8
+                                                                        }
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                }
+                                                              },
+                                                              "B": {
+                                                                "shadow": {
+                                                                  "type": "math_number",
+                                                                  "id": "pong_158",
+                                                                  "fields": {
+                                                                    "NUM": 4
+                                                                  }
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      },
+                                                      "next": {
+                                                        "block": {
+                                                          "type": "pg_set_vel",
+                                                          "id": "pong_165",
+                                                          "fields": {
+                                                            "AXIS": "y"
+                                                          },
+                                                          "inputs": {
+                                                            "T": {
+                                                              "block": {
+                                                                "type": "pg_tag",
+                                                                "id": "pong_161",
+                                                                "fields": {
+                                                                  "TAG": {
+                                                                    "id": "pong_Tag_ball"
+                                                                  }
+                                                                }
+                                                              }
+                                                            },
+                                                            "V": {
+                                                              "block": {
+                                                                "type": "math_random_int",
+                                                                "id": "pong_164",
+                                                                "inputs": {
+                                                                  "FROM": {
+                                                                    "shadow": {
+                                                                      "type": "math_number",
+                                                                      "id": "pong_162",
+                                                                      "fields": {
+                                                                        "NUM": -3
+                                                                      }
+                                                                    }
+                                                                  },
+                                                                  "TO": {
+                                                                    "shadow": {
+                                                                      "type": "math_number",
+                                                                      "id": "pong_163",
+                                                                      "fields": {
+                                                                        "NUM": 3
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "next": {
+                                      "block": {
+                                        "type": "controls_if",
+                                        "id": "pong_175",
+                                        "inputs": {
+                                          "IF0": {
+                                            "block": {
+                                              "type": "logic_operation",
+                                              "id": "pong_173",
+                                              "fields": {
+                                                "OP": "OR"
+                                              },
+                                              "inputs": {
+                                                "A": {
+                                                  "block": {
+                                                    "type": "logic_compare",
+                                                    "id": "pong_169",
+                                                    "fields": {
+                                                      "OP": "GTE"
+                                                    },
+                                                    "inputs": {
+                                                      "A": {
+                                                        "block": {
+                                                          "type": "variables_get",
+                                                          "id": "pong_167",
+                                                          "fields": {
+                                                            "VAR": {
+                                                              "id": "pong_var_cpuScore"
+                                                            }
+                                                          }
+                                                        }
+                                                      },
+                                                      "B": {
+                                                        "shadow": {
+                                                          "type": "math_number",
+                                                          "id": "pong_168",
+                                                          "fields": {
+                                                            "NUM": 5
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                },
+                                                "B": {
+                                                  "block": {
+                                                    "type": "logic_compare",
+                                                    "id": "pong_172",
+                                                    "fields": {
+                                                      "OP": "GTE"
+                                                    },
+                                                    "inputs": {
+                                                      "A": {
+                                                        "block": {
+                                                          "type": "pg_score",
+                                                          "id": "pong_170"
+                                                        }
+                                                      },
+                                                      "B": {
+                                                        "shadow": {
+                                                          "type": "math_number",
+                                                          "id": "pong_171",
+                                                          "fields": {
+                                                            "NUM": 5
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          },
+                                          "DO0": {
+                                            "block": {
+                                              "type": "pg_game_over",
+                                              "id": "pong_174"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_action",
+          "id": "pong_180",
+          "x": 20,
+          "y": 420,
+          "fields": {
+            "ACTION": "none"
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_set_vel",
+                "id": "pong_179",
+                "fields": {
+                  "AXIS": "y"
+                },
+                "inputs": {
+                  "T": {
+                    "block": {
+                      "type": "pg_tag",
+                      "id": "pong_177",
+                      "fields": {
+                        "TAG": {
+                          "id": "pong_Tag_player"
+                        }
+                      }
+                    }
+                  },
+                  "V": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "pong_178",
+                      "fields": {
+                        "NUM": 0
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_action",
+          "id": "pong_184",
+          "x": 20,
+          "y": 520,
+          "fields": {
+            "ACTION": "up"
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_set_vel",
+                "id": "pong_183",
+                "fields": {
+                  "AXIS": "y"
+                },
+                "inputs": {
+                  "T": {
+                    "block": {
+                      "type": "pg_tag",
+                      "id": "pong_181",
+                      "fields": {
+                        "TAG": {
+                          "id": "pong_Tag_player"
+                        }
+                      }
+                    }
+                  },
+                  "V": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "pong_182",
+                      "fields": {
+                        "NUM": -5
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_action",
+          "id": "pong_188",
+          "x": 20,
+          "y": 620,
+          "fields": {
+            "ACTION": "down"
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_set_vel",
+                "id": "pong_187",
+                "fields": {
+                  "AXIS": "y"
+                },
+                "inputs": {
+                  "T": {
+                    "block": {
+                      "type": "pg_tag",
+                      "id": "pong_185",
+                      "fields": {
+                        "TAG": {
+                          "id": "pong_Tag_player"
+                        }
+                      }
+                    }
+                  },
+                  "V": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "pong_186",
+                      "fields": {
+                        "NUM": 5
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_collide",
+          "id": "pong_199",
+          "x": 20,
+          "y": 720,
+          "fields": {
+            "A": {
+              "id": "pong_Tag_ball"
+            },
+            "B": {
+              "id": "pong_Tag_player"
+            }
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_bounce",
+                "id": "pong_189",
+                "next": {
+                  "block": {
+                    "type": "pg_set_vel",
+                    "id": "pong_198",
+                    "fields": {
+                      "AXIS": "y"
+                    },
+                    "inputs": {
+                      "T": {
+                        "block": {
+                          "type": "pg_self",
+                          "id": "pong_190"
+                        }
+                      },
+                      "V": {
+                        "block": {
+                          "type": "math_arithmetic",
+                          "id": "pong_197",
+                          "fields": {
+                            "OP": "MULTIPLY"
+                          },
+                          "inputs": {
+                            "A": {
+                              "block": {
+                                "type": "math_arithmetic",
+                                "id": "pong_195",
+                                "fields": {
+                                  "OP": "MINUS"
+                                },
+                                "inputs": {
+                                  "A": {
+                                    "block": {
+                                      "type": "pg_get",
+                                      "id": "pong_192",
+                                      "fields": {
+                                        "PROP": "y"
+                                      },
+                                      "inputs": {
+                                        "T": {
+                                          "block": {
+                                            "type": "pg_self",
+                                            "id": "pong_191"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "B": {
+                                    "block": {
+                                      "type": "pg_get",
+                                      "id": "pong_194",
+                                      "fields": {
+                                        "PROP": "y"
+                                      },
+                                      "inputs": {
+                                        "T": {
+                                          "block": {
+                                            "type": "pg_other",
+                                            "id": "pong_193"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "B": {
+                              "shadow": {
+                                "type": "math_number",
+                                "id": "pong_196",
+                                "fields": {
+                                  "NUM": 0.15
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_collide",
+          "id": "pong_210",
+          "x": 20,
+          "y": 820,
+          "fields": {
+            "A": {
+              "id": "pong_Tag_ball"
+            },
+            "B": {
+              "id": "pong_Tag_cpu"
+            }
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_bounce",
+                "id": "pong_200",
+                "next": {
+                  "block": {
+                    "type": "pg_set_vel",
+                    "id": "pong_209",
+                    "fields": {
+                      "AXIS": "y"
+                    },
+                    "inputs": {
+                      "T": {
+                        "block": {
+                          "type": "pg_self",
+                          "id": "pong_201"
+                        }
+                      },
+                      "V": {
+                        "block": {
+                          "type": "math_arithmetic",
+                          "id": "pong_208",
+                          "fields": {
+                            "OP": "MULTIPLY"
+                          },
+                          "inputs": {
+                            "A": {
+                              "block": {
+                                "type": "math_arithmetic",
+                                "id": "pong_206",
+                                "fields": {
+                                  "OP": "MINUS"
+                                },
+                                "inputs": {
+                                  "A": {
+                                    "block": {
+                                      "type": "pg_get",
+                                      "id": "pong_203",
+                                      "fields": {
+                                        "PROP": "y"
+                                      },
+                                      "inputs": {
+                                        "T": {
+                                          "block": {
+                                            "type": "pg_self",
+                                            "id": "pong_202"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "B": {
+                                    "block": {
+                                      "type": "pg_get",
+                                      "id": "pong_205",
+                                      "fields": {
+                                        "PROP": "y"
+                                      },
+                                      "inputs": {
+                                        "T": {
+                                          "block": {
+                                            "type": "pg_other",
+                                            "id": "pong_204"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "B": {
+                              "shadow": {
+                                "type": "math_number",
+                                "id": "pong_207",
+                                "fields": {
+                                  "NUM": 0.15
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_collide",
+          "id": "pong_212",
+          "x": 20,
+          "y": 920,
+          "fields": {
+            "A": {
+              "id": "pong_Tag_ball"
+            },
+            "B": {
+              "id": "pong_Tag_edge"
+            }
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_bounce",
+                "id": "pong_211"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "variables": [
+      {
+        "name": "player",
+        "id": "pong_Tag_player",
+        "type": "Tag"
+      },
+      {
+        "name": "obstacle",
+        "id": "pong_Tag_obstacle",
+        "type": "Tag"
+      },
+      {
+        "name": "ground",
+        "id": "pong_Tag_ground",
+        "type": "Tag"
+      },
+      {
+        "name": "ball",
+        "id": "pong_Tag_ball",
+        "type": "Tag"
+      },
+      {
+        "name": "cpu",
+        "id": "pong_Tag_cpu",
+        "type": "Tag"
+      },
+      {
+        "name": "edge",
+        "id": "pong_Tag_edge",
+        "type": "Tag"
+      },
+      {
+        "name": "cpuScore",
+        "id": "pong_var_cpuScore"
+      }
+    ]
+  },
+  "generatedCode": "\n\n\napi.$b('pong_1');\napi.$b('pong_6');\napi.sensors([\n  api.sensor.position('player'),\n  api.sensor.position('ball'),\n  api.sensor.velocity('ball'),\n  api.sensor.prop('cpu', 'y', 0, 300),\n]);\napi.$b('pong_55');\napi.onStart(() => {\n  api.$b('pong_14');\n  api.create({ tag: 'player', x: 385, y: 150, w: 8, h: 50, color: '#5ad1ff', vx: 0, vy: 0 });\n  api.$b('pong_22');\n  api.create({ tag: 'cpu', x: 15, y: 150, w: 8, h: 50, color: '#ff6b6b', vx: 0, vy: 0 });\n  api.$b('pong_30');\n  api.create({ tag: 'ball', x: 200, y: 150, w: 8, h: 8, color: '#ffffff', vx: 0, vy: 0 });\n  api.$b('pong_38');\n  api.create({ tag: 'edge', x: 200, y: -5, w: 400, h: 10, color: '#ffffff', vx: 0, vy: 0 });\n  api.$b('pong_46');\n  api.create({ tag: 'edge', x: 200, y: 305, w: 400, h: 10, color: '#ffffff', vx: 0, vy: 0 });\n  api.$b('pong_48');\n  api.vars['cpuScore'] = 0;\n  api.$b('pong_49');\n  api.setBehavior('player', 'stayInScreen');\n  api.$b('pong_50');\n  api.setBehavior('cpu', 'stayInScreen');\n  api.$b('pong_51');\n  api.setCostume('player', 'paddle');\n  api.$b('pong_52');\n  api.setCostume('cpu', 'paddle');\n  api.$b('pong_53');\n  api.setCostume('ball', 'ball');\n  api.$b('pong_54');\n  api.setCostume('edge', 'hidden');\n});\napi.$b('pong_176');\napi.onTick(() => {\n  api.$b('pong_58');\n  api.setVel('cpu', 'y', 0);\n  api.$b('pong_74');\n  if (api.get('ball', 'vx') < 0 && api.get('cpu', 'y') < api.get('ball', 'y') - 6) {\n    api.$b('pong_73');\n    api.setVel('cpu', 'y', 2.5);\n  }\n  api.$b('pong_90');\n  if (api.get('ball', 'vx') < 0 && api.get('cpu', 'y') > api.get('ball', 'y') + 6) {\n    api.$b('pong_89');\n    api.setVel('cpu', 'y', -2.5);\n  }\n  api.$b('pong_112');\n  if (api.frame() == 1) {\n    api.$b('pong_97');\n    api.setPos('ball', 200, 150);\n    api.$b('pong_106');\n    api.setVel('ball', 'x', api.randInt(0, 1) * 8 - 4);\n    api.$b('pong_111');\n    api.setVel('ball', 'y', api.randInt(-3, 3));\n  }\n  api.$b('pong_137');\n  if (api.get('ball', 'x') < 0) {\n    api.$b('pong_118');\n    api.addScore(1);\n    api.$b('pong_122');\n    api.setPos('ball', 200, 150);\n    api.$b('pong_131');\n    api.setVel('ball', 'x', api.randInt(0, 1) * 8 - 4);\n    api.$b('pong_136');\n    api.setVel('ball', 'y', api.randInt(-3, 3));\n  }\n  api.$b('pong_166');\n  if (api.get('ball', 'x') > 400) {\n    api.$b('pong_145');\n    api.vars['cpuScore'] = api.vars['cpuScore'] + 1;\n    api.$b('pong_147');\n    api.reward(-1);\n    api.$b('pong_151');\n    api.setPos('ball', 200, 150);\n    api.$b('pong_160');\n    api.setVel('ball', 'x', api.randInt(0, 1) * 8 - 4);\n    api.$b('pong_165');\n    api.setVel('ball', 'y', api.randInt(-3, 3));\n  }\n  api.$b('pong_175');\n  if (api.vars['cpuScore'] >= 5 || api.score() >= 5) {\n    api.$b('pong_174');\n    api.gameOver();\n  }\n});\napi.$b('pong_180');\napi.onAction('none', () => {\n  api.$b('pong_179');\n  api.setVel('player', 'y', 0);\n});\napi.$b('pong_184');\napi.onAction('up', () => {\n  api.$b('pong_183');\n  api.setVel('player', 'y', -5);\n});\napi.$b('pong_188');\napi.onAction('down', () => {\n  api.$b('pong_187');\n  api.setVel('player', 'y', 5);\n});\napi.$b('pong_199');\napi.onCollide('ball', 'player', (self, other) => {\n  api.$b('pong_189');\n  api.bounce(self, other);\n  api.$b('pong_198');\n  api.setVel(self, 'y', (api.get(self, 'y') - api.get(other, 'y')) * 0.15);\n});\napi.$b('pong_210');\napi.onCollide('ball', 'cpu', (self, other) => {\n  api.$b('pong_200');\n  api.bounce(self, other);\n  api.$b('pong_209');\n  api.setVel(self, 'y', (api.get(self, 'y') - api.get(other, 'y')) * 0.15);\n});\napi.$b('pong_212');\napi.onCollide('ball', 'edge', (self, other) => {\n  api.$b('pong_211');\n  api.bounce(self, other);\n});\n",
+  "settings": {
+    "actions": [
+      "none",
+      "up",
+      "down"
+    ],
+    "maxSteps": 3000,
+    "background": "#1d2330",
+    "backdrop": "arcade"
+  },
+  "keymap": {
+    "left": [
+      "ArrowLeft"
+    ],
+    "right": [
+      "ArrowRight"
+    ],
+    "up": [
+      "ArrowUp",
+      "KeyW"
+    ],
+    "down": [
+      "ArrowDown",
+      "KeyS"
+    ],
+    "a": [
+      "KeyA",
+      "Space"
+    ],
+    "b": []
+  },
+  "training": {
+    "algo": "dqn",
+    "steps": 1500000,
+    "frameSkip": 4,
+    "lr": 0.0005,
+    "network": {
+      "hidden": [
+        64,
+        64
+      ],
+      "activation": "relu"
+    }
+  }
+}

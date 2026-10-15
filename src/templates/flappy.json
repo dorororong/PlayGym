@@ -1,0 +1,971 @@
+{
+  "version": 1,
+  "blocksJson": {
+    "blocks": {
+      "languageVersion": 0,
+      "blocks": [
+        {
+          "type": "pg_settings",
+          "id": "flappy_1",
+          "x": 20,
+          "y": 20,
+          "fields": {
+            "LEFT": false,
+            "RIGHT": false,
+            "UP": true,
+            "DOWN": false,
+            "A": false,
+            "B": false,
+            "MAXSTEPS": 3000,
+            "BACKDROP": "sky",
+            "BG": "#bfe6ff"
+          }
+        },
+        {
+          "type": "pg_observe",
+          "id": "flappy_5",
+          "x": 20,
+          "y": 120,
+          "inputs": {
+            "SENSORS": {
+              "block": {
+                "type": "pg_s_position",
+                "id": "flappy_2",
+                "fields": {
+                  "SUBJECT": {
+                    "id": "flappy_Tag_player"
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "pg_s_velocity",
+                    "id": "flappy_3",
+                    "fields": {
+                      "SUBJECT": {
+                        "id": "flappy_Tag_player"
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "pg_s_lidar",
+                        "id": "flappy_4",
+                        "fields": {
+                          "SUBJECT": {
+                            "id": "flappy_Tag_player"
+                          },
+                          "RAYS": 9,
+                          "START": -60,
+                          "END": 60,
+                          "MAXDIST": 200,
+                          "TARGET": {
+                            "id": "flappy_Tag_obstacle"
+                          },
+                          "BOUNDS": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_start",
+          "id": "flappy_19",
+          "x": 20,
+          "y": 220,
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_create",
+                "id": "flappy_13",
+                "fields": {
+                  "TAG": {
+                    "id": "flappy_Tag_player"
+                  }
+                },
+                "inputs": {
+                  "X": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "flappy_7",
+                      "fields": {
+                        "NUM": 80
+                      }
+                    }
+                  },
+                  "Y": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "flappy_8",
+                      "fields": {
+                        "NUM": 150
+                      }
+                    }
+                  },
+                  "W": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "flappy_9",
+                      "fields": {
+                        "NUM": 20
+                      }
+                    }
+                  },
+                  "H": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "flappy_10",
+                      "fields": {
+                        "NUM": 20
+                      }
+                    }
+                  },
+                  "COLOR": {
+                    "shadow": {
+                      "type": "pg_colour",
+                      "id": "flappy_6",
+                      "fields": {
+                        "C": "#f5c518"
+                      }
+                    }
+                  },
+                  "VX": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "flappy_11",
+                      "fields": {
+                        "NUM": 0
+                      }
+                    }
+                  },
+                  "VY": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "flappy_12",
+                      "fields": {
+                        "NUM": 0
+                      }
+                    }
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "pg_set_behavior",
+                    "id": "flappy_14",
+                    "fields": {
+                      "TAG": {
+                        "id": "flappy_Tag_player"
+                      },
+                      "KIND": "gravity",
+                      "PARAM": 0.5
+                    },
+                    "next": {
+                      "block": {
+                        "type": "pg_set_behavior",
+                        "id": "flappy_15",
+                        "fields": {
+                          "TAG": {
+                            "id": "flappy_Tag_obstacle"
+                          },
+                          "KIND": "destroyOffscreen",
+                          "PARAM": 0.5
+                        },
+                        "next": {
+                          "block": {
+                            "type": "pg_set_costume",
+                            "id": "flappy_16",
+                            "fields": {
+                              "TAG": {
+                                "id": "flappy_Tag_player"
+                              },
+                              "COSTUME": "duck"
+                            },
+                            "next": {
+                              "block": {
+                                "type": "pg_set_costume",
+                                "id": "flappy_17",
+                                "fields": {
+                                  "TAG": {
+                                    "id": "flappy_Tag_obstacle"
+                                  },
+                                  "COSTUME": "pipe"
+                                },
+                                "next": {
+                                  "block": {
+                                    "type": "pg_set_costume",
+                                    "id": "flappy_18",
+                                    "fields": {
+                                      "TAG": {
+                                        "id": "flappy_Tag_gate"
+                                      },
+                                      "COSTUME": "hidden"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_tick",
+          "id": "flappy_35",
+          "x": 20,
+          "y": 320,
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_reward",
+                "id": "flappy_21",
+                "inputs": {
+                  "N": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "flappy_20",
+                      "fields": {
+                        "NUM": 0.1
+                      }
+                    }
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "controls_if",
+                    "id": "flappy_34",
+                    "inputs": {
+                      "IF0": {
+                        "block": {
+                          "type": "logic_operation",
+                          "id": "flappy_30",
+                          "fields": {
+                            "OP": "OR"
+                          },
+                          "inputs": {
+                            "A": {
+                              "block": {
+                                "type": "logic_compare",
+                                "id": "flappy_25",
+                                "fields": {
+                                  "OP": "LT"
+                                },
+                                "inputs": {
+                                  "A": {
+                                    "block": {
+                                      "type": "pg_get",
+                                      "id": "flappy_23",
+                                      "fields": {
+                                        "PROP": "y"
+                                      },
+                                      "inputs": {
+                                        "T": {
+                                          "block": {
+                                            "type": "pg_tag",
+                                            "id": "flappy_22",
+                                            "fields": {
+                                              "TAG": {
+                                                "id": "flappy_Tag_player"
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "B": {
+                                    "shadow": {
+                                      "type": "math_number",
+                                      "id": "flappy_24",
+                                      "fields": {
+                                        "NUM": 0
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "B": {
+                              "block": {
+                                "type": "logic_compare",
+                                "id": "flappy_29",
+                                "fields": {
+                                  "OP": "GT"
+                                },
+                                "inputs": {
+                                  "A": {
+                                    "block": {
+                                      "type": "pg_get",
+                                      "id": "flappy_27",
+                                      "fields": {
+                                        "PROP": "y"
+                                      },
+                                      "inputs": {
+                                        "T": {
+                                          "block": {
+                                            "type": "pg_tag",
+                                            "id": "flappy_26",
+                                            "fields": {
+                                              "TAG": {
+                                                "id": "flappy_Tag_player"
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "B": {
+                                    "shadow": {
+                                      "type": "math_number",
+                                      "id": "flappy_28",
+                                      "fields": {
+                                        "NUM": 300
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "DO0": {
+                        "block": {
+                          "type": "pg_reward",
+                          "id": "flappy_32",
+                          "inputs": {
+                            "N": {
+                              "shadow": {
+                                "type": "math_number",
+                                "id": "flappy_31",
+                                "fields": {
+                                  "NUM": -1
+                                }
+                              }
+                            }
+                          },
+                          "next": {
+                            "block": {
+                              "type": "pg_game_over",
+                              "id": "flappy_33"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_interval",
+          "id": "flappy_76",
+          "x": 20,
+          "y": 420,
+          "fields": {
+            "N": 90
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "variables_set",
+                "id": "flappy_39",
+                "fields": {
+                  "VAR": {
+                    "id": "flappy_var_gap"
+                  }
+                },
+                "inputs": {
+                  "VALUE": {
+                    "block": {
+                      "type": "math_random_int",
+                      "id": "flappy_38",
+                      "inputs": {
+                        "FROM": {
+                          "shadow": {
+                            "type": "math_number",
+                            "id": "flappy_36",
+                            "fields": {
+                              "NUM": 80
+                            }
+                          }
+                        },
+                        "TO": {
+                          "shadow": {
+                            "type": "math_number",
+                            "id": "flappy_37",
+                            "fields": {
+                              "NUM": 220
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "pg_create",
+                    "id": "flappy_53",
+                    "fields": {
+                      "TAG": {
+                        "id": "flappy_Tag_obstacle"
+                      }
+                    },
+                    "inputs": {
+                      "X": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "flappy_49",
+                          "fields": {
+                            "NUM": 425
+                          }
+                        }
+                      },
+                      "Y": {
+                        "block": {
+                          "type": "math_arithmetic",
+                          "id": "flappy_44",
+                          "fields": {
+                            "OP": "DIVIDE"
+                          },
+                          "inputs": {
+                            "A": {
+                              "block": {
+                                "type": "math_arithmetic",
+                                "id": "flappy_42",
+                                "fields": {
+                                  "OP": "MINUS"
+                                },
+                                "inputs": {
+                                  "A": {
+                                    "block": {
+                                      "type": "variables_get",
+                                      "id": "flappy_40",
+                                      "fields": {
+                                        "VAR": {
+                                          "id": "flappy_var_gap"
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "B": {
+                                    "shadow": {
+                                      "type": "math_number",
+                                      "id": "flappy_41",
+                                      "fields": {
+                                        "NUM": 50
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "B": {
+                              "shadow": {
+                                "type": "math_number",
+                                "id": "flappy_43",
+                                "fields": {
+                                  "NUM": 2
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "W": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "flappy_50",
+                          "fields": {
+                            "NUM": 50
+                          }
+                        }
+                      },
+                      "H": {
+                        "block": {
+                          "type": "math_arithmetic",
+                          "id": "flappy_47",
+                          "fields": {
+                            "OP": "MINUS"
+                          },
+                          "inputs": {
+                            "A": {
+                              "block": {
+                                "type": "variables_get",
+                                "id": "flappy_45",
+                                "fields": {
+                                  "VAR": {
+                                    "id": "flappy_var_gap"
+                                  }
+                                }
+                              }
+                            },
+                            "B": {
+                              "shadow": {
+                                "type": "math_number",
+                                "id": "flappy_46",
+                                "fields": {
+                                  "NUM": 50
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "COLOR": {
+                        "shadow": {
+                          "type": "pg_colour",
+                          "id": "flappy_48",
+                          "fields": {
+                            "C": "#2e8b3e"
+                          }
+                        }
+                      },
+                      "VX": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "flappy_51",
+                          "fields": {
+                            "NUM": -2
+                          }
+                        }
+                      },
+                      "VY": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "flappy_52",
+                          "fields": {
+                            "NUM": 0
+                          }
+                        }
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "pg_create",
+                        "id": "flappy_67",
+                        "fields": {
+                          "TAG": {
+                            "id": "flappy_Tag_obstacle"
+                          }
+                        },
+                        "inputs": {
+                          "X": {
+                            "shadow": {
+                              "type": "math_number",
+                              "id": "flappy_63",
+                              "fields": {
+                                "NUM": 425
+                              }
+                            }
+                          },
+                          "Y": {
+                            "block": {
+                              "type": "math_arithmetic",
+                              "id": "flappy_58",
+                              "fields": {
+                                "OP": "DIVIDE"
+                              },
+                              "inputs": {
+                                "A": {
+                                  "block": {
+                                    "type": "math_arithmetic",
+                                    "id": "flappy_56",
+                                    "fields": {
+                                      "OP": "ADD"
+                                    },
+                                    "inputs": {
+                                      "A": {
+                                        "block": {
+                                          "type": "variables_get",
+                                          "id": "flappy_54",
+                                          "fields": {
+                                            "VAR": {
+                                              "id": "flappy_var_gap"
+                                            }
+                                          }
+                                        }
+                                      },
+                                      "B": {
+                                        "shadow": {
+                                          "type": "math_number",
+                                          "id": "flappy_55",
+                                          "fields": {
+                                            "NUM": 350
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "B": {
+                                  "shadow": {
+                                    "type": "math_number",
+                                    "id": "flappy_57",
+                                    "fields": {
+                                      "NUM": 2
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "W": {
+                            "shadow": {
+                              "type": "math_number",
+                              "id": "flappy_64",
+                              "fields": {
+                                "NUM": 50
+                              }
+                            }
+                          },
+                          "H": {
+                            "block": {
+                              "type": "math_arithmetic",
+                              "id": "flappy_61",
+                              "fields": {
+                                "OP": "MINUS"
+                              },
+                              "inputs": {
+                                "A": {
+                                  "shadow": {
+                                    "type": "math_number",
+                                    "id": "flappy_60",
+                                    "fields": {
+                                      "NUM": 250
+                                    }
+                                  }
+                                },
+                                "B": {
+                                  "block": {
+                                    "type": "variables_get",
+                                    "id": "flappy_59",
+                                    "fields": {
+                                      "VAR": {
+                                        "id": "flappy_var_gap"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "COLOR": {
+                            "shadow": {
+                              "type": "pg_colour",
+                              "id": "flappy_62",
+                              "fields": {
+                                "C": "#2e8b3e"
+                              }
+                            }
+                          },
+                          "VX": {
+                            "shadow": {
+                              "type": "math_number",
+                              "id": "flappy_65",
+                              "fields": {
+                                "NUM": -2
+                              }
+                            }
+                          },
+                          "VY": {
+                            "shadow": {
+                              "type": "math_number",
+                              "id": "flappy_66",
+                              "fields": {
+                                "NUM": 0
+                              }
+                            }
+                          }
+                        },
+                        "next": {
+                          "block": {
+                            "type": "pg_create",
+                            "id": "flappy_75",
+                            "fields": {
+                              "TAG": {
+                                "id": "flappy_Tag_gate"
+                              }
+                            },
+                            "inputs": {
+                              "X": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "flappy_70",
+                                  "fields": {
+                                    "NUM": 425
+                                  }
+                                }
+                              },
+                              "Y": {
+                                "block": {
+                                  "type": "variables_get",
+                                  "id": "flappy_68",
+                                  "fields": {
+                                    "VAR": {
+                                      "id": "flappy_var_gap"
+                                    }
+                                  }
+                                }
+                              },
+                              "W": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "flappy_71",
+                                  "fields": {
+                                    "NUM": 4
+                                  }
+                                }
+                              },
+                              "H": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "flappy_72",
+                                  "fields": {
+                                    "NUM": 100
+                                  }
+                                }
+                              },
+                              "COLOR": {
+                                "shadow": {
+                                  "type": "pg_colour",
+                                  "id": "flappy_69",
+                                  "fields": {
+                                    "C": "#ffffff"
+                                  }
+                                }
+                              },
+                              "VX": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "flappy_73",
+                                  "fields": {
+                                    "NUM": -2
+                                  }
+                                }
+                              },
+                              "VY": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "flappy_74",
+                                  "fields": {
+                                    "NUM": 0
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_action",
+          "id": "flappy_80",
+          "x": 20,
+          "y": 520,
+          "fields": {
+            "ACTION": "up"
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_set_vel",
+                "id": "flappy_79",
+                "fields": {
+                  "AXIS": "y"
+                },
+                "inputs": {
+                  "T": {
+                    "block": {
+                      "type": "pg_tag",
+                      "id": "flappy_77",
+                      "fields": {
+                        "TAG": {
+                          "id": "flappy_Tag_player"
+                        }
+                      }
+                    }
+                  },
+                  "V": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "flappy_78",
+                      "fields": {
+                        "NUM": -7
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_collide",
+          "id": "flappy_84",
+          "x": 20,
+          "y": 620,
+          "fields": {
+            "A": {
+              "id": "flappy_Tag_player"
+            },
+            "B": {
+              "id": "flappy_Tag_obstacle"
+            }
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_reward",
+                "id": "flappy_82",
+                "inputs": {
+                  "N": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "flappy_81",
+                      "fields": {
+                        "NUM": -1
+                      }
+                    }
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "pg_game_over",
+                    "id": "flappy_83"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_collide",
+          "id": "flappy_89",
+          "x": 20,
+          "y": 720,
+          "fields": {
+            "A": {
+              "id": "flappy_Tag_player"
+            },
+            "B": {
+              "id": "flappy_Tag_gate"
+            }
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_add_score",
+                "id": "flappy_86",
+                "inputs": {
+                  "N": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "flappy_85",
+                      "fields": {
+                        "NUM": 1
+                      }
+                    }
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "pg_destroy",
+                    "id": "flappy_88",
+                    "inputs": {
+                      "T": {
+                        "block": {
+                          "type": "pg_other",
+                          "id": "flappy_87"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "variables": [
+      {
+        "name": "player",
+        "id": "flappy_Tag_player",
+        "type": "Tag"
+      },
+      {
+        "name": "obstacle",
+        "id": "flappy_Tag_obstacle",
+        "type": "Tag"
+      },
+      {
+        "name": "ground",
+        "id": "flappy_Tag_ground",
+        "type": "Tag"
+      },
+      {
+        "name": "gate",
+        "id": "flappy_Tag_gate",
+        "type": "Tag"
+      },
+      {
+        "name": "gap",
+        "id": "flappy_var_gap"
+      }
+    ]
+  },
+  "generatedCode": "\n\n\napi.$b('flappy_1');\napi.$b('flappy_5');\napi.sensors([\n  api.sensor.position('player'),\n  api.sensor.velocity('player'),\n  api.sensor.lidar('player', 9, -60, 60, 200, 'obstacle', true),\n]);\napi.$b('flappy_19');\napi.onStart(() => {\n  api.$b('flappy_13');\n  api.create({ tag: 'player', x: 80, y: 150, w: 20, h: 20, color: '#f5c518', vx: 0, vy: 0 });\n  api.$b('flappy_14');\n  api.setBehavior('player', 'gravity', 0.5);\n  api.$b('flappy_15');\n  api.setBehavior('obstacle', 'destroyOffscreen');\n  api.$b('flappy_16');\n  api.setCostume('player', 'duck');\n  api.$b('flappy_17');\n  api.setCostume('obstacle', 'pipe');\n  api.$b('flappy_18');\n  api.setCostume('gate', 'hidden');\n});\napi.$b('flappy_35');\napi.onTick(() => {\n  api.$b('flappy_21');\n  api.reward(0.1);\n  api.$b('flappy_34');\n  if (api.get('player', 'y') < 0 || api.get('player', 'y') > 300) {\n    api.$b('flappy_32');\n    api.reward(-1);\n    api.$b('flappy_33');\n    api.gameOver();\n  }\n});\napi.$b('flappy_76');\napi.onInterval(90, () => {\n  api.$b('flappy_39');\n  api.vars['gap'] = api.randInt(80, 220);\n  api.$b('flappy_53');\n  api.create({ tag: 'obstacle', x: 425, y: (api.vars['gap'] - 50) / 2, w: 50, h: api.vars['gap'] - 50, color: '#2e8b3e', vx: -2, vy: 0 });\n  api.$b('flappy_67');\n  api.create({ tag: 'obstacle', x: 425, y: (api.vars['gap'] + 350) / 2, w: 50, h: 250 - api.vars['gap'], color: '#2e8b3e', vx: -2, vy: 0 });\n  api.$b('flappy_75');\n  api.create({ tag: 'gate', x: 425, y: api.vars['gap'], w: 4, h: 100, color: '#ffffff', vx: -2, vy: 0 });\n});\napi.$b('flappy_80');\napi.onAction('up', () => {\n  api.$b('flappy_79');\n  api.setVel('player', 'y', -7);\n});\napi.$b('flappy_84');\napi.onCollide('player', 'obstacle', (self, other) => {\n  api.$b('flappy_82');\n  api.reward(-1);\n  api.$b('flappy_83');\n  api.gameOver();\n});\napi.$b('flappy_89');\napi.onCollide('player', 'gate', (self, other) => {\n  api.$b('flappy_86');\n  api.addScore(1);\n  api.$b('flappy_88');\n  api.destroy(other);\n});\n",
+  "settings": {
+    "actions": [
+      "none",
+      "up"
+    ],
+    "maxSteps": 3000,
+    "background": "#bfe6ff",
+    "backdrop": "sky"
+  },
+  "keymap": {
+    "left": [
+      "ArrowLeft"
+    ],
+    "right": [
+      "ArrowRight"
+    ],
+    "up": [
+      "ArrowUp",
+      "Space",
+      "KeyW"
+    ],
+    "down": [
+      "ArrowDown"
+    ],
+    "a": [
+      "KeyA"
+    ],
+    "b": [
+      "KeyS"
+    ]
+  },
+  "training": {
+    "steps": 1500000,
+    "frameSkip": 2
+  }
+}

@@ -1,0 +1,552 @@
+{
+  "version": 1,
+  "blocksJson": {
+    "blocks": {
+      "languageVersion": 0,
+      "blocks": [
+        {
+          "type": "pg_settings",
+          "id": "dino_1",
+          "x": 20,
+          "y": 20,
+          "fields": {
+            "LEFT": false,
+            "RIGHT": false,
+            "UP": true,
+            "DOWN": false,
+            "A": false,
+            "B": false,
+            "MAXSTEPS": 3000,
+            "BACKDROP": "desert",
+            "BG": "#f7f7f2"
+          }
+        },
+        {
+          "type": "pg_observe",
+          "id": "dino_4",
+          "x": 20,
+          "y": 120,
+          "inputs": {
+            "SENSORS": {
+              "block": {
+                "type": "pg_s_nearest",
+                "id": "dino_2",
+                "fields": {
+                  "SUBJECT": {
+                    "id": "dino_Tag_player"
+                  },
+                  "TARGET": {
+                    "id": "dino_Tag_obstacle"
+                  },
+                  "DIR": "right"
+                },
+                "next": {
+                  "block": {
+                    "type": "pg_s_on_ground",
+                    "id": "dino_3",
+                    "fields": {
+                      "SUBJECT": {
+                        "id": "dino_Tag_player"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_start",
+          "id": "dino_27",
+          "x": 20,
+          "y": 220,
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_create",
+                "id": "dino_12",
+                "fields": {
+                  "TAG": {
+                    "id": "dino_Tag_ground"
+                  }
+                },
+                "inputs": {
+                  "X": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "dino_6",
+                      "fields": {
+                        "NUM": 200
+                      }
+                    }
+                  },
+                  "Y": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "dino_7",
+                      "fields": {
+                        "NUM": 290
+                      }
+                    }
+                  },
+                  "W": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "dino_8",
+                      "fields": {
+                        "NUM": 400
+                      }
+                    }
+                  },
+                  "H": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "dino_9",
+                      "fields": {
+                        "NUM": 20
+                      }
+                    }
+                  },
+                  "COLOR": {
+                    "shadow": {
+                      "type": "pg_colour",
+                      "id": "dino_5",
+                      "fields": {
+                        "C": "#555555"
+                      }
+                    }
+                  },
+                  "VX": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "dino_10",
+                      "fields": {
+                        "NUM": 0
+                      }
+                    }
+                  },
+                  "VY": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "dino_11",
+                      "fields": {
+                        "NUM": 0
+                      }
+                    }
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "pg_create",
+                    "id": "dino_20",
+                    "fields": {
+                      "TAG": {
+                        "id": "dino_Tag_player"
+                      }
+                    },
+                    "inputs": {
+                      "X": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "dino_14",
+                          "fields": {
+                            "NUM": 60
+                          }
+                        }
+                      },
+                      "Y": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "dino_15",
+                          "fields": {
+                            "NUM": 250
+                          }
+                        }
+                      },
+                      "W": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "dino_16",
+                          "fields": {
+                            "NUM": 20
+                          }
+                        }
+                      },
+                      "H": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "dino_17",
+                          "fields": {
+                            "NUM": 30
+                          }
+                        }
+                      },
+                      "COLOR": {
+                        "shadow": {
+                          "type": "pg_colour",
+                          "id": "dino_13",
+                          "fields": {
+                            "C": "#22bb77"
+                          }
+                        }
+                      },
+                      "VX": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "dino_18",
+                          "fields": {
+                            "NUM": 0
+                          }
+                        }
+                      },
+                      "VY": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "dino_19",
+                          "fields": {
+                            "NUM": 0
+                          }
+                        }
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "pg_set_behavior",
+                        "id": "dino_21",
+                        "fields": {
+                          "TAG": {
+                            "id": "dino_Tag_player"
+                          },
+                          "KIND": "gravity",
+                          "PARAM": 0.8
+                        },
+                        "next": {
+                          "block": {
+                            "type": "pg_set_behavior",
+                            "id": "dino_22",
+                            "fields": {
+                              "TAG": {
+                                "id": "dino_Tag_ground"
+                              },
+                              "KIND": "solid",
+                              "PARAM": 0.5
+                            },
+                            "next": {
+                              "block": {
+                                "type": "pg_set_behavior",
+                                "id": "dino_23",
+                                "fields": {
+                                  "TAG": {
+                                    "id": "dino_Tag_obstacle"
+                                  },
+                                  "KIND": "destroyOffscreen",
+                                  "PARAM": 0.5
+                                },
+                                "next": {
+                                  "block": {
+                                    "type": "pg_set_costume",
+                                    "id": "dino_24",
+                                    "fields": {
+                                      "TAG": {
+                                        "id": "dino_Tag_player"
+                                      },
+                                      "COSTUME": "dino"
+                                    },
+                                    "next": {
+                                      "block": {
+                                        "type": "pg_set_costume",
+                                        "id": "dino_25",
+                                        "fields": {
+                                          "TAG": {
+                                            "id": "dino_Tag_obstacle"
+                                          },
+                                          "COSTUME": "cactus"
+                                        },
+                                        "next": {
+                                          "block": {
+                                            "type": "pg_set_costume",
+                                            "id": "dino_26",
+                                            "fields": {
+                                              "TAG": {
+                                                "id": "dino_Tag_ground"
+                                              },
+                                              "COSTUME": "groundRun"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_tick",
+          "id": "dino_30",
+          "x": 20,
+          "y": 320,
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_add_score",
+                "id": "dino_29",
+                "inputs": {
+                  "N": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "dino_28",
+                      "fields": {
+                        "NUM": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_interval",
+          "id": "dino_39",
+          "x": 20,
+          "y": 420,
+          "fields": {
+            "N": 60
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_create",
+                "id": "dino_38",
+                "fields": {
+                  "TAG": {
+                    "id": "dino_Tag_obstacle"
+                  }
+                },
+                "inputs": {
+                  "X": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "dino_32",
+                      "fields": {
+                        "NUM": 410
+                      }
+                    }
+                  },
+                  "Y": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "dino_33",
+                      "fields": {
+                        "NUM": 265
+                      }
+                    }
+                  },
+                  "W": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "dino_34",
+                      "fields": {
+                        "NUM": 15
+                      }
+                    }
+                  },
+                  "H": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "dino_35",
+                      "fields": {
+                        "NUM": 30
+                      }
+                    }
+                  },
+                  "COLOR": {
+                    "shadow": {
+                      "type": "pg_colour",
+                      "id": "dino_31",
+                      "fields": {
+                        "C": "#cc3333"
+                      }
+                    }
+                  },
+                  "VX": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "dino_36",
+                      "fields": {
+                        "NUM": -5
+                      }
+                    }
+                  },
+                  "VY": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "dino_37",
+                      "fields": {
+                        "NUM": 0
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_action",
+          "id": "dino_46",
+          "x": 20,
+          "y": 520,
+          "fields": {
+            "ACTION": "up"
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "controls_if",
+                "id": "dino_45",
+                "inputs": {
+                  "IF0": {
+                    "block": {
+                      "type": "pg_on_ground",
+                      "id": "dino_41",
+                      "inputs": {
+                        "T": {
+                          "block": {
+                            "type": "pg_tag",
+                            "id": "dino_40",
+                            "fields": {
+                              "TAG": {
+                                "id": "dino_Tag_player"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "DO0": {
+                    "block": {
+                      "type": "pg_set_vel",
+                      "id": "dino_44",
+                      "fields": {
+                        "AXIS": "y"
+                      },
+                      "inputs": {
+                        "T": {
+                          "block": {
+                            "type": "pg_tag",
+                            "id": "dino_42",
+                            "fields": {
+                              "TAG": {
+                                "id": "dino_Tag_player"
+                              }
+                            }
+                          }
+                        },
+                        "V": {
+                          "shadow": {
+                            "type": "math_number",
+                            "id": "dino_43",
+                            "fields": {
+                              "NUM": -12
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_collide",
+          "id": "dino_48",
+          "x": 20,
+          "y": 620,
+          "fields": {
+            "A": {
+              "id": "dino_Tag_player"
+            },
+            "B": {
+              "id": "dino_Tag_obstacle"
+            }
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_game_over",
+                "id": "dino_47"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "variables": [
+      {
+        "name": "player",
+        "id": "dino_Tag_player",
+        "type": "Tag"
+      },
+      {
+        "name": "obstacle",
+        "id": "dino_Tag_obstacle",
+        "type": "Tag"
+      },
+      {
+        "name": "ground",
+        "id": "dino_Tag_ground",
+        "type": "Tag"
+      }
+    ]
+  },
+  "generatedCode": "\n\n\napi.$b('dino_1');\napi.$b('dino_4');\napi.sensors([\n  api.sensor.nearest('player', 'obstacle', 'right'),\n  api.sensor.onGround('player'),\n]);\napi.$b('dino_27');\napi.onStart(() => {\n  api.$b('dino_12');\n  api.create({ tag: 'ground', x: 200, y: 290, w: 400, h: 20, color: '#555555', vx: 0, vy: 0 });\n  api.$b('dino_20');\n  api.create({ tag: 'player', x: 60, y: 250, w: 20, h: 30, color: '#22bb77', vx: 0, vy: 0 });\n  api.$b('dino_21');\n  api.setBehavior('player', 'gravity', 0.8);\n  api.$b('dino_22');\n  api.setBehavior('ground', 'solid');\n  api.$b('dino_23');\n  api.setBehavior('obstacle', 'destroyOffscreen');\n  api.$b('dino_24');\n  api.setCostume('player', 'dino');\n  api.$b('dino_25');\n  api.setCostume('obstacle', 'cactus');\n  api.$b('dino_26');\n  api.setCostume('ground', 'groundRun');\n});\napi.$b('dino_30');\napi.onTick(() => {\n  api.$b('dino_29');\n  api.addScore(1);\n});\napi.$b('dino_39');\napi.onInterval(60, () => {\n  api.$b('dino_38');\n  api.create({ tag: 'obstacle', x: 410, y: 265, w: 15, h: 30, color: '#cc3333', vx: -5, vy: 0 });\n});\napi.$b('dino_46');\napi.onAction('up', () => {\n  api.$b('dino_45');\n  if (api.onGround('player')) {\n    api.$b('dino_44');\n    api.setVel('player', 'y', -12);\n  }\n});\napi.$b('dino_48');\napi.onCollide('player', 'obstacle', (self, other) => {\n  api.$b('dino_47');\n  api.gameOver();\n});\n",
+  "settings": {
+    "actions": [
+      "none",
+      "up"
+    ],
+    "maxSteps": 3000,
+    "background": "#f7f7f2",
+    "backdrop": "desert"
+  },
+  "keymap": {
+    "left": [
+      "ArrowLeft"
+    ],
+    "right": [
+      "ArrowRight"
+    ],
+    "up": [
+      "ArrowUp",
+      "Space",
+      "KeyW"
+    ],
+    "down": [
+      "ArrowDown"
+    ],
+    "a": [
+      "KeyA"
+    ],
+    "b": [
+      "KeyS"
+    ]
+  },
+  "training": {
+    "steps": 300000,
+    "frameSkip": 4
+  }
+}

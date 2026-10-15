@@ -1,0 +1,42 @@
+{
+  "target": "breakout",
+  "cfg": {
+    "frameSkip": 4,
+    "nEnvs": 8,
+    "nSteps": 128,
+    "epochs": 4,
+    "minibatch": 256,
+    "gamma": 0.99,
+    "lambda": 0.95,
+    "clip": 0.2,
+    "lr": 0.0005,
+    "entCoef": 0.01,
+    "vfCoef": 0.5,
+    "maxGradNorm": 0.5,
+    "hidden": [
+      64,
+      64
+    ],
+    "seed": 0
+  },
+  "steps": 3002295,
+  "seconds": 190.720163,
+  "random": {
+    "meanReturn": 0.8,
+    "meanScore": 0.8,
+    "meanLength": 95.1,
+    "episodes": 30
+  },
+  "greedy": {
+    "meanReturn": 27,
+    "meanScore": 27,
+    "meanLength": 3000,
+    "episodes": 30
+  },
+  "sampled": {
+    "meanReturn": 20.766666666666666,
+    "meanScore": 20.766666666666666,
+    "meanLength": 2187.6,
+    "episodes": 30
+  }
+}

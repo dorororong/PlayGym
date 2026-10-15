@@ -1,0 +1,1211 @@
+{
+  "version": 1,
+  "blocksJson": {
+    "blocks": {
+      "languageVersion": 0,
+      "blocks": [
+        {
+          "type": "pg_settings",
+          "id": "dodge_1",
+          "x": 20,
+          "y": 20,
+          "fields": {
+            "LEFT": true,
+            "RIGHT": true,
+            "UP": true,
+            "DOWN": true,
+            "A": false,
+            "B": false,
+            "MAXSTEPS": 3000,
+            "BACKDROP": "space",
+            "BG": "#20202a"
+          }
+        },
+        {
+          "type": "pg_observe",
+          "id": "dodge_4",
+          "x": 20,
+          "y": 120,
+          "inputs": {
+            "SENSORS": {
+              "block": {
+                "type": "pg_s_position",
+                "id": "dodge_2",
+                "fields": {
+                  "SUBJECT": {
+                    "id": "dodge_Tag_player"
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "pg_s_lidar",
+                    "id": "dodge_3",
+                    "fields": {
+                      "SUBJECT": {
+                        "id": "dodge_Tag_player"
+                      },
+                      "RAYS": 16,
+                      "START": 0,
+                      "END": 337.5,
+                      "MAXDIST": 160,
+                      "TARGET": {
+                        "id": "dodge_Tag_obstacle"
+                      },
+                      "BOUNDS": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_start",
+          "id": "dodge_17",
+          "x": 20,
+          "y": 220,
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_create",
+                "id": "dodge_12",
+                "fields": {
+                  "TAG": {
+                    "id": "dodge_Tag_player"
+                  }
+                },
+                "inputs": {
+                  "X": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "dodge_6",
+                      "fields": {
+                        "NUM": 200
+                      }
+                    }
+                  },
+                  "Y": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "dodge_7",
+                      "fields": {
+                        "NUM": 150
+                      }
+                    }
+                  },
+                  "W": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "dodge_8",
+                      "fields": {
+                        "NUM": 22
+                      }
+                    }
+                  },
+                  "H": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "dodge_9",
+                      "fields": {
+                        "NUM": 22
+                      }
+                    }
+                  },
+                  "COLOR": {
+                    "shadow": {
+                      "type": "pg_colour",
+                      "id": "dodge_5",
+                      "fields": {
+                        "C": "#5ad1ff"
+                      }
+                    }
+                  },
+                  "VX": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "dodge_10",
+                      "fields": {
+                        "NUM": 0
+                      }
+                    }
+                  },
+                  "VY": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "dodge_11",
+                      "fields": {
+                        "NUM": 0
+                      }
+                    }
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "pg_set_behavior",
+                    "id": "dodge_13",
+                    "fields": {
+                      "TAG": {
+                        "id": "dodge_Tag_player"
+                      },
+                      "KIND": "stayInScreen",
+                      "PARAM": 0.5
+                    },
+                    "next": {
+                      "block": {
+                        "type": "pg_set_behavior",
+                        "id": "dodge_14",
+                        "fields": {
+                          "TAG": {
+                            "id": "dodge_Tag_obstacle"
+                          },
+                          "KIND": "destroyOffscreen",
+                          "PARAM": 0.5
+                        },
+                        "next": {
+                          "block": {
+                            "type": "pg_set_costume",
+                            "id": "dodge_15",
+                            "fields": {
+                              "TAG": {
+                                "id": "dodge_Tag_player"
+                              },
+                              "COSTUME": "ship"
+                            },
+                            "next": {
+                              "block": {
+                                "type": "pg_set_costume",
+                                "id": "dodge_16",
+                                "fields": {
+                                  "TAG": {
+                                    "id": "dodge_Tag_obstacle"
+                                  },
+                                  "COSTUME": "meteor"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_tick",
+          "id": "dodge_20",
+          "x": 20,
+          "y": 320,
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_add_score",
+                "id": "dodge_19",
+                "inputs": {
+                  "N": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "dodge_18",
+                      "fields": {
+                        "NUM": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_interval",
+          "id": "dodge_97",
+          "x": 20,
+          "y": 420,
+          "fields": {
+            "N": 12
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "variables_set",
+                "id": "dodge_24",
+                "fields": {
+                  "VAR": {
+                    "id": "dodge_var_side"
+                  }
+                },
+                "inputs": {
+                  "VALUE": {
+                    "block": {
+                      "type": "math_random_int",
+                      "id": "dodge_23",
+                      "inputs": {
+                        "FROM": {
+                          "shadow": {
+                            "type": "math_number",
+                            "id": "dodge_21",
+                            "fields": {
+                              "NUM": 0
+                            }
+                          }
+                        },
+                        "TO": {
+                          "shadow": {
+                            "type": "math_number",
+                            "id": "dodge_22",
+                            "fields": {
+                              "NUM": 3
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "variables_set",
+                    "id": "dodge_28",
+                    "fields": {
+                      "VAR": {
+                        "id": "dodge_var_speed"
+                      }
+                    },
+                    "inputs": {
+                      "VALUE": {
+                        "block": {
+                          "type": "math_random_int",
+                          "id": "dodge_27",
+                          "inputs": {
+                            "FROM": {
+                              "shadow": {
+                                "type": "math_number",
+                                "id": "dodge_25",
+                                "fields": {
+                                  "NUM": 2
+                                }
+                              }
+                            },
+                            "TO": {
+                              "shadow": {
+                                "type": "math_number",
+                                "id": "dodge_26",
+                                "fields": {
+                                  "NUM": 4
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "controls_if",
+                        "id": "dodge_44",
+                        "inputs": {
+                          "IF0": {
+                            "block": {
+                              "type": "logic_compare",
+                              "id": "dodge_31",
+                              "fields": {
+                                "OP": "EQ"
+                              },
+                              "inputs": {
+                                "A": {
+                                  "block": {
+                                    "type": "variables_get",
+                                    "id": "dodge_29",
+                                    "fields": {
+                                      "VAR": {
+                                        "id": "dodge_var_side"
+                                      }
+                                    }
+                                  }
+                                },
+                                "B": {
+                                  "shadow": {
+                                    "type": "math_number",
+                                    "id": "dodge_30",
+                                    "fields": {
+                                      "NUM": 0
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "DO0": {
+                            "block": {
+                              "type": "pg_create",
+                              "id": "dodge_43",
+                              "fields": {
+                                "TAG": {
+                                  "id": "dodge_Tag_obstacle"
+                                }
+                              },
+                              "inputs": {
+                                "X": {
+                                  "block": {
+                                    "type": "math_random_int",
+                                    "id": "dodge_34",
+                                    "inputs": {
+                                      "FROM": {
+                                        "shadow": {
+                                          "type": "math_number",
+                                          "id": "dodge_32",
+                                          "fields": {
+                                            "NUM": 20
+                                          }
+                                        }
+                                      },
+                                      "TO": {
+                                        "shadow": {
+                                          "type": "math_number",
+                                          "id": "dodge_33",
+                                          "fields": {
+                                            "NUM": 380
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "Y": {
+                                  "shadow": {
+                                    "type": "math_number",
+                                    "id": "dodge_40",
+                                    "fields": {
+                                      "NUM": -9
+                                    }
+                                  }
+                                },
+                                "W": {
+                                  "shadow": {
+                                    "type": "math_number",
+                                    "id": "dodge_41",
+                                    "fields": {
+                                      "NUM": 18
+                                    }
+                                  }
+                                },
+                                "H": {
+                                  "shadow": {
+                                    "type": "math_number",
+                                    "id": "dodge_42",
+                                    "fields": {
+                                      "NUM": 18
+                                    }
+                                  }
+                                },
+                                "COLOR": {
+                                  "shadow": {
+                                    "type": "pg_colour",
+                                    "id": "dodge_39",
+                                    "fields": {
+                                      "C": "#8b5a2b"
+                                    }
+                                  }
+                                },
+                                "VX": {
+                                  "block": {
+                                    "type": "math_random_int",
+                                    "id": "dodge_37",
+                                    "inputs": {
+                                      "FROM": {
+                                        "shadow": {
+                                          "type": "math_number",
+                                          "id": "dodge_35",
+                                          "fields": {
+                                            "NUM": -1
+                                          }
+                                        }
+                                      },
+                                      "TO": {
+                                        "shadow": {
+                                          "type": "math_number",
+                                          "id": "dodge_36",
+                                          "fields": {
+                                            "NUM": 1
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "VY": {
+                                  "block": {
+                                    "type": "variables_get",
+                                    "id": "dodge_38",
+                                    "fields": {
+                                      "VAR": {
+                                        "id": "dodge_var_speed"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "next": {
+                          "block": {
+                            "type": "controls_if",
+                            "id": "dodge_62",
+                            "inputs": {
+                              "IF0": {
+                                "block": {
+                                  "type": "logic_compare",
+                                  "id": "dodge_47",
+                                  "fields": {
+                                    "OP": "EQ"
+                                  },
+                                  "inputs": {
+                                    "A": {
+                                      "block": {
+                                        "type": "variables_get",
+                                        "id": "dodge_45",
+                                        "fields": {
+                                          "VAR": {
+                                            "id": "dodge_var_side"
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "B": {
+                                      "shadow": {
+                                        "type": "math_number",
+                                        "id": "dodge_46",
+                                        "fields": {
+                                          "NUM": 1
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "DO0": {
+                                "block": {
+                                  "type": "pg_create",
+                                  "id": "dodge_61",
+                                  "fields": {
+                                    "TAG": {
+                                      "id": "dodge_Tag_obstacle"
+                                    }
+                                  },
+                                  "inputs": {
+                                    "X": {
+                                      "block": {
+                                        "type": "math_random_int",
+                                        "id": "dodge_50",
+                                        "inputs": {
+                                          "FROM": {
+                                            "shadow": {
+                                              "type": "math_number",
+                                              "id": "dodge_48",
+                                              "fields": {
+                                                "NUM": 20
+                                              }
+                                            }
+                                          },
+                                          "TO": {
+                                            "shadow": {
+                                              "type": "math_number",
+                                              "id": "dodge_49",
+                                              "fields": {
+                                                "NUM": 380
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "Y": {
+                                      "shadow": {
+                                        "type": "math_number",
+                                        "id": "dodge_58",
+                                        "fields": {
+                                          "NUM": 309
+                                        }
+                                      }
+                                    },
+                                    "W": {
+                                      "shadow": {
+                                        "type": "math_number",
+                                        "id": "dodge_59",
+                                        "fields": {
+                                          "NUM": 18
+                                        }
+                                      }
+                                    },
+                                    "H": {
+                                      "shadow": {
+                                        "type": "math_number",
+                                        "id": "dodge_60",
+                                        "fields": {
+                                          "NUM": 18
+                                        }
+                                      }
+                                    },
+                                    "COLOR": {
+                                      "shadow": {
+                                        "type": "pg_colour",
+                                        "id": "dodge_57",
+                                        "fields": {
+                                          "C": "#8b5a2b"
+                                        }
+                                      }
+                                    },
+                                    "VX": {
+                                      "block": {
+                                        "type": "math_random_int",
+                                        "id": "dodge_53",
+                                        "inputs": {
+                                          "FROM": {
+                                            "shadow": {
+                                              "type": "math_number",
+                                              "id": "dodge_51",
+                                              "fields": {
+                                                "NUM": -1
+                                              }
+                                            }
+                                          },
+                                          "TO": {
+                                            "shadow": {
+                                              "type": "math_number",
+                                              "id": "dodge_52",
+                                              "fields": {
+                                                "NUM": 1
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "VY": {
+                                      "block": {
+                                        "type": "math_arithmetic",
+                                        "id": "dodge_56",
+                                        "fields": {
+                                          "OP": "MINUS"
+                                        },
+                                        "inputs": {
+                                          "A": {
+                                            "shadow": {
+                                              "type": "math_number",
+                                              "id": "dodge_55",
+                                              "fields": {
+                                                "NUM": 0
+                                              }
+                                            }
+                                          },
+                                          "B": {
+                                            "block": {
+                                              "type": "variables_get",
+                                              "id": "dodge_54",
+                                              "fields": {
+                                                "VAR": {
+                                                  "id": "dodge_var_speed"
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "next": {
+                              "block": {
+                                "type": "controls_if",
+                                "id": "dodge_78",
+                                "inputs": {
+                                  "IF0": {
+                                    "block": {
+                                      "type": "logic_compare",
+                                      "id": "dodge_65",
+                                      "fields": {
+                                        "OP": "EQ"
+                                      },
+                                      "inputs": {
+                                        "A": {
+                                          "block": {
+                                            "type": "variables_get",
+                                            "id": "dodge_63",
+                                            "fields": {
+                                              "VAR": {
+                                                "id": "dodge_var_side"
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "B": {
+                                          "shadow": {
+                                            "type": "math_number",
+                                            "id": "dodge_64",
+                                            "fields": {
+                                              "NUM": 2
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "DO0": {
+                                    "block": {
+                                      "type": "pg_create",
+                                      "id": "dodge_77",
+                                      "fields": {
+                                        "TAG": {
+                                          "id": "dodge_Tag_obstacle"
+                                        }
+                                      },
+                                      "inputs": {
+                                        "X": {
+                                          "shadow": {
+                                            "type": "math_number",
+                                            "id": "dodge_74",
+                                            "fields": {
+                                              "NUM": -9
+                                            }
+                                          }
+                                        },
+                                        "Y": {
+                                          "block": {
+                                            "type": "math_random_int",
+                                            "id": "dodge_68",
+                                            "inputs": {
+                                              "FROM": {
+                                                "shadow": {
+                                                  "type": "math_number",
+                                                  "id": "dodge_66",
+                                                  "fields": {
+                                                    "NUM": 20
+                                                  }
+                                                }
+                                              },
+                                              "TO": {
+                                                "shadow": {
+                                                  "type": "math_number",
+                                                  "id": "dodge_67",
+                                                  "fields": {
+                                                    "NUM": 280
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "W": {
+                                          "shadow": {
+                                            "type": "math_number",
+                                            "id": "dodge_75",
+                                            "fields": {
+                                              "NUM": 18
+                                            }
+                                          }
+                                        },
+                                        "H": {
+                                          "shadow": {
+                                            "type": "math_number",
+                                            "id": "dodge_76",
+                                            "fields": {
+                                              "NUM": 18
+                                            }
+                                          }
+                                        },
+                                        "COLOR": {
+                                          "shadow": {
+                                            "type": "pg_colour",
+                                            "id": "dodge_73",
+                                            "fields": {
+                                              "C": "#8b5a2b"
+                                            }
+                                          }
+                                        },
+                                        "VX": {
+                                          "block": {
+                                            "type": "variables_get",
+                                            "id": "dodge_69",
+                                            "fields": {
+                                              "VAR": {
+                                                "id": "dodge_var_speed"
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "VY": {
+                                          "block": {
+                                            "type": "math_random_int",
+                                            "id": "dodge_72",
+                                            "inputs": {
+                                              "FROM": {
+                                                "shadow": {
+                                                  "type": "math_number",
+                                                  "id": "dodge_70",
+                                                  "fields": {
+                                                    "NUM": -1
+                                                  }
+                                                }
+                                              },
+                                              "TO": {
+                                                "shadow": {
+                                                  "type": "math_number",
+                                                  "id": "dodge_71",
+                                                  "fields": {
+                                                    "NUM": 1
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "next": {
+                                  "block": {
+                                    "type": "controls_if",
+                                    "id": "dodge_96",
+                                    "inputs": {
+                                      "IF0": {
+                                        "block": {
+                                          "type": "logic_compare",
+                                          "id": "dodge_81",
+                                          "fields": {
+                                            "OP": "EQ"
+                                          },
+                                          "inputs": {
+                                            "A": {
+                                              "block": {
+                                                "type": "variables_get",
+                                                "id": "dodge_79",
+                                                "fields": {
+                                                  "VAR": {
+                                                    "id": "dodge_var_side"
+                                                  }
+                                                }
+                                              }
+                                            },
+                                            "B": {
+                                              "shadow": {
+                                                "type": "math_number",
+                                                "id": "dodge_80",
+                                                "fields": {
+                                                  "NUM": 3
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      },
+                                      "DO0": {
+                                        "block": {
+                                          "type": "pg_create",
+                                          "id": "dodge_95",
+                                          "fields": {
+                                            "TAG": {
+                                              "id": "dodge_Tag_obstacle"
+                                            }
+                                          },
+                                          "inputs": {
+                                            "X": {
+                                              "shadow": {
+                                                "type": "math_number",
+                                                "id": "dodge_92",
+                                                "fields": {
+                                                  "NUM": 409
+                                                }
+                                              }
+                                            },
+                                            "Y": {
+                                              "block": {
+                                                "type": "math_random_int",
+                                                "id": "dodge_84",
+                                                "inputs": {
+                                                  "FROM": {
+                                                    "shadow": {
+                                                      "type": "math_number",
+                                                      "id": "dodge_82",
+                                                      "fields": {
+                                                        "NUM": 20
+                                                      }
+                                                    }
+                                                  },
+                                                  "TO": {
+                                                    "shadow": {
+                                                      "type": "math_number",
+                                                      "id": "dodge_83",
+                                                      "fields": {
+                                                        "NUM": 280
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            },
+                                            "W": {
+                                              "shadow": {
+                                                "type": "math_number",
+                                                "id": "dodge_93",
+                                                "fields": {
+                                                  "NUM": 18
+                                                }
+                                              }
+                                            },
+                                            "H": {
+                                              "shadow": {
+                                                "type": "math_number",
+                                                "id": "dodge_94",
+                                                "fields": {
+                                                  "NUM": 18
+                                                }
+                                              }
+                                            },
+                                            "COLOR": {
+                                              "shadow": {
+                                                "type": "pg_colour",
+                                                "id": "dodge_91",
+                                                "fields": {
+                                                  "C": "#8b5a2b"
+                                                }
+                                              }
+                                            },
+                                            "VX": {
+                                              "block": {
+                                                "type": "math_arithmetic",
+                                                "id": "dodge_87",
+                                                "fields": {
+                                                  "OP": "MINUS"
+                                                },
+                                                "inputs": {
+                                                  "A": {
+                                                    "shadow": {
+                                                      "type": "math_number",
+                                                      "id": "dodge_86",
+                                                      "fields": {
+                                                        "NUM": 0
+                                                      }
+                                                    }
+                                                  },
+                                                  "B": {
+                                                    "block": {
+                                                      "type": "variables_get",
+                                                      "id": "dodge_85",
+                                                      "fields": {
+                                                        "VAR": {
+                                                          "id": "dodge_var_speed"
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            },
+                                            "VY": {
+                                              "block": {
+                                                "type": "math_random_int",
+                                                "id": "dodge_90",
+                                                "inputs": {
+                                                  "FROM": {
+                                                    "shadow": {
+                                                      "type": "math_number",
+                                                      "id": "dodge_88",
+                                                      "fields": {
+                                                        "NUM": -1
+                                                      }
+                                                    }
+                                                  },
+                                                  "TO": {
+                                                    "shadow": {
+                                                      "type": "math_number",
+                                                      "id": "dodge_89",
+                                                      "fields": {
+                                                        "NUM": 1
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_action",
+          "id": "dodge_101",
+          "x": 20,
+          "y": 520,
+          "fields": {
+            "ACTION": "left"
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_move",
+                "id": "dodge_100",
+                "fields": {
+                  "AXIS": "x"
+                },
+                "inputs": {
+                  "T": {
+                    "block": {
+                      "type": "pg_tag",
+                      "id": "dodge_98",
+                      "fields": {
+                        "TAG": {
+                          "id": "dodge_Tag_player"
+                        }
+                      }
+                    }
+                  },
+                  "D": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "dodge_99",
+                      "fields": {
+                        "NUM": -4
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_action",
+          "id": "dodge_105",
+          "x": 20,
+          "y": 620,
+          "fields": {
+            "ACTION": "right"
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_move",
+                "id": "dodge_104",
+                "fields": {
+                  "AXIS": "x"
+                },
+                "inputs": {
+                  "T": {
+                    "block": {
+                      "type": "pg_tag",
+                      "id": "dodge_102",
+                      "fields": {
+                        "TAG": {
+                          "id": "dodge_Tag_player"
+                        }
+                      }
+                    }
+                  },
+                  "D": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "dodge_103",
+                      "fields": {
+                        "NUM": 4
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_action",
+          "id": "dodge_109",
+          "x": 20,
+          "y": 720,
+          "fields": {
+            "ACTION": "up"
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_move",
+                "id": "dodge_108",
+                "fields": {
+                  "AXIS": "y"
+                },
+                "inputs": {
+                  "T": {
+                    "block": {
+                      "type": "pg_tag",
+                      "id": "dodge_106",
+                      "fields": {
+                        "TAG": {
+                          "id": "dodge_Tag_player"
+                        }
+                      }
+                    }
+                  },
+                  "D": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "dodge_107",
+                      "fields": {
+                        "NUM": -4
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_action",
+          "id": "dodge_113",
+          "x": 20,
+          "y": 820,
+          "fields": {
+            "ACTION": "down"
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_move",
+                "id": "dodge_112",
+                "fields": {
+                  "AXIS": "y"
+                },
+                "inputs": {
+                  "T": {
+                    "block": {
+                      "type": "pg_tag",
+                      "id": "dodge_110",
+                      "fields": {
+                        "TAG": {
+                          "id": "dodge_Tag_player"
+                        }
+                      }
+                    }
+                  },
+                  "D": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "dodge_111",
+                      "fields": {
+                        "NUM": 4
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_collide",
+          "id": "dodge_115",
+          "x": 20,
+          "y": 920,
+          "fields": {
+            "A": {
+              "id": "dodge_Tag_player"
+            },
+            "B": {
+              "id": "dodge_Tag_obstacle"
+            }
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_game_over",
+                "id": "dodge_114"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "variables": [
+      {
+        "name": "player",
+        "id": "dodge_Tag_player",
+        "type": "Tag"
+      },
+      {
+        "name": "obstacle",
+        "id": "dodge_Tag_obstacle",
+        "type": "Tag"
+      },
+      {
+        "name": "ground",
+        "id": "dodge_Tag_ground",
+        "type": "Tag"
+      },
+      {
+        "name": "side",
+        "id": "dodge_var_side"
+      },
+      {
+        "name": "speed",
+        "id": "dodge_var_speed"
+      }
+    ]
+  },
+  "generatedCode": "\n\n\napi.$b('dodge_1');\napi.$b('dodge_4');\napi.sensors([\n  api.sensor.position('player'),\n  api.sensor.lidar('player', 16, 0, 337.5, 160, 'obstacle', false),\n]);\napi.$b('dodge_17');\napi.onStart(() => {\n  api.$b('dodge_12');\n  api.create({ tag: 'player', x: 200, y: 150, w: 22, h: 22, color: '#5ad1ff', vx: 0, vy: 0 });\n  api.$b('dodge_13');\n  api.setBehavior('player', 'stayInScreen');\n  api.$b('dodge_14');\n  api.setBehavior('obstacle', 'destroyOffscreen');\n  api.$b('dodge_15');\n  api.setCostume('player', 'ship');\n  api.$b('dodge_16');\n  api.setCostume('obstacle', 'meteor');\n});\napi.$b('dodge_20');\napi.onTick(() => {\n  api.$b('dodge_19');\n  api.addScore(1);\n});\napi.$b('dodge_97');\napi.onInterval(12, () => {\n  api.$b('dodge_24');\n  api.vars['side'] = api.randInt(0, 3);\n  api.$b('dodge_28');\n  api.vars['speed'] = api.randInt(2, 4);\n  api.$b('dodge_44');\n  if (api.vars['side'] == 0) {\n    api.$b('dodge_43');\n    api.create({ tag: 'obstacle', x: api.randInt(20, 380), y: -9, w: 18, h: 18, color: '#8b5a2b', vx: api.randInt(-1, 1), vy: api.vars['speed'] });\n  }\n  api.$b('dodge_62');\n  if (api.vars['side'] == 1) {\n    api.$b('dodge_61');\n    api.create({ tag: 'obstacle', x: api.randInt(20, 380), y: 309, w: 18, h: 18, color: '#8b5a2b', vx: api.randInt(-1, 1), vy: 0 - api.vars['speed'] });\n  }\n  api.$b('dodge_78');\n  if (api.vars['side'] == 2) {\n    api.$b('dodge_77');\n    api.create({ tag: 'obstacle', x: -9, y: api.randInt(20, 280), w: 18, h: 18, color: '#8b5a2b', vx: api.vars['speed'], vy: api.randInt(-1, 1) });\n  }\n  api.$b('dodge_96');\n  if (api.vars['side'] == 3) {\n    api.$b('dodge_95');\n    api.create({ tag: 'obstacle', x: 409, y: api.randInt(20, 280), w: 18, h: 18, color: '#8b5a2b', vx: 0 - api.vars['speed'], vy: api.randInt(-1, 1) });\n  }\n});\napi.$b('dodge_101');\napi.onAction('left', () => {\n  api.$b('dodge_100');\n  api.move('player', 'x', -4);\n});\napi.$b('dodge_105');\napi.onAction('right', () => {\n  api.$b('dodge_104');\n  api.move('player', 'x', 4);\n});\napi.$b('dodge_109');\napi.onAction('up', () => {\n  api.$b('dodge_108');\n  api.move('player', 'y', -4);\n});\napi.$b('dodge_113');\napi.onAction('down', () => {\n  api.$b('dodge_112');\n  api.move('player', 'y', 4);\n});\napi.$b('dodge_115');\napi.onCollide('player', 'obstacle', (self, other) => {\n  api.$b('dodge_114');\n  api.gameOver();\n});\n",
+  "settings": {
+    "actions": [
+      "none",
+      "left",
+      "right",
+      "up",
+      "down"
+    ],
+    "maxSteps": 3000,
+    "background": "#20202a",
+    "backdrop": "space"
+  },
+  "keymap": {
+    "left": [
+      "ArrowLeft",
+      "KeyA"
+    ],
+    "right": [
+      "ArrowRight",
+      "KeyD"
+    ],
+    "up": [
+      "ArrowUp",
+      "KeyW"
+    ],
+    "down": [
+      "ArrowDown",
+      "KeyS"
+    ],
+    "a": [
+      "Space"
+    ],
+    "b": []
+  },
+  "training": {
+    "steps": 1500000,
+    "frameSkip": 4
+  }
+}

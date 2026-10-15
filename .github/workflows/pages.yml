@@ -1,0 +1,47 @@
+# main 에 push 하면 테스트 → 빌드 → GitHub Pages 배포
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      # 배포본에 라이선스 고지를 함께 둔다 (Blockly 는 Apache 2.0: 전문 사본 포함 필요)
+      - name: Add license notices
+        run: |
+          cp THIRD_PARTY_NOTICES.md dist/
+          curl -fsSL https://www.apache.org/licenses/LICENSE-2.0.txt -o dist/LICENSE-blockly.txt
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

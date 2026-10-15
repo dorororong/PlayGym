@@ -1,0 +1,2 @@
+{"game":"invaders","algo":"dqn","seed":0,"frames":1504093,"frameSkip":4,"seconds":216.7,"fps":6941,"randomScore":9.53,"greedyScore":15.93,"playScore":15.83,"playLength":1555,"secondsTo2x":null}
+{"game":"invaders","algo":"dqn","seed":1,"frames":1504083,"frameSkip":4,"seconds":239.2,"fps":6287,"randomScore":9.53,"greedyScore":14.17,"playScore":15.37,"playLength":1315,"secondsTo2x":null}

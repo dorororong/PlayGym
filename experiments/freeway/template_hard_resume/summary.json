@@ -1,0 +1,70 @@
+{
+  "target": "freewayHard",
+  "resumedFrom": 3002368,
+  "cfg": {
+    "algo": "dqn",
+    "steps": 1500000,
+    "frameSkip": 4,
+    "seed": 0,
+    "gamma": 0.99,
+    "lr": 0.0005,
+    "network": {
+      "hidden": [
+        64,
+        64
+      ],
+      "activation": "relu"
+    },
+    "ppo": {
+      "nEnvs": 8,
+      "nSteps": 128,
+      "epochs": 4,
+      "minibatch": 256,
+      "clip": 0.2,
+      "lambda": 0.95,
+      "entCoef": 0.01
+    },
+    "dqn": {
+      "buffer": 50000,
+      "batch": 64,
+      "learningStarts": 1000,
+      "trainFreq": 4,
+      "targetUpdate": 1000,
+      "epsStart": 1,
+      "epsEnd": 0.05,
+      "epsFraction": 0.3,
+      "double": true
+    },
+    "reinforce": {
+      "episodes": 8,
+      "entCoef": 0.01
+    },
+    "qtable": {
+      "bins": 8,
+      "alpha": 0.1,
+      "epsStart": 1,
+      "epsEnd": 0.05,
+      "epsFraction": 0.5
+    }
+  },
+  "steps": 4505600,
+  "seconds": 254.851729,
+  "random": {
+    "meanReturn": 0.020800000000000648,
+    "meanScore": 0,
+    "meanLength": 2000,
+    "episodes": 30
+  },
+  "greedy": {
+    "meanReturn": 13.528666666667034,
+    "meanScore": 6.466666666666667,
+    "meanLength": 2000,
+    "episodes": 30
+  },
+  "play": {
+    "meanReturn": 13.01173333333369,
+    "meanScore": 6.233333333333333,
+    "meanLength": 2000,
+    "episodes": 30
+  }
+}

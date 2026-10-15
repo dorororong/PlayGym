@@ -1,0 +1,5 @@
+{"game":"breakout","algo":"dqn","seed":0,"frames":1500706,"frameSkip":4,"seconds":208.6,"fps":7196,"randomScore":0.8,"greedyScore":20,"playScore":13.83,"playLength":1666,"secondsTo2x":17.7}
+{"game":"breakout","algo":"dqn","seed":1,"frames":1500739,"frameSkip":4,"seconds":176.4,"fps":8507,"randomScore":0.8,"greedyScore":2,"playScore":2.67,"playLength":252,"secondsTo2x":13.7}
+{"game":"breakout","algo":"ppo","seed":0,"frames":1503628,"frameSkip":4,"seconds":73.1,"fps":20559,"randomScore":0.8,"greedyScore":24,"playScore":22.63,"playLength":2401,"secondsTo2x":8}
+{"game":"breakout","algo":"ppo","seed":1,"frames":1502806,"frameSkip":4,"seconds":75.8,"fps":19822,"randomScore":0.8,"greedyScore":4,"playScore":5.93,"playLength":545,"secondsTo2x":8}
+결과: experiments/atari/algos2/results.md

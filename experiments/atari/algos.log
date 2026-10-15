@@ -1,0 +1,14 @@
+{"game":"dino","algo":"qtable","seed":0,"frames":301371,"frameSkip":4,"seconds":0.3,"fps":970627,"randomScore":199.63,"greedyScore":131,"playScore":134.93,"playLength":135,"secondsTo2x":0.2}
+{"game":"dino","algo":"qtable","seed":1,"frames":301362,"frameSkip":4,"seconds":0.3,"fps":1120139,"randomScore":199.63,"greedyScore":129,"playScore":320.33,"playLength":320,"secondsTo2x":0.1}
+{"game":"dino","algo":"reinforce","seed":0,"frames":300632,"frameSkip":4,"seconds":0.6,"fps":488644,"randomScore":199.63,"greedyScore":3000,"playScore":260.27,"playLength":260,"secondsTo2x":null}
+{"game":"dino","algo":"reinforce","seed":1,"frames":301056,"frameSkip":4,"seconds":0.5,"fps":612830,"randomScore":199.63,"greedyScore":3000,"playScore":261.47,"playLength":261,"secondsTo2x":null}
+{"game":"dino","algo":"dqn","seed":0,"frames":301889,"frameSkip":4,"seconds":41.5,"fps":7279,"randomScore":199.63,"greedyScore":3000,"playScore":1057.37,"playLength":1057,"secondsTo2x":28.6}
+{"game":"dino","algo":"dqn","seed":1,"frames":301459,"frameSkip":4,"seconds":41.7,"fps":7228,"randomScore":199.63,"greedyScore":127,"playScore":131,"playLength":131,"secondsTo2x":null}
+{"game":"dino","algo":"ppo","seed":0,"frames":302665,"frameSkip":4,"seconds":16.6,"fps":18287,"randomScore":199.63,"greedyScore":3000,"playScore":3000,"playLength":3000,"secondsTo2x":4}
+{"game":"dino","algo":"ppo","seed":1,"frames":302402,"frameSkip":4,"seconds":16.6,"fps":18228,"randomScore":199.63,"greedyScore":3000,"playScore":3000,"playLength":3000,"secondsTo2x":7.4}
+{"game":"breakout","algo":"qtable","seed":0,"frames":1507048,"frameSkip":4,"seconds":6.3,"fps":238613,"randomScore":0.8,"greedyScore":4,"playScore":3.93,"playLength":289,"secondsTo2x":0.8}
+{"game":"breakout","algo":"qtable","seed":1,"frames":1507495,"frameSkip":4,"seconds":6.5,"fps":230582,"randomScore":0.8,"greedyScore":6,"playScore":5.47,"playLength":445,"secondsTo2x":0.8}
+{"game":"breakout","algo":"reinforce","seed":0,"frames":1500347,"frameSkip":4,"seconds":7.9,"fps":189251,"randomScore":0.8,"greedyScore":1,"playScore":1.6,"playLength":152,"secondsTo2x":1.1}
+{"game":"breakout","algo":"reinforce","seed":1,"frames":1501063,"frameSkip":4,"seconds":7.8,"fps":193265,"randomScore":0.8,"greedyScore":1,"playScore":1.43,"playLength":140,"secondsTo2x":0.9}
+{"game":"breakout","algo":"dqn","seed":0,"frames":1500706,"frameSkip":4,"seconds":230.3,"fps":6517,"randomScore":0.8,"greedyScore":20,"playScore":13.83,"playLength":1666,"secondsTo2x":15.1}
+{"game":"breakout","algo":"dqn","seed":1,"frames":1500739,"frameSkip":4,"seconds":243.7,"fps":6159,"randomScore":0.8,"greedyScore":2,"playScore":2.67,"playLength":252,"secondsTo2x":21.9}

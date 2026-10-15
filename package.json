@@ -1,0 +1,27 @@
+{
+  "name": "playgym",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "templates": "tsx scripts/build-templates.ts",
+    "bench": "tsx scripts/bench.ts",
+    "train": "tsx scripts/train.ts",
+    "experiment": "tsx scripts/experiment.ts"
+  },
+  "dependencies": {
+    "blockly": "^12.5.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.7",
+    "vitest": "^3.2.7"
+  }
+}

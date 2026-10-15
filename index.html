@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PlayGym</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>" />
+    <!-- 글꼴: 인터넷이 없으면 시스템 글꼴로 대체된다 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&display=swap" />
+  </head>
+  <body>
+    <header id="topbar">
+      <div class="brand">
+        <span class="logo">🎮</span>
+        <div>
+          <div class="name">PlayGym</div>
+          <div class="tagline" id="tagline"></div>
+        </div>
+      </div>
+      <div id="game-bar"></div>
+      <div id="file-actions"></div>
+    </header>
+
+    <main id="app">
+      <section id="editor" class="card"><div id="blockly"></div></section>
+
+      <section id="side">
+        <div id="game-card" class="card">
+          <div id="game-head"></div>
+          <div id="stage">
+            <div id="screen">
+              <canvas id="game" tabindex="0"></canvas>
+              <div id="screen-overlay"></div>
+            </div>
+          </div>
+          <div id="controls"></div>
+          <div id="pad"></div>
+        </div>
+
+        <div id="bottom" class="card">
+          <div id="tabs"></div>
+          <div id="obs-panel"></div>
+          <div id="train-panel" hidden></div>
+          <div id="log-panel" hidden></div>
+        </div>
+      </section>
+    </main>
+
+    <dialog id="keymap-dialog"></dialog>
+    <dialog id="paint-dialog"></dialog>
+    <dialog id="design-dialog"></dialog>
+    <dialog id="library-dialog"></dialog>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

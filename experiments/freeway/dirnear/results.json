@@ -1,0 +1,66 @@
+{
+  "env": {
+    "node": "v24.14.1",
+    "cpu": "12th Gen Intel(R) Core(TM) i5-12500",
+    "cores": 12,
+    "date": "2026-10-14T23:42:43.296Z"
+  },
+  "rows": [
+    {
+      "game": "dirnear",
+      "algo": "ppo",
+      "seed": 0,
+      "frames": 1503232,
+      "frameSkip": 4,
+      "seconds": 132.4,
+      "fps": 11350,
+      "randomScore": 0,
+      "greedyScore": 8.97,
+      "playScore": 9.03,
+      "playLength": 2000,
+      "secondsTo2x": 3
+    },
+    {
+      "game": "dirnear",
+      "algo": "ppo",
+      "seed": 1,
+      "frames": 1503232,
+      "frameSkip": 4,
+      "seconds": 149.4,
+      "fps": 10062,
+      "randomScore": 0,
+      "greedyScore": 8.3,
+      "playScore": 8.03,
+      "playLength": 2000,
+      "secondsTo2x": 2.9
+    },
+    {
+      "game": "dirnear",
+      "algo": "dqn",
+      "seed": 0,
+      "frames": 1503232,
+      "frameSkip": 4,
+      "seconds": 408.7,
+      "fps": 3678,
+      "randomScore": 0,
+      "greedyScore": 9.1,
+      "playScore": 8.9,
+      "playLength": 2000,
+      "secondsTo2x": 56.5
+    },
+    {
+      "game": "dirnear",
+      "algo": "dqn",
+      "seed": 1,
+      "frames": 1503232,
+      "frameSkip": 4,
+      "seconds": 410.9,
+      "fps": 3659,
+      "randomScore": 0,
+      "greedyScore": 9.4,
+      "playScore": 9.13,
+      "playLength": 2000,
+      "secondsTo2x": 63.1
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+node_modules/
+dist/
+.claude/
+# 실험에서 나온 학습된 AI 가중치 (다시 만들 수 있고 크다). 결과표·학습 곡선·로그는 남긴다
+experiments/**/agent*.json
+experiments/**/policy*.json

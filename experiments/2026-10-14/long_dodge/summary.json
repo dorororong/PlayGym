@@ -1,0 +1,42 @@
+{
+  "target": "dodge",
+  "cfg": {
+    "frameSkip": 4,
+    "nEnvs": 8,
+    "nSteps": 128,
+    "epochs": 4,
+    "minibatch": 256,
+    "gamma": 0.99,
+    "lambda": 0.95,
+    "clip": 0.2,
+    "lr": 0.0005,
+    "entCoef": 0.01,
+    "vfCoef": 0.5,
+    "maxGradNorm": 0.5,
+    "hidden": [
+      64,
+      64
+    ],
+    "seed": 0
+  },
+  "steps": 3002760,
+  "seconds": 223.3104186,
+  "random": {
+    "meanReturn": 119.6,
+    "meanScore": 119.6,
+    "meanLength": 119.6,
+    "episodes": 30
+  },
+  "greedy": {
+    "meanReturn": 571.5333333333333,
+    "meanScore": 571.5333333333333,
+    "meanLength": 571.5333333333333,
+    "episodes": 30
+  },
+  "sampled": {
+    "meanReturn": 363.3666666666667,
+    "meanScore": 363.3666666666667,
+    "meanLength": 363.3666666666667,
+    "episodes": 30
+  }
+}

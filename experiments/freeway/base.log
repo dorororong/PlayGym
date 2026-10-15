@@ -1,0 +1,5 @@
+{"game":"base","algo":"ppo","seed":0,"frames":1503232,"frameSkip":4,"seconds":106.6,"fps":14096,"randomScore":0,"greedyScore":8.3,"playScore":8.3,"playLength":2000,"secondsTo2x":3.5}
+{"game":"base","algo":"ppo","seed":1,"frames":1503232,"frameSkip":4,"seconds":101.1,"fps":14875,"randomScore":0,"greedyScore":8.3,"playScore":8.3,"playLength":2000,"secondsTo2x":2.2}
+{"game":"base","algo":"dqn","seed":0,"frames":1503232,"frameSkip":4,"seconds":314.8,"fps":4775,"randomScore":0,"greedyScore":8.23,"playScore":8.17,"playLength":2000,"secondsTo2x":47.8}
+{"game":"base","algo":"dqn","seed":1,"frames":1503232,"frameSkip":4,"seconds":328.5,"fps":4576,"randomScore":0,"greedyScore":8.4,"playScore":8.1,"playLength":2000,"secondsTo2x":55.3}
+결과: experiments/freeway/base/results.md

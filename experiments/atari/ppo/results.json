@@ -1,0 +1,94 @@
+{
+  "env": {
+    "node": "v24.14.1",
+    "cpu": "12th Gen Intel(R) Core(TM) i5-12500",
+    "cores": 12,
+    "date": "2026-10-14T22:56:24.277Z"
+  },
+  "rows": [
+    {
+      "game": "invaders",
+      "algo": "ppo",
+      "seed": 0,
+      "frames": 1502973,
+      "frameSkip": 4,
+      "seconds": 89.1,
+      "fps": 16865,
+      "randomScore": 9.53,
+      "greedyScore": 12.1,
+      "playScore": 11.83,
+      "playLength": 766,
+      "secondsTo2x": null
+    },
+    {
+      "game": "invaders",
+      "algo": "ppo",
+      "seed": 1,
+      "frames": 1503105,
+      "frameSkip": 4,
+      "seconds": 89.3,
+      "fps": 16824,
+      "randomScore": 9.53,
+      "greedyScore": 10.07,
+      "playScore": 11.63,
+      "playLength": 662,
+      "secondsTo2x": null
+    },
+    {
+      "game": "pong",
+      "algo": "ppo",
+      "seed": 0,
+      "frames": 1503984,
+      "frameSkip": 4,
+      "seconds": 79.1,
+      "fps": 19011,
+      "randomScore": 0.37,
+      "greedyScore": 0.27,
+      "playScore": 0.27,
+      "playLength": 679,
+      "secondsTo2x": null
+    },
+    {
+      "game": "pong",
+      "algo": "ppo",
+      "seed": 1,
+      "frames": 1504037,
+      "frameSkip": 4,
+      "seconds": 91.3,
+      "fps": 16472,
+      "randomScore": 0.37,
+      "greedyScore": 0.33,
+      "playScore": 0.27,
+      "playLength": 679,
+      "secondsTo2x": null
+    },
+    {
+      "game": "freeway",
+      "algo": "ppo",
+      "seed": 0,
+      "frames": 1503232,
+      "frameSkip": 4,
+      "seconds": 115.1,
+      "fps": 13055,
+      "randomScore": 0,
+      "greedyScore": 0,
+      "playScore": 0,
+      "playLength": 2000,
+      "secondsTo2x": null
+    },
+    {
+      "game": "freeway",
+      "algo": "ppo",
+      "seed": 1,
+      "frames": 1503232,
+      "frameSkip": 4,
+      "seconds": 117.6,
+      "fps": 12783,
+      "randomScore": 0,
+      "greedyScore": 0,
+      "playScore": 0,
+      "playLength": 2000,
+      "secondsTo2x": null
+    }
+  ]
+}

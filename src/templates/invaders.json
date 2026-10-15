@@ -1,0 +1,1835 @@
+{
+  "version": 1,
+  "blocksJson": {
+    "blocks": {
+      "languageVersion": 0,
+      "blocks": [
+        {
+          "type": "pg_settings",
+          "id": "invaders_1",
+          "x": 20,
+          "y": 20,
+          "fields": {
+            "LEFT": true,
+            "RIGHT": true,
+            "UP": false,
+            "DOWN": false,
+            "A": true,
+            "B": false,
+            "MAXSTEPS": 3000,
+            "BACKDROP": "space",
+            "BG": "#1d2330"
+          }
+        },
+        {
+          "type": "pg_observe",
+          "id": "invaders_7",
+          "x": 20,
+          "y": 120,
+          "inputs": {
+            "SENSORS": {
+              "block": {
+                "type": "pg_s_position",
+                "id": "invaders_2",
+                "fields": {
+                  "SUBJECT": {
+                    "id": "invaders_Tag_player"
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "pg_s_nearest_k",
+                    "id": "invaders_3",
+                    "fields": {
+                      "K": 3,
+                      "SUBJECT": {
+                        "id": "invaders_Tag_player"
+                      },
+                      "TARGET": {
+                        "id": "invaders_Tag_alien"
+                      },
+                      "DIR": "all"
+                    },
+                    "next": {
+                      "block": {
+                        "type": "pg_s_nearest_k",
+                        "id": "invaders_4",
+                        "fields": {
+                          "K": 2,
+                          "SUBJECT": {
+                            "id": "invaders_Tag_player"
+                          },
+                          "TARGET": {
+                            "id": "invaders_Tag_bomb"
+                          },
+                          "DIR": "up"
+                        },
+                        "next": {
+                          "block": {
+                            "type": "pg_s_count",
+                            "id": "invaders_5",
+                            "fields": {
+                              "TARGET": {
+                                "id": "invaders_Tag_bullet"
+                              },
+                              "MAX": 1
+                            },
+                            "next": {
+                              "block": {
+                                "type": "pg_s_count",
+                                "id": "invaders_6",
+                                "fields": {
+                                  "TARGET": {
+                                    "id": "invaders_Tag_alien"
+                                  },
+                                  "MAX": 18
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_start",
+          "id": "invaders_78",
+          "x": 20,
+          "y": 220,
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_create",
+                "id": "invaders_15",
+                "fields": {
+                  "TAG": {
+                    "id": "invaders_Tag_player"
+                  }
+                },
+                "inputs": {
+                  "X": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "invaders_9",
+                      "fields": {
+                        "NUM": 200
+                      }
+                    }
+                  },
+                  "Y": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "invaders_10",
+                      "fields": {
+                        "NUM": 280
+                      }
+                    }
+                  },
+                  "W": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "invaders_11",
+                      "fields": {
+                        "NUM": 24
+                      }
+                    }
+                  },
+                  "H": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "invaders_12",
+                      "fields": {
+                        "NUM": 16
+                      }
+                    }
+                  },
+                  "COLOR": {
+                    "shadow": {
+                      "type": "pg_colour",
+                      "id": "invaders_8",
+                      "fields": {
+                        "C": "#5ad1ff"
+                      }
+                    }
+                  },
+                  "VX": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "invaders_13",
+                      "fields": {
+                        "NUM": 0
+                      }
+                    }
+                  },
+                  "VY": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "invaders_14",
+                      "fields": {
+                        "NUM": 0
+                      }
+                    }
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "pg_create",
+                    "id": "invaders_23",
+                    "fields": {
+                      "TAG": {
+                        "id": "invaders_Tag_wall"
+                      }
+                    },
+                    "inputs": {
+                      "X": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "invaders_17",
+                          "fields": {
+                            "NUM": -5
+                          }
+                        }
+                      },
+                      "Y": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "invaders_18",
+                          "fields": {
+                            "NUM": 150
+                          }
+                        }
+                      },
+                      "W": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "invaders_19",
+                          "fields": {
+                            "NUM": 10
+                          }
+                        }
+                      },
+                      "H": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "invaders_20",
+                          "fields": {
+                            "NUM": 300
+                          }
+                        }
+                      },
+                      "COLOR": {
+                        "shadow": {
+                          "type": "pg_colour",
+                          "id": "invaders_16",
+                          "fields": {
+                            "C": "#ffffff"
+                          }
+                        }
+                      },
+                      "VX": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "invaders_21",
+                          "fields": {
+                            "NUM": 0
+                          }
+                        }
+                      },
+                      "VY": {
+                        "shadow": {
+                          "type": "math_number",
+                          "id": "invaders_22",
+                          "fields": {
+                            "NUM": 0
+                          }
+                        }
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "pg_create",
+                        "id": "invaders_31",
+                        "fields": {
+                          "TAG": {
+                            "id": "invaders_Tag_wall"
+                          }
+                        },
+                        "inputs": {
+                          "X": {
+                            "shadow": {
+                              "type": "math_number",
+                              "id": "invaders_25",
+                              "fields": {
+                                "NUM": 405
+                              }
+                            }
+                          },
+                          "Y": {
+                            "shadow": {
+                              "type": "math_number",
+                              "id": "invaders_26",
+                              "fields": {
+                                "NUM": 150
+                              }
+                            }
+                          },
+                          "W": {
+                            "shadow": {
+                              "type": "math_number",
+                              "id": "invaders_27",
+                              "fields": {
+                                "NUM": 10
+                              }
+                            }
+                          },
+                          "H": {
+                            "shadow": {
+                              "type": "math_number",
+                              "id": "invaders_28",
+                              "fields": {
+                                "NUM": 300
+                              }
+                            }
+                          },
+                          "COLOR": {
+                            "shadow": {
+                              "type": "pg_colour",
+                              "id": "invaders_24",
+                              "fields": {
+                                "C": "#ffffff"
+                              }
+                            }
+                          },
+                          "VX": {
+                            "shadow": {
+                              "type": "math_number",
+                              "id": "invaders_29",
+                              "fields": {
+                                "NUM": 0
+                              }
+                            }
+                          },
+                          "VY": {
+                            "shadow": {
+                              "type": "math_number",
+                              "id": "invaders_30",
+                              "fields": {
+                                "NUM": 0
+                              }
+                            }
+                          }
+                        },
+                        "next": {
+                          "block": {
+                            "type": "pg_create",
+                            "id": "invaders_39",
+                            "fields": {
+                              "TAG": {
+                                "id": "invaders_Tag_floor"
+                              }
+                            },
+                            "inputs": {
+                              "X": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "invaders_33",
+                                  "fields": {
+                                    "NUM": 200
+                                  }
+                                }
+                              },
+                              "Y": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "invaders_34",
+                                  "fields": {
+                                    "NUM": 266
+                                  }
+                                }
+                              },
+                              "W": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "invaders_35",
+                                  "fields": {
+                                    "NUM": 400
+                                  }
+                                }
+                              },
+                              "H": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "invaders_36",
+                                  "fields": {
+                                    "NUM": 4
+                                  }
+                                }
+                              },
+                              "COLOR": {
+                                "shadow": {
+                                  "type": "pg_colour",
+                                  "id": "invaders_32",
+                                  "fields": {
+                                    "C": "#ffffff"
+                                  }
+                                }
+                              },
+                              "VX": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "invaders_37",
+                                  "fields": {
+                                    "NUM": 0
+                                  }
+                                }
+                              },
+                              "VY": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "invaders_38",
+                                  "fields": {
+                                    "NUM": 0
+                                  }
+                                }
+                              }
+                            },
+                            "next": {
+                              "block": {
+                                "type": "variables_set",
+                                "id": "invaders_41",
+                                "fields": {
+                                  "VAR": {
+                                    "id": "invaders_var_dir"
+                                  }
+                                },
+                                "inputs": {
+                                  "VALUE": {
+                                    "shadow": {
+                                      "type": "math_number",
+                                      "id": "invaders_40",
+                                      "fields": {
+                                        "NUM": 1
+                                      }
+                                    }
+                                  }
+                                },
+                                "next": {
+                                  "block": {
+                                    "type": "variables_set",
+                                    "id": "invaders_43",
+                                    "fields": {
+                                      "VAR": {
+                                        "id": "invaders_var_turned"
+                                      }
+                                    },
+                                    "inputs": {
+                                      "VALUE": {
+                                        "shadow": {
+                                          "type": "math_number",
+                                          "id": "invaders_42",
+                                          "fields": {
+                                            "NUM": 0
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "next": {
+                                      "block": {
+                                        "type": "controls_for",
+                                        "id": "invaders_70",
+                                        "fields": {
+                                          "VAR": {
+                                            "id": "invaders_var_row"
+                                          }
+                                        },
+                                        "inputs": {
+                                          "FROM": {
+                                            "shadow": {
+                                              "type": "math_number",
+                                              "id": "invaders_67",
+                                              "fields": {
+                                                "NUM": 0
+                                              }
+                                            }
+                                          },
+                                          "BY": {
+                                            "shadow": {
+                                              "type": "math_number",
+                                              "id": "invaders_69",
+                                              "fields": {
+                                                "NUM": 1
+                                              }
+                                            }
+                                          },
+                                          "TO": {
+                                            "shadow": {
+                                              "type": "math_number",
+                                              "id": "invaders_68",
+                                              "fields": {
+                                                "NUM": 2
+                                              }
+                                            }
+                                          },
+                                          "DO": {
+                                            "block": {
+                                              "type": "controls_for",
+                                              "id": "invaders_66",
+                                              "fields": {
+                                                "VAR": {
+                                                  "id": "invaders_var_col"
+                                                }
+                                              },
+                                              "inputs": {
+                                                "FROM": {
+                                                  "shadow": {
+                                                    "type": "math_number",
+                                                    "id": "invaders_63",
+                                                    "fields": {
+                                                      "NUM": 0
+                                                    }
+                                                  }
+                                                },
+                                                "BY": {
+                                                  "shadow": {
+                                                    "type": "math_number",
+                                                    "id": "invaders_65",
+                                                    "fields": {
+                                                      "NUM": 1
+                                                    }
+                                                  }
+                                                },
+                                                "TO": {
+                                                  "shadow": {
+                                                    "type": "math_number",
+                                                    "id": "invaders_64",
+                                                    "fields": {
+                                                      "NUM": 5
+                                                    }
+                                                  }
+                                                },
+                                                "DO": {
+                                                  "block": {
+                                                    "type": "pg_create",
+                                                    "id": "invaders_62",
+                                                    "fields": {
+                                                      "TAG": {
+                                                        "id": "invaders_Tag_alien"
+                                                      }
+                                                    },
+                                                    "inputs": {
+                                                      "X": {
+                                                        "block": {
+                                                          "type": "math_arithmetic",
+                                                          "id": "invaders_48",
+                                                          "fields": {
+                                                            "OP": "ADD"
+                                                          },
+                                                          "inputs": {
+                                                            "A": {
+                                                              "shadow": {
+                                                                "type": "math_number",
+                                                                "id": "invaders_47",
+                                                                "fields": {
+                                                                  "NUM": 80
+                                                                }
+                                                              }
+                                                            },
+                                                            "B": {
+                                                              "block": {
+                                                                "type": "math_arithmetic",
+                                                                "id": "invaders_46",
+                                                                "fields": {
+                                                                  "OP": "MULTIPLY"
+                                                                },
+                                                                "inputs": {
+                                                                  "A": {
+                                                                    "block": {
+                                                                      "type": "variables_get",
+                                                                      "id": "invaders_44",
+                                                                      "fields": {
+                                                                        "VAR": {
+                                                                          "id": "invaders_var_col"
+                                                                        }
+                                                                      }
+                                                                    }
+                                                                  },
+                                                                  "B": {
+                                                                    "shadow": {
+                                                                      "type": "math_number",
+                                                                      "id": "invaders_45",
+                                                                      "fields": {
+                                                                        "NUM": 44
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      },
+                                                      "Y": {
+                                                        "block": {
+                                                          "type": "math_arithmetic",
+                                                          "id": "invaders_53",
+                                                          "fields": {
+                                                            "OP": "ADD"
+                                                          },
+                                                          "inputs": {
+                                                            "A": {
+                                                              "shadow": {
+                                                                "type": "math_number",
+                                                                "id": "invaders_52",
+                                                                "fields": {
+                                                                  "NUM": 40
+                                                                }
+                                                              }
+                                                            },
+                                                            "B": {
+                                                              "block": {
+                                                                "type": "math_arithmetic",
+                                                                "id": "invaders_51",
+                                                                "fields": {
+                                                                  "OP": "MULTIPLY"
+                                                                },
+                                                                "inputs": {
+                                                                  "A": {
+                                                                    "block": {
+                                                                      "type": "variables_get",
+                                                                      "id": "invaders_49",
+                                                                      "fields": {
+                                                                        "VAR": {
+                                                                          "id": "invaders_var_row"
+                                                                        }
+                                                                      }
+                                                                    }
+                                                                  },
+                                                                  "B": {
+                                                                    "shadow": {
+                                                                      "type": "math_number",
+                                                                      "id": "invaders_50",
+                                                                      "fields": {
+                                                                        "NUM": 30
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      },
+                                                      "W": {
+                                                        "shadow": {
+                                                          "type": "math_number",
+                                                          "id": "invaders_58",
+                                                          "fields": {
+                                                            "NUM": 22
+                                                          }
+                                                        }
+                                                      },
+                                                      "H": {
+                                                        "shadow": {
+                                                          "type": "math_number",
+                                                          "id": "invaders_59",
+                                                          "fields": {
+                                                            "NUM": 16
+                                                          }
+                                                        }
+                                                      },
+                                                      "COLOR": {
+                                                        "block": {
+                                                          "type": "pg_rainbow",
+                                                          "id": "invaders_57",
+                                                          "inputs": {
+                                                            "N": {
+                                                              "block": {
+                                                                "type": "math_arithmetic",
+                                                                "id": "invaders_56",
+                                                                "fields": {
+                                                                  "OP": "ADD"
+                                                                },
+                                                                "inputs": {
+                                                                  "A": {
+                                                                    "block": {
+                                                                      "type": "variables_get",
+                                                                      "id": "invaders_54",
+                                                                      "fields": {
+                                                                        "VAR": {
+                                                                          "id": "invaders_var_row"
+                                                                        }
+                                                                      }
+                                                                    }
+                                                                  },
+                                                                  "B": {
+                                                                    "shadow": {
+                                                                      "type": "math_number",
+                                                                      "id": "invaders_55",
+                                                                      "fields": {
+                                                                        "NUM": 4
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      },
+                                                      "VX": {
+                                                        "shadow": {
+                                                          "type": "math_number",
+                                                          "id": "invaders_60",
+                                                          "fields": {
+                                                            "NUM": 1
+                                                          }
+                                                        }
+                                                      },
+                                                      "VY": {
+                                                        "shadow": {
+                                                          "type": "math_number",
+                                                          "id": "invaders_61",
+                                                          "fields": {
+                                                            "NUM": 0
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "next": {
+                                          "block": {
+                                            "type": "pg_set_behavior",
+                                            "id": "invaders_71",
+                                            "fields": {
+                                              "TAG": {
+                                                "id": "invaders_Tag_player"
+                                              },
+                                              "KIND": "stayInScreen",
+                                              "PARAM": 0.5
+                                            },
+                                            "next": {
+                                              "block": {
+                                                "type": "pg_set_behavior",
+                                                "id": "invaders_72",
+                                                "fields": {
+                                                  "TAG": {
+                                                    "id": "invaders_Tag_bullet"
+                                                  },
+                                                  "KIND": "destroyOffscreen",
+                                                  "PARAM": 0.5
+                                                },
+                                                "next": {
+                                                  "block": {
+                                                    "type": "pg_set_behavior",
+                                                    "id": "invaders_73",
+                                                    "fields": {
+                                                      "TAG": {
+                                                        "id": "invaders_Tag_bomb"
+                                                      },
+                                                      "KIND": "destroyOffscreen",
+                                                      "PARAM": 0.5
+                                                    },
+                                                    "next": {
+                                                      "block": {
+                                                        "type": "pg_set_costume",
+                                                        "id": "invaders_74",
+                                                        "fields": {
+                                                          "TAG": {
+                                                            "id": "invaders_Tag_player"
+                                                          },
+                                                          "COSTUME": "ship"
+                                                        },
+                                                        "next": {
+                                                          "block": {
+                                                            "type": "pg_set_costume",
+                                                            "id": "invaders_75",
+                                                            "fields": {
+                                                              "TAG": {
+                                                                "id": "invaders_Tag_alien"
+                                                              },
+                                                              "COSTUME": "alien"
+                                                            },
+                                                            "next": {
+                                                              "block": {
+                                                                "type": "pg_set_costume",
+                                                                "id": "invaders_76",
+                                                                "fields": {
+                                                                  "TAG": {
+                                                                    "id": "invaders_Tag_wall"
+                                                                  },
+                                                                  "COSTUME": "hidden"
+                                                                },
+                                                                "next": {
+                                                                  "block": {
+                                                                    "type": "pg_set_costume",
+                                                                    "id": "invaders_77",
+                                                                    "fields": {
+                                                                      "TAG": {
+                                                                        "id": "invaders_Tag_floor"
+                                                                      },
+                                                                      "COSTUME": "hidden"
+                                                                    }
+                                                                  }
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_tick",
+          "id": "invaders_84",
+          "x": 20,
+          "y": 320,
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "controls_if",
+                "id": "invaders_83",
+                "inputs": {
+                  "IF0": {
+                    "block": {
+                      "type": "logic_compare",
+                      "id": "invaders_81",
+                      "fields": {
+                        "OP": "EQ"
+                      },
+                      "inputs": {
+                        "A": {
+                          "block": {
+                            "type": "pg_count",
+                            "id": "invaders_79",
+                            "fields": {
+                              "TAG": {
+                                "id": "invaders_Tag_alien"
+                              }
+                            }
+                          }
+                        },
+                        "B": {
+                          "shadow": {
+                            "type": "math_number",
+                            "id": "invaders_80",
+                            "fields": {
+                              "NUM": 0
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "DO0": {
+                    "block": {
+                      "type": "pg_game_over",
+                      "id": "invaders_82"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_collide",
+          "id": "invaders_111",
+          "x": 20,
+          "y": 420,
+          "fields": {
+            "A": {
+              "id": "invaders_Tag_alien"
+            },
+            "B": {
+              "id": "invaders_Tag_wall"
+            }
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "controls_if",
+                "id": "invaders_110",
+                "inputs": {
+                  "IF0": {
+                    "block": {
+                      "type": "logic_compare",
+                      "id": "invaders_89",
+                      "fields": {
+                        "OP": "GT"
+                      },
+                      "inputs": {
+                        "A": {
+                          "block": {
+                            "type": "math_arithmetic",
+                            "id": "invaders_87",
+                            "fields": {
+                              "OP": "MINUS"
+                            },
+                            "inputs": {
+                              "A": {
+                                "block": {
+                                  "type": "pg_frame",
+                                  "id": "invaders_85"
+                                }
+                              },
+                              "B": {
+                                "block": {
+                                  "type": "variables_get",
+                                  "id": "invaders_86",
+                                  "fields": {
+                                    "VAR": {
+                                      "id": "invaders_var_turned"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "B": {
+                          "shadow": {
+                            "type": "math_number",
+                            "id": "invaders_88",
+                            "fields": {
+                              "NUM": 10
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "DO0": {
+                    "block": {
+                      "type": "variables_set",
+                      "id": "invaders_93",
+                      "fields": {
+                        "VAR": {
+                          "id": "invaders_var_dir"
+                        }
+                      },
+                      "inputs": {
+                        "VALUE": {
+                          "block": {
+                            "type": "math_arithmetic",
+                            "id": "invaders_92",
+                            "fields": {
+                              "OP": "MINUS"
+                            },
+                            "inputs": {
+                              "A": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "invaders_91",
+                                  "fields": {
+                                    "NUM": 0
+                                  }
+                                }
+                              },
+                              "B": {
+                                "block": {
+                                  "type": "variables_get",
+                                  "id": "invaders_90",
+                                  "fields": {
+                                    "VAR": {
+                                      "id": "invaders_var_dir"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "next": {
+                        "block": {
+                          "type": "variables_set",
+                          "id": "invaders_95",
+                          "fields": {
+                            "VAR": {
+                              "id": "invaders_var_turned"
+                            }
+                          },
+                          "inputs": {
+                            "VALUE": {
+                              "block": {
+                                "type": "pg_frame",
+                                "id": "invaders_94"
+                              }
+                            }
+                          },
+                          "next": {
+                            "block": {
+                              "type": "pg_set_vel",
+                              "id": "invaders_106",
+                              "fields": {
+                                "AXIS": "x"
+                              },
+                              "inputs": {
+                                "T": {
+                                  "block": {
+                                    "type": "pg_tag",
+                                    "id": "invaders_96",
+                                    "fields": {
+                                      "TAG": {
+                                        "id": "invaders_Tag_alien"
+                                      }
+                                    }
+                                  }
+                                },
+                                "V": {
+                                  "block": {
+                                    "type": "math_arithmetic",
+                                    "id": "invaders_105",
+                                    "fields": {
+                                      "OP": "MULTIPLY"
+                                    },
+                                    "inputs": {
+                                      "A": {
+                                        "block": {
+                                          "type": "variables_get",
+                                          "id": "invaders_97",
+                                          "fields": {
+                                            "VAR": {
+                                              "id": "invaders_var_dir"
+                                            }
+                                          }
+                                        }
+                                      },
+                                      "B": {
+                                        "block": {
+                                          "type": "math_arithmetic",
+                                          "id": "invaders_104",
+                                          "fields": {
+                                            "OP": "ADD"
+                                          },
+                                          "inputs": {
+                                            "A": {
+                                              "shadow": {
+                                                "type": "math_number",
+                                                "id": "invaders_103",
+                                                "fields": {
+                                                  "NUM": 1
+                                                }
+                                              }
+                                            },
+                                            "B": {
+                                              "block": {
+                                                "type": "math_arithmetic",
+                                                "id": "invaders_102",
+                                                "fields": {
+                                                  "OP": "DIVIDE"
+                                                },
+                                                "inputs": {
+                                                  "A": {
+                                                    "block": {
+                                                      "type": "math_arithmetic",
+                                                      "id": "invaders_100",
+                                                      "fields": {
+                                                        "OP": "MINUS"
+                                                      },
+                                                      "inputs": {
+                                                        "A": {
+                                                          "shadow": {
+                                                            "type": "math_number",
+                                                            "id": "invaders_99",
+                                                            "fields": {
+                                                              "NUM": 18
+                                                            }
+                                                          }
+                                                        },
+                                                        "B": {
+                                                          "block": {
+                                                            "type": "pg_count",
+                                                            "id": "invaders_98",
+                                                            "fields": {
+                                                              "TAG": {
+                                                                "id": "invaders_Tag_alien"
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  },
+                                                  "B": {
+                                                    "shadow": {
+                                                      "type": "math_number",
+                                                      "id": "invaders_101",
+                                                      "fields": {
+                                                        "NUM": 9
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "next": {
+                                "block": {
+                                  "type": "pg_move",
+                                  "id": "invaders_109",
+                                  "fields": {
+                                    "AXIS": "y"
+                                  },
+                                  "inputs": {
+                                    "T": {
+                                      "block": {
+                                        "type": "pg_tag",
+                                        "id": "invaders_107",
+                                        "fields": {
+                                          "TAG": {
+                                            "id": "invaders_Tag_alien"
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "D": {
+                                      "shadow": {
+                                        "type": "math_number",
+                                        "id": "invaders_108",
+                                        "fields": {
+                                          "NUM": 8
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_interval",
+          "id": "invaders_129",
+          "x": 20,
+          "y": 520,
+          "fields": {
+            "N": 45
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "controls_if",
+                "id": "invaders_128",
+                "inputs": {
+                  "IF0": {
+                    "block": {
+                      "type": "logic_compare",
+                      "id": "invaders_114",
+                      "fields": {
+                        "OP": "GT"
+                      },
+                      "inputs": {
+                        "A": {
+                          "block": {
+                            "type": "pg_count",
+                            "id": "invaders_112",
+                            "fields": {
+                              "TAG": {
+                                "id": "invaders_Tag_alien"
+                              }
+                            }
+                          }
+                        },
+                        "B": {
+                          "shadow": {
+                            "type": "math_number",
+                            "id": "invaders_113",
+                            "fields": {
+                              "NUM": 0
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "DO0": {
+                    "block": {
+                      "type": "pg_create",
+                      "id": "invaders_127",
+                      "fields": {
+                        "TAG": {
+                          "id": "invaders_Tag_bomb"
+                        }
+                      },
+                      "inputs": {
+                        "X": {
+                          "block": {
+                            "type": "math_random_int",
+                            "id": "invaders_117",
+                            "inputs": {
+                              "FROM": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "invaders_115",
+                                  "fields": {
+                                    "NUM": 20
+                                  }
+                                }
+                              },
+                              "TO": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "invaders_116",
+                                  "fields": {
+                                    "NUM": 380
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "Y": {
+                          "block": {
+                            "type": "math_arithmetic",
+                            "id": "invaders_121",
+                            "fields": {
+                              "OP": "ADD"
+                            },
+                            "inputs": {
+                              "A": {
+                                "block": {
+                                  "type": "pg_get",
+                                  "id": "invaders_119",
+                                  "fields": {
+                                    "PROP": "y"
+                                  },
+                                  "inputs": {
+                                    "T": {
+                                      "block": {
+                                        "type": "pg_tag",
+                                        "id": "invaders_118",
+                                        "fields": {
+                                          "TAG": {
+                                            "id": "invaders_Tag_alien"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "B": {
+                                "shadow": {
+                                  "type": "math_number",
+                                  "id": "invaders_120",
+                                  "fields": {
+                                    "NUM": 50
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "W": {
+                          "shadow": {
+                            "type": "math_number",
+                            "id": "invaders_123",
+                            "fields": {
+                              "NUM": 4
+                            }
+                          }
+                        },
+                        "H": {
+                          "shadow": {
+                            "type": "math_number",
+                            "id": "invaders_124",
+                            "fields": {
+                              "NUM": 8
+                            }
+                          }
+                        },
+                        "COLOR": {
+                          "shadow": {
+                            "type": "pg_colour",
+                            "id": "invaders_122",
+                            "fields": {
+                              "C": "#ff4d4d"
+                            }
+                          }
+                        },
+                        "VX": {
+                          "shadow": {
+                            "type": "math_number",
+                            "id": "invaders_125",
+                            "fields": {
+                              "NUM": 0
+                            }
+                          }
+                        },
+                        "VY": {
+                          "shadow": {
+                            "type": "math_number",
+                            "id": "invaders_126",
+                            "fields": {
+                              "NUM": 3
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_action",
+          "id": "invaders_133",
+          "x": 20,
+          "y": 620,
+          "fields": {
+            "ACTION": "none"
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_set_vel",
+                "id": "invaders_132",
+                "fields": {
+                  "AXIS": "x"
+                },
+                "inputs": {
+                  "T": {
+                    "block": {
+                      "type": "pg_tag",
+                      "id": "invaders_130",
+                      "fields": {
+                        "TAG": {
+                          "id": "invaders_Tag_player"
+                        }
+                      }
+                    }
+                  },
+                  "V": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "invaders_131",
+                      "fields": {
+                        "NUM": 0
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_action",
+          "id": "invaders_137",
+          "x": 20,
+          "y": 720,
+          "fields": {
+            "ACTION": "left"
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_set_vel",
+                "id": "invaders_136",
+                "fields": {
+                  "AXIS": "x"
+                },
+                "inputs": {
+                  "T": {
+                    "block": {
+                      "type": "pg_tag",
+                      "id": "invaders_134",
+                      "fields": {
+                        "TAG": {
+                          "id": "invaders_Tag_player"
+                        }
+                      }
+                    }
+                  },
+                  "V": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "invaders_135",
+                      "fields": {
+                        "NUM": -4
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_action",
+          "id": "invaders_141",
+          "x": 20,
+          "y": 820,
+          "fields": {
+            "ACTION": "right"
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_set_vel",
+                "id": "invaders_140",
+                "fields": {
+                  "AXIS": "x"
+                },
+                "inputs": {
+                  "T": {
+                    "block": {
+                      "type": "pg_tag",
+                      "id": "invaders_138",
+                      "fields": {
+                        "TAG": {
+                          "id": "invaders_Tag_player"
+                        }
+                      }
+                    }
+                  },
+                  "V": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "invaders_139",
+                      "fields": {
+                        "NUM": 4
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_action",
+          "id": "invaders_155",
+          "x": 20,
+          "y": 920,
+          "fields": {
+            "ACTION": "a"
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "controls_if",
+                "id": "invaders_154",
+                "inputs": {
+                  "IF0": {
+                    "block": {
+                      "type": "logic_compare",
+                      "id": "invaders_144",
+                      "fields": {
+                        "OP": "EQ"
+                      },
+                      "inputs": {
+                        "A": {
+                          "block": {
+                            "type": "pg_count",
+                            "id": "invaders_142",
+                            "fields": {
+                              "TAG": {
+                                "id": "invaders_Tag_bullet"
+                              }
+                            }
+                          }
+                        },
+                        "B": {
+                          "shadow": {
+                            "type": "math_number",
+                            "id": "invaders_143",
+                            "fields": {
+                              "NUM": 0
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "DO0": {
+                    "block": {
+                      "type": "pg_create",
+                      "id": "invaders_153",
+                      "fields": {
+                        "TAG": {
+                          "id": "invaders_Tag_bullet"
+                        }
+                      },
+                      "inputs": {
+                        "X": {
+                          "block": {
+                            "type": "pg_get",
+                            "id": "invaders_146",
+                            "fields": {
+                              "PROP": "x"
+                            },
+                            "inputs": {
+                              "T": {
+                                "block": {
+                                  "type": "pg_tag",
+                                  "id": "invaders_145",
+                                  "fields": {
+                                    "TAG": {
+                                      "id": "invaders_Tag_player"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "Y": {
+                          "shadow": {
+                            "type": "math_number",
+                            "id": "invaders_148",
+                            "fields": {
+                              "NUM": 268
+                            }
+                          }
+                        },
+                        "W": {
+                          "shadow": {
+                            "type": "math_number",
+                            "id": "invaders_149",
+                            "fields": {
+                              "NUM": 4
+                            }
+                          }
+                        },
+                        "H": {
+                          "shadow": {
+                            "type": "math_number",
+                            "id": "invaders_150",
+                            "fields": {
+                              "NUM": 10
+                            }
+                          }
+                        },
+                        "COLOR": {
+                          "shadow": {
+                            "type": "pg_colour",
+                            "id": "invaders_147",
+                            "fields": {
+                              "C": "#ffd23f"
+                            }
+                          }
+                        },
+                        "VX": {
+                          "shadow": {
+                            "type": "math_number",
+                            "id": "invaders_151",
+                            "fields": {
+                              "NUM": 0
+                            }
+                          }
+                        },
+                        "VY": {
+                          "shadow": {
+                            "type": "math_number",
+                            "id": "invaders_152",
+                            "fields": {
+                              "NUM": -8
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_collide",
+          "id": "invaders_162",
+          "x": 20,
+          "y": 1020,
+          "fields": {
+            "A": {
+              "id": "invaders_Tag_bullet"
+            },
+            "B": {
+              "id": "invaders_Tag_alien"
+            }
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_destroy",
+                "id": "invaders_157",
+                "inputs": {
+                  "T": {
+                    "block": {
+                      "type": "pg_self",
+                      "id": "invaders_156"
+                    }
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "pg_destroy",
+                    "id": "invaders_159",
+                    "inputs": {
+                      "T": {
+                        "block": {
+                          "type": "pg_other",
+                          "id": "invaders_158"
+                        }
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "pg_add_score",
+                        "id": "invaders_161",
+                        "inputs": {
+                          "N": {
+                            "shadow": {
+                              "type": "math_number",
+                              "id": "invaders_160",
+                              "fields": {
+                                "NUM": 1
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_collide",
+          "id": "invaders_166",
+          "x": 20,
+          "y": 1120,
+          "fields": {
+            "A": {
+              "id": "invaders_Tag_bomb"
+            },
+            "B": {
+              "id": "invaders_Tag_player"
+            }
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_reward",
+                "id": "invaders_164",
+                "inputs": {
+                  "N": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "invaders_163",
+                      "fields": {
+                        "NUM": -1
+                      }
+                    }
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "pg_game_over",
+                    "id": "invaders_165"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "pg_on_collide",
+          "id": "invaders_170",
+          "x": 20,
+          "y": 1220,
+          "fields": {
+            "A": {
+              "id": "invaders_Tag_alien"
+            },
+            "B": {
+              "id": "invaders_Tag_floor"
+            }
+          },
+          "inputs": {
+            "DO": {
+              "block": {
+                "type": "pg_reward",
+                "id": "invaders_168",
+                "inputs": {
+                  "N": {
+                    "shadow": {
+                      "type": "math_number",
+                      "id": "invaders_167",
+                      "fields": {
+                        "NUM": -1
+                      }
+                    }
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "pg_game_over",
+                    "id": "invaders_169"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "variables": [
+      {
+        "name": "player",
+        "id": "invaders_Tag_player",
+        "type": "Tag"
+      },
+      {
+        "name": "obstacle",
+        "id": "invaders_Tag_obstacle",
+        "type": "Tag"
+      },
+      {
+        "name": "ground",
+        "id": "invaders_Tag_ground",
+        "type": "Tag"
+      },
+      {
+        "name": "alien",
+        "id": "invaders_Tag_alien",
+        "type": "Tag"
+      },
+      {
+        "name": "bomb",
+        "id": "invaders_Tag_bomb",
+        "type": "Tag"
+      },
+      {
+        "name": "bullet",
+        "id": "invaders_Tag_bullet",
+        "type": "Tag"
+      },
+      {
+        "name": "wall",
+        "id": "invaders_Tag_wall",
+        "type": "Tag"
+      },
+      {
+        "name": "floor",
+        "id": "invaders_Tag_floor",
+        "type": "Tag"
+      },
+      {
+        "name": "dir",
+        "id": "invaders_var_dir"
+      },
+      {
+        "name": "turned",
+        "id": "invaders_var_turned"
+      },
+      {
+        "name": "col",
+        "id": "invaders_var_col"
+      },
+      {
+        "name": "row",
+        "id": "invaders_var_row"
+      }
+    ]
+  },
+  "generatedCode": "\n\n\napi.$b('invaders_1');\napi.$b('invaders_7');\napi.sensors([\n  api.sensor.position('player'),\n  api.sensor.nearestK('player', 'alien', 3, 'all'),\n  api.sensor.nearestK('player', 'bomb', 2, 'up'),\n  api.sensor.count('bullet', 1),\n  api.sensor.count('alien', 18),\n]);\napi.$b('invaders_78');\napi.onStart(() => {\n  api.$b('invaders_15');\n  api.create({ tag: 'player', x: 200, y: 280, w: 24, h: 16, color: '#5ad1ff', vx: 0, vy: 0 });\n  api.$b('invaders_23');\n  api.create({ tag: 'wall', x: -5, y: 150, w: 10, h: 300, color: '#ffffff', vx: 0, vy: 0 });\n  api.$b('invaders_31');\n  api.create({ tag: 'wall', x: 405, y: 150, w: 10, h: 300, color: '#ffffff', vx: 0, vy: 0 });\n  api.$b('invaders_39');\n  api.create({ tag: 'floor', x: 200, y: 266, w: 400, h: 4, color: '#ffffff', vx: 0, vy: 0 });\n  api.$b('invaders_41');\n  api.vars['dir'] = 1;\n  api.$b('invaders_43');\n  api.vars['turned'] = 0;\n  api.$b('invaders_70');\n  {\n    const $a = 0, $z = 2, $s = ($a <= $z ? 1 : -1) * (Math.abs(1) || 1);\n    for (api.vars['row'] = $a; $s > 0 ? api.vars['row'] <= $z : api.vars['row'] >= $z; api.vars['row'] += $s) {\n      api.$loop();\n      api.$b('invaders_66');\n      {\n        const $a = 0, $z = 5, $s = ($a <= $z ? 1 : -1) * (Math.abs(1) || 1);\n        for (api.vars['col'] = $a; $s > 0 ? api.vars['col'] <= $z : api.vars['col'] >= $z; api.vars['col'] += $s) {\n          api.$loop();\n          api.$b('invaders_62');\n          api.create({ tag: 'alien', x: 80 + api.vars['col'] * 44, y: 40 + api.vars['row'] * 30, w: 22, h: 16, color: api.rainbow(api.vars['row'] + 4), vx: 1, vy: 0 });\n          api.$b('invaders_66');\n        }\n      }\n      api.$b('invaders_70');\n    }\n  }\n  api.$b('invaders_71');\n  api.setBehavior('player', 'stayInScreen');\n  api.$b('invaders_72');\n  api.setBehavior('bullet', 'destroyOffscreen');\n  api.$b('invaders_73');\n  api.setBehavior('bomb', 'destroyOffscreen');\n  api.$b('invaders_74');\n  api.setCostume('player', 'ship');\n  api.$b('invaders_75');\n  api.setCostume('alien', 'alien');\n  api.$b('invaders_76');\n  api.setCostume('wall', 'hidden');\n  api.$b('invaders_77');\n  api.setCostume('floor', 'hidden');\n});\napi.$b('invaders_84');\napi.onTick(() => {\n  api.$b('invaders_83');\n  if (api.count('alien') == 0) {\n    api.$b('invaders_82');\n    api.gameOver();\n  }\n});\napi.$b('invaders_111');\napi.onCollide('alien', 'wall', (self, other) => {\n  api.$b('invaders_110');\n  if (api.frame() - api.vars['turned'] > 10) {\n    api.$b('invaders_93');\n    api.vars['dir'] = 0 - api.vars['dir'];\n    api.$b('invaders_95');\n    api.vars['turned'] = api.frame();\n    api.$b('invaders_106');\n    api.setVel('alien', 'x', api.vars['dir'] * (1 + (18 - api.count('alien')) / 9));\n    api.$b('invaders_109');\n    api.move('alien', 'y', 8);\n  }\n});\napi.$b('invaders_129');\napi.onInterval(45, () => {\n  api.$b('invaders_128');\n  if (api.count('alien') > 0) {\n    api.$b('invaders_127');\n    api.create({ tag: 'bomb', x: api.randInt(20, 380), y: api.get('alien', 'y') + 50, w: 4, h: 8, color: '#ff4d4d', vx: 0, vy: 3 });\n  }\n});\napi.$b('invaders_133');\napi.onAction('none', () => {\n  api.$b('invaders_132');\n  api.setVel('player', 'x', 0);\n});\napi.$b('invaders_137');\napi.onAction('left', () => {\n  api.$b('invaders_136');\n  api.setVel('player', 'x', -4);\n});\napi.$b('invaders_141');\napi.onAction('right', () => {\n  api.$b('invaders_140');\n  api.setVel('player', 'x', 4);\n});\napi.$b('invaders_155');\napi.onAction('a', () => {\n  api.$b('invaders_154');\n  if (api.count('bullet') == 0) {\n    api.$b('invaders_153');\n    api.create({ tag: 'bullet', x: api.get('player', 'x'), y: 268, w: 4, h: 10, color: '#ffd23f', vx: 0, vy: -8 });\n  }\n});\napi.$b('invaders_162');\napi.onCollide('bullet', 'alien', (self, other) => {\n  api.$b('invaders_157');\n  api.destroy(self);\n  api.$b('invaders_159');\n  api.destroy(other);\n  api.$b('invaders_161');\n  api.addScore(1);\n});\napi.$b('invaders_166');\napi.onCollide('bomb', 'player', (self, other) => {\n  api.$b('invaders_164');\n  api.reward(-1);\n  api.$b('invaders_165');\n  api.gameOver();\n});\napi.$b('invaders_170');\napi.onCollide('alien', 'floor', (self, other) => {\n  api.$b('invaders_168');\n  api.reward(-1);\n  api.$b('invaders_169');\n  api.gameOver();\n});\n",
+  "settings": {
+    "actions": [
+      "none",
+      "left",
+      "right",
+      "a"
+    ],
+    "maxSteps": 3000,
+    "background": "#1d2330",
+    "backdrop": "space"
+  },
+  "keymap": {
+    "left": [
+      "ArrowLeft",
+      "KeyA"
+    ],
+    "right": [
+      "ArrowRight",
+      "KeyD"
+    ],
+    "up": [
+      "ArrowUp"
+    ],
+    "down": [
+      "ArrowDown"
+    ],
+    "a": [
+      "Space",
+      "KeyJ"
+    ],
+    "b": [
+      "KeyS"
+    ]
+  },
+  "training": {
+    "algo": "dqn",
+    "steps": 3000000,
+    "frameSkip": 4,
+    "lr": 0.0005,
+    "network": {
+      "hidden": [
+        64,
+        64
+      ],
+      "activation": "relu"
+    }
+  }
+}
