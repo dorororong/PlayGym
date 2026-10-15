@@ -256,7 +256,12 @@ export class TrainPanel {
       if (s.meanScore !== null) run.curve.push({ steps: s.steps, score: s.meanScore });
       if (run.curve.length > 800) run.curve = run.curve.filter((_, i) => i % 2 === 0);
       run.seconds = m.seconds;
-      const extra = 'epsilon' in s.info ? ` · ε ${s.info.epsilon.toFixed(2)}` : '';
+      const extra =
+        'epsilon' in s.info
+          ? ` · <span title="${t.epsHint}">ε ${s.info.epsilon.toFixed(2)}</span>`
+          : 'explore' in s.info
+            ? ` · <span title="${t.exploreHint}">${t.explore} <b>${Math.round(s.info.explore * 100)}%</b></span>`
+            : '';
       const states = 'states' in s.info ? ` · 표 ${fmt(s.info.states)}칸` : '';
       this.els.stat.innerHTML =
         `<b>${shortNum(s.steps)}</b> / ${shortNum(m.total)} ${t.framesUnit} · ` +

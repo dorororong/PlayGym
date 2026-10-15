@@ -2,7 +2,7 @@
 // `npm run templates` 가 이것으로 src/templates/*.json 을 만든다.
 
 import type { Keymap } from '../engine/types';
-import type { LearnConfig } from '../rl/config';
+import { DEFAULT_CONFIG, type LearnConfig } from '../rl/config';
 import { TemplateBuilder, type Value } from './builder';
 
 export function dinoBlocks() {
@@ -508,7 +508,8 @@ export const TEMPLATE_SOURCES = {
 export const TEMPLATE_TRAINING: Record<keyof typeof TEMPLATE_SOURCES, Partial<LearnConfig>> = {
   dino: { steps: 300_000, frameSkip: 4 },
   flappy: { steps: 1_500_000, frameSkip: 2 },
-  breakout: { steps: 1_500_000, frameSkip: 4 },
+  // 탐험 보너스 0.01 이면 시드에 따라 행동이 일찍 굳는다 (experiments/explore: 0.01 → 23.3·6.7, 0.03 → 26.4·26.5)
+  breakout: { steps: 1_500_000, frameSkip: 4, ppo: { ...DEFAULT_CONFIG.ppo, entCoef: 0.03 } },
   dodge: { steps: 1_500_000, frameSkip: 4 },
   // Atari 스타일은 실험에서 DQN 이 더 나았다 (experiments/atari: 우주 침략자 DQN 16.9 / PPO 11.2, 핑퐁 DQN 1.5~3.1 / PPO 0.6~1.3)
   invaders: { algo: 'dqn', steps: 3_000_000, frameSkip: 4, lr: 5e-4, network: { hidden: [64, 64], activation: 'relu' } },

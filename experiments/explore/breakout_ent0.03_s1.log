@@ -1,0 +1,20 @@
+
+> playgym@0.1.0 train
+> tsx scripts/train.ts breakout --ent 0.03 --seed 1 --out experiments/explore/breakout_ent0.03_s1
+
+[breakout] PPO · 64×64 tanh · 행동 유지 4 · 1,500,000 프레임
+  무작위 행동: 점수 0.7 · 보상 0.7 · 길이 87
+    138416 프레임   10초 | 점수 0.8 보상 0.8 길이 87 | entropy=1.0267 approxKl=0.0057 clipFrac=0.0002
+    268807 프레임   20초 | 점수 1.4 보상 1.4 길이 135 | entropy=0.9545 approxKl=0.003 clipFrac=0.0347
+    391256 프레임   31초 | 점수 7.0 보상 7.0 길이 584 | entropy=0.9028 approxKl=0.0044 clipFrac=0.0251
+    522140 프레임   41초 | 점수 6.8 보상 6.8 길이 581 | entropy=0.8579 approxKl=0.0058 clipFrac=0.0352
+    665417 프레임   51초 | 점수 12.9 보상 12.9 길이 1180 | entropy=0.8024 approxKl=0.0028 clipFrac=0.0173
+    804578 프레임   61초 | 점수 16.8 보상 16.8 길이 1571 | entropy=0.7804 approxKl=0.0032 clipFrac=0.0059
+    956075 프레임   71초 | 점수 14.7 보상 14.7 길이 1381 | entropy=0.7577 approxKl=0.0043 clipFrac=0.0139
+   1103465 프레임   81초 | 점수 10.6 보상 10.6 길이 1032 | entropy=0.7821 approxKl=0.009 clipFrac=0.0605
+   1259060 프레임   91초 | 점수 18.7 보상 18.7 길이 1839 | entropy=0.7516 approxKl=0.0048 clipFrac=0.04
+   1414667 프레임  101초 | 점수 19.1 보상 19.1 길이 2090 | entropy=0.7747 approxKl=0.0051 clipFrac=0.0447
+   1500658 프레임  107초 | 점수 14.3 보상 14.3 길이 1326 | entropy=0.7488 approxKl=0.0065 clipFrac=0.0513
+[breakout] 학습 1,500,658 프레임 / 107초 (13,983 프레임/초)
+  학습된 AI (최선만)   : 점수 28.0 · 보상 28.0 · 길이 3000
+  학습된 AI (화면 방식): 점수 26.5 · 보상 26.5 · 길이 3000

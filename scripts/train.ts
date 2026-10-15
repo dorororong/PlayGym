@@ -3,6 +3,8 @@
 //   npm run train -- dino [--algo ppo|dqn|reinforce|qtable] [--steps 300000] [--skip 4] [--lr 5e-4]
 //                          [--hidden 64,64] [--act tanh|relu|sigmoid] [--bins 6] [--seed 0] [--eval 20] [--out 폴더]
 //                          [--resume 폴더/agent.json]   ← 저장된 AI 에서 이어서 학습 (--steps 만큼 더)
+//                          [--ent 0.03]                 ← 탐험 보너스 (PPO·REINFORCE 엔트로피 계수)
+//                          [--eps-end 0.05] [--eps-frac 0.3]  ← DQN·Q-table 의 마지막 ε, ε 를 줄이는 기간
 
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { createEnv } from '../src/engine/env';
@@ -30,6 +32,9 @@ if (opt('hidden') !== undefined) cfg.network.hidden = opt('hidden')!.split(',').
 if (opt('act')) cfg.network.activation = opt('act') as Activation;
 if (opt('bins')) cfg.qtable.bins = Number(opt('bins'));
 if (opt('gamma')) cfg.gamma = Number(opt('gamma'));
+if (opt('ent')) cfg.ppo.entCoef = cfg.reinforce.entCoef = Number(opt('ent'));
+if (opt('eps-end')) cfg.dqn.epsEnd = cfg.qtable.epsEnd = Number(opt('eps-end'));
+if (opt('eps-frac')) cfg.dqn.epsFraction = cfg.qtable.epsFraction = Number(opt('eps-frac'));
 cfg.seed = Number(opt('seed') ?? 0);
 const out = opt('out');
 const evalEps = Number(opt('eval') ?? 20);

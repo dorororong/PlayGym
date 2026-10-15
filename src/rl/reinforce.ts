@@ -80,6 +80,6 @@ export class ReinforceTrainer implements Trainer {
       entSum += H;
     }
     this.opt.step([...grads.gW, ...grads.gb], 1);
-    return this.eps.stats(this.steps, { entropy: entSum / N, decisions: N });
+    return this.eps.stats(this.steps, { entropy: entSum / N, explore: entSum / N / Math.log(Math.max(2, nAct)), decisions: N });
   }
 }

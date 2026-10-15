@@ -1003,6 +1003,15 @@
   },
   "training": {
     "steps": 1500000,
-    "frameSkip": 4
+    "frameSkip": 4,
+    "ppo": {
+      "nEnvs": 8,
+      "nSteps": 128,
+      "epochs": 4,
+      "minibatch": 256,
+      "clip": 0.2,
+      "lambda": 0.95,
+      "entCoef": 0.03
+    }
   }
 }

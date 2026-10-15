@@ -162,7 +162,8 @@ export class PpoTrainer implements Trainer {
         this.optVf.step([...gv.gW, ...gv.gb], 0.5);
       }
     }
-    return this.eps.stats(this.steps, { entropy: entSum / count, approxKl: klSum / count, clipFrac: clipCount / count });
+    // explore: 엔트로피 ÷ 최대 엔트로피(ln 행동 수) — 1 이면 완전히 무작위, 0 이면 늘 같은 행동
+    return this.eps.stats(this.steps, { entropy: entSum / count, explore: entSum / count / Math.log(Math.max(2, nAct)), approxKl: klSum / count, clipFrac: clipCount / count });
   }
 }
 
